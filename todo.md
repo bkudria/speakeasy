@@ -15,14 +15,14 @@
   - [x] Validate that both the audio file and `asrOutput.json` exist.
     - [x] If they don't exist, inform the user with a clear error message and exit the script.
 
-- [ ] Modify the script to handle existing speaker audio files.
+- [x] Modify the script to handle existing speaker audio files.
 
-  - [ ] Check if **named** speaker files exist in the directory (files matching `spk_*_*.m4a`, where the second `*` is the speaker's name).
-    - [ ] If named speaker files exist, skip the speaker audio extraction step and proceed to generate the transcript.
-  - [ ] If **unnamed** speaker files exist (files matching `spk_*.m4a` without speaker names), inform the user.
-    - [ ] Instruct the user to rename the files to identify the speakers.
-    - [ ] Wait for the user to type `go` and press Enter after renaming.
-  - [ ] If no speaker files exist, proceed to extract speaker audio as normal.
+  - [x] Check if **named** speaker files exist in the directory (files matching `spk_*_*.m4a`, where the second `*` is the speaker's name).
+    - [x] If named speaker files exist, skip the speaker audio extraction step and proceed to generate the transcript.
+  - [x] If **unnamed** speaker files exist (files matching `spk_*.m4a` without speaker names), inform the user.
+    - [x] Instruct the user to rename the files to identify the speakers.
+    - [x] Wait for the user to type `go` and press Enter after renaming.
+  - [x] If no speaker files exist, proceed to extract speaker audio as normal.
 
 - [ ] Modify the transcript naming convention.
 

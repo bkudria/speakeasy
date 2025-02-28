@@ -20,6 +20,42 @@ class TranscriptProcessor
   def process
     puts "Starting Amazon Transcribe processing script"
 
+    # Check for existing named speaker files
+    named_speaker_files = Dir.glob("spk_*_*.m4a")
+    if named_speaker_files.any?
+      puts "\nNamed speaker files detected. Skipping speaker audio extraction step."
+      wait_for_speaker_identification(skip: true)
+      generate_csv_transcript
+      identify_segments_to_review
+      puts "Processing complete!"
+      return
+    end
+
+    # Check for existing unnamed speaker files
+    unnamed_speaker_files = Dir.glob("spk_*.m4a") - named_speaker_files
+    if unnamed_speaker_files.any?
+      puts "\nUnnamed speaker files detected."
+      puts "Please identify each speaker by renaming the audio files:"
+      puts "  Example: rename 'spk_0.m4a' to 'spk_0_Alex.m4a' if the speaker is Alex"
+      puts "\nType `go` and press enter after renaming the files..."
+      until STDIN.gets.strip.downcase == "go"
+        sleep 1
+      end
+      # After renaming, restart the process to check for named speaker files
+      named_speaker_files = Dir.glob("spk_*_*.m4a")
+      if named_speaker_files.any?
+        puts "\nNamed speaker files detected after renaming. Skipping speaker audio extraction step."
+        wait_for_speaker_identification(skip: true)
+        generate_csv_transcript
+        identify_segments_to_review
+        puts "Processing complete!"
+        return
+      else
+        puts "No named speaker files found after renaming. Exiting."
+        exit 1
+      end
+    end
+
     # Step 1: Extract speaker audio
     extract_speaker_audio
 
@@ -117,7 +153,9 @@ class TranscriptProcessor
     puts "\nSpeaker audio extraction complete!"
   end
 
-  def wait_for_speaker_identification
+  def wait_for_speaker_identification(skip: false)
+    return if skip
+    
     puts "\n=== Speaker Identification ==="
     puts "Please identify each speaker by renaming the audio files:"
     puts "  Example: rename 'spk_0.m4a' to 'spk_0_John.m4a' if the speaker is John"
