@@ -8,9 +8,10 @@
  4. Highlight segments requiring review
 
  ## Input
- The script accepts two command-line arguments:
- 1. Path to the JSON transcript file (output from Amazon Transcribe)
- 2. Path to the original audio file
+ The script accepts one command-line argument:
+ 1. Path to a directory containing:
+    - The JSON transcript file (named "asrOutput.json")
+    - The original audio file (largest audio file in the directory)
 
  ## JSON Structure
  The Amazon Transcribe JSON follows this structure:

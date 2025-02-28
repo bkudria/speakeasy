@@ -1,19 +1,19 @@
 - [x] After generating speaker audio, the script should pause until the user types "go".
 
-- [ ] Modify the script to accept a directory as an input argument and use it as the working directory.
+- [x] Modify the script to accept a directory as an input argument and use it as the working directory.
 
-  - [ ] Update the script to accept a single directory path as the command-line argument.
-  - [ ] Validate that the provided directory exists and is accessible.
-  - [ ] Set the working directory to the provided directory throughout the script.
+  - [x] Update the script to accept a single directory path as the command-line argument.
+  - [x] Validate that the provided directory exists and is accessible.
+  - [x] Set the working directory to the provided directory throughout the script.
 
-- [ ] Modify the script to locate input files within the specified directory.
+- [x] Modify the script to locate input files within the specified directory.
 
-  - [ ] In the specified directory, find the largest audio file to use as the audio input.
-    - [ ] Search for audio files with common extensions (e.g., `.wav`, `.mp3`, `.m4a`).
-    - [ ] Determine the largest audio file by file size among these.
-  - [ ] In the specified directory, find `asrOutput.json` to use as the transcript file.
-  - [ ] Validate that both the audio file and `asrOutput.json` exist.
-    - [ ] If they don't exist, inform the user with a clear error message and exit the script.
+  - [x] In the specified directory, find the largest audio file to use as the audio input.
+    - [x] Search for audio files with common extensions (e.g., `.wav`, `.mp3`, `.m4a`).
+    - [x] Determine the largest audio file by file size among these.
+  - [x] In the specified directory, find `asrOutput.json` to use as the transcript file.
+  - [x] Validate that both the audio file and `asrOutput.json` exist.
+    - [x] If they don't exist, inform the user with a clear error message and exit the script.
 
 - [ ] Modify the script to handle existing speaker audio files.
 

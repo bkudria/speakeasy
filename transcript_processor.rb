@@ -325,13 +325,34 @@ class TranscriptProcessor
 end
 
 # Main execution
-if ARGV.size != 2
-  puts "Usage: #{$0} <transcript_json_path> <audio_file_path>"
+if ARGV.size != 1
+  puts "Usage: #{$0} <input_directory>"
   exit 1
 end
 
-transcript_path = ARGV[0]
-audio_path = ARGV[1]
+directory_path = ARGV[0]
+
+unless Dir.exist?(directory_path)
+  abort "Error: Directory '#{directory_path}' not found or inaccessible."
+end
+
+# Set the working directory to the provided directory
+Dir.chdir(directory_path)
+
+# Find the largest audio file
+audio_files = Dir.glob(["*.wav", "*.mp3", "*.m4a", "*.aac", "*.flac"].flat_map { |ext| [ext.downcase, ext.upcase] })
+if audio_files.empty?
+  abort "Error: No audio files found in directory '#{directory_path}'."
+end
+
+audio_path = audio_files.max_by { |f| File.size(f) }
+puts "Using largest audio file: #{audio_path}"
+
+# Find the transcript file
+transcript_path = File.join(directory_path, "asrOutput.json")
+unless File.exist?(transcript_path)
+  abort "Error: Transcript file 'asrOutput.json' not found in directory '#{directory_path}'."
+end
 
 processor = TranscriptProcessor.new(transcript_path, audio_path)
 processor.process
