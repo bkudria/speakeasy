@@ -24,6 +24,15 @@
     - [x] Wait for the user to type `go` and press Enter after renaming.
   - [x] If no speaker files exist, proceed to extract speaker audio as normal.
 
+- [ ] Set up RSpec
+
+- [ ] Write some basic tests to ensure the script works as expected, so we can refactor confidently
+
+- [ ] Write more advanced tests
+  - [ ] Use `asrOutput.json` as the basis for a test fixture. Write a one-off script that:
+    - [ ] Removes most of the data in this file
+    - [ ] Replaces remaining data with a fake and humorous meeting transcript
+    - [ ] Replaces the timestamp data with artificial but realistic and self-consistent timestamps data
 - [ ] Modify the transcript naming convention.
 
   - [ ] Change the output transcript filename to `transcript.csv`.
@@ -37,10 +46,10 @@
     - [ ] On **Windows**, use `start <directory>`.
     - [ ] On **Linux**, use `xdg-open <directory>`.
   - [ ] Detect the operating system within the script and execute the corresponding command.
-  
+
 - [ ] Update script documentation.
 
   - [ ] Update the usage instructions and help messages to reflect the new command-line arguments and behaviors.
   - [ ] Ensure the script's README or documentation is updated accordingly.
 
-- [ ] 
+- [ ]
