@@ -29,7 +29,8 @@
   - [ ] Change the output transcript filename to `transcript.csv`.
   - [ ] If `transcript.csv` already exists in the directory, append an incrementing number to the filename (e.g., `transcript.1.csv`, `transcript.2.csv`) to avoid overwriting existing files.
 
-- [ ] After speaker-specific audio files are generated, execute a system command to open the working directory in the system file manager so the user can listen to the files and identify the speakers.
+- [ ] After speaker-specific audio files are generated, execute a system command to open the working directory in the
+      system file manager so the user can listen to the files and identify the speakers.
 
   - [ ] Use the appropriate command based on the operating system:
     - [ ] On **macOS**, use `open <directory>`.
