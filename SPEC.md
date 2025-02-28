@@ -1,103 +1,140 @@
-I'd like to write a ruby script that processes a transcript output by Amazon Transcribe. 
+ # Amazon Transcribe Processing Script Specification
 
-The script will take two arguments - the path to the json transcript, and the path to the audio file. The script will
-then do several things:
+ ## Overview
+ This Ruby script processes Amazon Transcribe JSON output alongside the original audio file to:
+ 1. Extract individual speaker audio segments
+ 2. Allow for speaker identification
+ 3. Generate a structured CSV transcript
+ 4. Highlight segments requiring review
 
-1. extract speaker audio
-2. look for identified speaker audio files
-3. produce a csv of the transcript
-4. print segments to review
+ ## Input
+ The script accepts two command-line arguments:
+ 1. Path to the JSON transcript file (output from Amazon Transcribe)
+ 2. Path to the original audio file
 
-The transcript JSON structure looks like this:
-
+ ## JSON Structure
+ The Amazon Transcribe JSON follows this structure:
+ ```json
+ {
+   "accountId": "string",
+   "jobName": "string",
+   "results": {
+     "audio_segments": [
+       {
+         "end_time": "string",
+         "id": "integer",
+         "items": ["integer"],
+         "speaker_label": "string",
+         "start_time": "string",
+         "transcript": "string"
+       }
+     ],
+     "items": [
+       {
+         "alternatives": [
+           {
+             "confidence": "string",
+             "content": "string"
+           }
+         ],
+         "end_time": "string",
+         "id": "integer",
+         "speaker_label": "string",
+         "start_time": "string",
+         "type": "string"
+       }
+     ],
+     "speaker_labels": {
+       "channel_label": "string",
+       "segments": [
+         {
+           "end_time": "string",
+           "items": [
+             {
+               "end_time": "string",
+               "speaker_label": "string",
+               "start_time": "string"
+             }
+           ],
+           "speaker_label": "string",
+           "start_time": "string"
+         }
+       ],
+       "speakers": "integer"
+     },
+     "transcripts": [
+       {
+         "transcript": "string"
+       }
+     ]
+   },
+   "status": "string"
+ }
 ```
-.accountId: str
-.jobName: str
-.results.audio_segments[].end_time: str
-.results.audio_segments[].id: int
-.results.audio_segments[].items[]: int
-.results.audio_segments[].speaker_label: str
-.results.audio_segments[].start_time: str
-.results.audio_segments[].transcript: str
-.results.items[].alternatives[].confidence: str
-.results.items[].alternatives[].content: str
-.results.items[].end_time: str
-.results.items[].id: int
-.results.items[].speaker_label: str
-.results.items[].start_time: str
-.results.items[].type: str
-.results.speaker_labels.channel_label: str
-.results.speaker_labels.segments[].end_time: str
-.results.speaker_labels.segments[].items[].end_time: str
-.results.speaker_labels.segments[].items[].speaker_label: str
-.results.speaker_labels.segments[].items[].start_time: str
-.results.speaker_labels.segments[].speaker_label: str
-.results.speaker_labels.segments[].start_time: str
-.results.speaker_labels.speakers: int
-.results.transcripts[].transcript: str
-.status: str
-```
-
-That is:
- - the the transcript is a JSON object with top-level keys accountId (a string), jobName (a string), results (an
-   object), and status (a string).
- - results is an object with keys audio_segments (an array), items (an array), speaker_labels (an object), and
-   transcripts (an array)
- 
- etc.
- 
- `items` is the smallest unit. it describes a short section of audio, assigning it an ID and identifying it's start and
- end times. It also includes a speaker label (e.g. spk_0, spk_1, etc), the type of content, and the content itself, with
- a confidence value, a float from 0 to 1.0, stored as a string.
- 
- `audio_segments` aggregates consecutive items by a single speaker into larger segments.
- 
- `speaker_labels` is the same aggregation, but reduces items to their speaker label and time bounds, rather than
- referencing item IDs
- 
-= 
- Step 1:
- 
-The script produces N audio files in the current directory, where N is the number of speakers, the int
-`.results.speaker_labels.speakers`. The audio format should be whatever is reasonable, given the input format.
-
-Each audio file is the concatenation of that speaker's audio segments, i.e. the audio between the start_time and
-end_time of the segments in audio_segments for that speaker.
-
-The script should use ffmpeg to efficiently extract a speaker's audio, producing a smaller shorter file. It should print
-it's progress for each speaker, and for the step overall. The files should be named by their speaker label, e.g.
-`spk_0.m4a`, etc.
-
-Once complete, the script should pause, and instruct the user to identify the speakers by appending the speaker's name
-to the filename. E.g. if spk_0 is Ben, the user would rename the file to spk_0_Ben.m4a. The script will inform the user
-to hit the enter key once they're done.
-
-Step 2: once the user renames the files and hits enter, the script should produce a CSV file in the current directory
-with the following columns:
-
-ID: an auto-incrementing integer, starting at 1. Each row increments the ID
-Speaker: The speaker's name, e.g. "Ben"
-Transcript: What the speaker said for that row
-Confidence Min: the minimum confidence of items for this row
-Confidence Max: the maximum confidence of items for this row
-Confident Mean: the mean confidence of items for this row
-Confidence Median: the median confidence for items for this row
-Note: one of "multiple speakers", "unknown", or "error"
-
-A new row should be started when:
-1. A new speaker speaks
-2. There is more than 1 second of silence
-
-If several speakers speakers overlap, or there is no transcript, or there is some unexpected condition with that segment
-or row, use the Note field.
-
-If there is more than 3 error rows in a row, the script should print a detailed description of each error, and then exit
-
-The script should display a detailed progress bar to inform the user of its progress.
-
-Finally, after writing out the CSV file, the script should output the IDs of rows with especially low confidence for the
-user to review and possibly correct. If there are several consecutive row IDs, they should be grouped into Handle.
-
-The script should handle other errors in a reasonable fashion.
 
 
+                                                                       Processing Steps
+
+                                                               Step 1: Speaker Audio Extraction
+
+ 1 The script extracts N audio files, where N equals the number of speakers (.results.speaker_labels.speakers).
+ 2 Each audio file contains the concatenated segments for a single speaker, using the start_time and end_time from audio_segments.
+ 3 The script uses ffmpeg to extract the audio segments efficiently.
+ 4 Output files are named according to speaker labels (e.g., spk_0.m4a).
+ 5 The script displays progress for each speaker extraction and the overall step.
+ 6 Upon completion, the script prints a summary showing:
+    • Total number of speakers detected
+    • Number of segments per speaker
+    • Total duration of audio per speaker
+
+                                                                        Error Handling
+
+ • If the input audio format is incompatible with ffmpeg, the script will display an error message and exit.
+
+                                                                       User Interaction
+
+ 1 After extraction, the script pauses and instructs the user to identify speakers by renaming files:
+    • Original: spk_0.m4a
+    • Renamed: spk_0_Ben.m4a (if speaker is identified as "Ben")
+ 2 The script informs the user to press Enter when done with renaming.
+ 3 If a user doesn't rename a particular speaker file, the script will treat that speaker as unidentified in the CSV output (blank Speaker column).
+
+                                                                    Step 2: CSV Generation
+
+ 1 The script generates a CSV file with the following naming convention:
+    • Base name matches the audio filename with a .csv extension
+    • If a file with that name exists, append an incrementing number (e.g., name.1.csv, name.2.csv)
+ 2 The CSV contains these columns:
+    • ID: Auto-incrementing integer starting at 1
+    • Speaker: The identified speaker's name (blank if unidentified)
+    • Transcript: The spoken content
+    • Confidence Min: Minimum confidence value among items in this segment
+    • Confidence Max: Maximum confidence value among items in this segment
+    • Confidence Mean: Average confidence value among items in this segment
+    • Confidence Median: Median confidence value among items in this segment
+    • Note: One of "multiple speakers", "unknown", or "error"
+ 3 Row segmentation rules:
+    • Start a new row when a different speaker begins talking
+    • Start a new row when there is more than 1 second of silence
+ 4 The script displays a detailed progress bar during CSV generation.
+
+                                                                        Error Handling
+
+ • If the script encounters unexpected conditions while processing a segment, it marks the row with "error" in the Note field.
+ • If three consecutive error rows occur, the script prints detailed descriptions of each error and exits.
+
+                                                                  Step 3: Review Suggestions
+
+After CSV generation, the script identifies segments with low confidence scores for user review:
+
+ • Low confidence threshold: segments with mean confidence below 0.75
+ • The script outputs the IDs of these segments
+ • Consecutive IDs are grouped for easier reference
+
+
+                                                                    General Error Handling
+
+ • The script validates input files exist before processing
+ • It checks for proper JSON formatting in the transcript file
+ • It verifies the audio file can be processed by ffmpeg
+ • All errors are reported with clear, actionable messages
