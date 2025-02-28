@@ -1,4 +1,4 @@
-- [ ] after generating speaker audio, the script should pause until the user types "go"
+- [x] after generating speaker audio, the script should pause until the user types "go"
 - [ ] instead of two files as input, the script should take a directory, and pick the biggest audio file, and a transcript file `asrOutput.json`
 - [ ] instead of working in the current directory, the script should use the directory passed in as the argument
 - [ ] if named speaker files already exist, we should go straight to generating the transcript
