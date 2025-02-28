@@ -179,14 +179,15 @@ class TranscriptProcessor
     end
 
     # Determine output CSV filename
-    csv_filename = @base_filename + ".csv"
-    if File.exist?(csv_filename)
-      i = 1
-      while File.exist?("#{@base_filename}.#{i}.csv")
-        i += 1
-      end
-      csv_filename = "#{@base_filename}.#{i}.csv"
+    output_filename = "transcript.csv"
+    index = 1
+
+    while File.exist?(File.join(@output_dir, output_filename))
+      output_filename = "transcript.#{index}.csv"
+      index += 1
     end
+
+    csv_filename = output_filename
 
     # Process transcript into rows
     rows = []
@@ -301,6 +302,7 @@ class TranscriptProcessor
 
     # Write to CSV
     puts "\nWriting transcript to #{csv_filename}..."
+    puts "Transcript saved as #{csv_filename}."
     CSV.open(csv_filename, "w") do |csv|
       # Write header
       csv << ["ID", "Speaker", "Transcript", "Confidence Min", "Confidence Max", "Confidence Mean", "Confidence Median", "Note"]

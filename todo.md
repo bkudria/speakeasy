@@ -1,7 +1,7 @@
-- [ ] Modify the transcript naming convention.
+- [x] Modify the transcript naming convention.
 
-  - [ ] Change the output transcript filename to `transcript.csv`.
-  - [ ] If `transcript.csv` already exists in the directory, append an incrementing number to the filename (e.g., `transcript.1.csv`, `transcript.2.csv`) to avoid overwriting existing files.
+  - [x] Change the output transcript filename to `transcript.csv`.
+  - [x] If `transcript.csv` already exists in the directory, append an incrementing number to the filename (e.g., `transcript.1.csv`, `transcript.2.csv`) to avoid overwriting existing files.
 
 - [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to the files and identify the speakers.
 
