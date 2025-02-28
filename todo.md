@@ -33,9 +33,4 @@
     - [ ] Test how the script handles multiple speakers with overlapping dialogues.
     - [ ] Test the script's error handling with malformed or unexpected data.
 
-- [ ] Update script documentation.
-
-  - [ ] Update the usage instructions and help messages to reflect the new command-line arguments and behaviors.
-  - [ ] Ensure the script's README or documentation is updated accordingly.
-
 - [ ] 
