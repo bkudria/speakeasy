@@ -13,7 +13,7 @@
   - [x] Update or create parser tests that load and parse this fixture
   - [ ] Confirm coverage for:
     - [ ] normal transcript data
-    - [ ] missing fields
+    - [x] missing fields
     - [ ] malformed fields
     - [ ] error handling
   - [ ] Verify:
