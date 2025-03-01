@@ -5,7 +5,14 @@
 
 - [ ] Set up RSpec for testing.
 
-  - [ ] Install RSpec in the project.
-  - [ ] Initialize RSpec configuration files.
+  - [ ] Add `rspec` to the `Gemfile`.
+
+  - [ ] Run `bundle install` to install RSpec.
+
+  - [ ] Initialize RSpec by running `rspec --init`.
+
+  - [ ] Create a `spec` directory for test files.
+
+  - [ ] Verify RSpec setup by running a sample test.
 
 - [ ] 
