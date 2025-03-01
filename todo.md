@@ -1,3 +1,4 @@
+- [ ] Install and configure the `simplecov` gem, for code coverage
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
   - [x] Update or create parser tests that load and parse this fixture
