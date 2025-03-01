@@ -26,4 +26,7 @@
   - [ ] Ensure `TranscriptProcessor` calls `TranscriptParser` for transcript operations.
   - [ ] Verify the new structure is testable, adding or moving tests as needed.
 
+- [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
+- [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
+
 - [ ] 
