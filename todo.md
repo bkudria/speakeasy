@@ -21,7 +21,12 @@
   - [x] Test that the script validates input files and directories correctly.
 
 - [ ] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
-  - [ ] Extract transcript-parsing logic from `TranscriptProcessor` into a separate class/module.
+  - [ ] Create a new `TranscriptParser` class/module in a separate file.
+  - [ ] Move the transcript parsing functionality from `TranscriptProcessor` into the new class/module.
+  - [ ] Ensure the main script uses the new class/module for parsing.
   - [ ] Create dedicated RSpec tests for the new parsing class/module.
+    - [ ] Test correct grouping logic.
+    - [ ] Test confidence calculations.
+    - [ ] Test error handling.
 
 - [ ] 
