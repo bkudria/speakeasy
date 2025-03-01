@@ -1,6 +1,6 @@
 - [x] Install and configure the `simplecov` gem, for code coverage
   - SimpleCov's README is here: https://raw.githubusercontent.com/simplecov-ruby/simplecov/refs/heads/main/README.md
-  - [ ] Ensure tests print the coverage percentage clearly
+  - [x] Ensure tests print the coverage percentage clearly
   - [ ] Implement a coverage ratchet:
     - [ ] Set a minimum acceptable coverage threshold
     - [ ] Ensure tests fail if coverage dips below that threshold
