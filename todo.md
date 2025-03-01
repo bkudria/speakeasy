@@ -2,9 +2,10 @@
   - SimpleCov's README is here: https://raw.githubusercontent.com/simplecov-ruby/simplecov/refs/heads/main/README.md
   - [x] Ensure tests print the coverage percentage clearly
   - [ ] Implement a coverage ratchet:
-    - [ ] Set a minimum acceptable coverage threshold
-    - [ ] Ensure tests fail if coverage dips below that threshold
-    - [ ] Ensure tests fail if coverage decreases from the prior run
+    - [ ] Configure SimpleCov to enforce a minimum acceptable coverage threshold
+    - [ ] Fail tests if coverage dips below that threshold
+    - [ ] Track and compare coverage from a prior run
+    - [ ] Fail tests if coverage decreases from the prior run
 
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
