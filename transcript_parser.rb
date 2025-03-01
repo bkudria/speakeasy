@@ -1,3 +1,4 @@
+require 'json'
 
 class TranscriptParser
   def initialize(transcript_path)
@@ -5,6 +6,6 @@ class TranscriptParser
   end
 
   def parse
-    # JSON parsing logic will be added in the next sub-task
+    JSON.parse(File.read(@transcript_path))
   end
 end

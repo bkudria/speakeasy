@@ -5,6 +5,7 @@ require 'csv'
 require 'fileutils'
 require 'open3'
 require 'descriptive_statistics'
+require_relative 'transcript_parser'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
@@ -12,7 +13,7 @@ class TranscriptProcessor
 
     @transcript_path = transcript_path
     @audio_path = audio_path
-    @transcript = JSON.parse(File.read(transcript_path))
+    @transcript = TranscriptParser.new(transcript_path).parse
     @base_filename = File.basename(audio_path, ".*")
     @output_dir = Dir.pwd
   end
