@@ -3,7 +3,7 @@
   - [x] Change the output transcript filename to `transcript.csv`.
   - [x] If `transcript.csv` already exists in the directory, append an incrementing number to the filename (e.g., `transcript.1.csv`, `transcript.2.csv`) to avoid overwriting existing files.
 
-- [ ] Set up RSpec for testing.
+- [x] Set up RSpec for testing.
 
   - [x] Add `rspec` to the `Gemfile`.
 
