@@ -53,3 +53,14 @@ RSpec.describe TranscriptParser, "missing fields" do
     # etc.
   end
 end
+
+RSpec.describe TranscriptParser, "normal transcript data" do
+  it "loads the fixture 'asrOutput.json' without error" do
+    fixture_path = File.join(File.dirname(__FILE__), 'fixture', 'asrOutput.json')
+    parser = TranscriptParser.new(fixture_path)
+
+    expect {
+      parser.parse
+    }.not_to raise_error, "Expected the transcript to parse without any exceptions"
+  end
+end
