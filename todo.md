@@ -17,7 +17,7 @@
 
 - [ ] Write basic tests to ensure the script works as expected.
 
-  - [ ] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
-  - [ ] Test that the script validates input files and directories correctly.
+  - [x] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
+  - [x] Test that the script validates input files and directories correctly.
 
 - [ ] 
