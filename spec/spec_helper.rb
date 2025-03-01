@@ -11,6 +11,10 @@ SimpleCov.at_exit do
   if File.exist?(coverage_tracking_file)
     previous_coverage = File.read(coverage_tracking_file).to_f
     puts "Previous coverage: #{previous_coverage}%"
+    if current_coverage < previous_coverage
+      puts "Coverage decreased from #{previous_coverage}% to #{current_coverage.round(2)}%. Failing."
+      exit 1
+    end
   else
     puts "No prior coverage data found."
   end

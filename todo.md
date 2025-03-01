@@ -5,7 +5,7 @@
     - [x] Configure SimpleCov to enforce a minimum acceptable coverage threshold
     - [x] Fail tests if coverage dips below that threshold
     - [x] Track and compare coverage from a prior run
-    - [ ] Fail tests if coverage decreases from the prior run
+    - [x] Fail tests if coverage decreases from the prior run
 
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
