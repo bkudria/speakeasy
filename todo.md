@@ -6,9 +6,6 @@
     - [ ] Ensure tests fail if coverage dips below that threshold
     - [ ] Ensure tests fail if coverage decreases from the prior run
 
-  - [ ] Add RSpec coverage for `transcript_processor.rb`
-    - [ ] Require `transcript_processor.rb` in a new or existing spec
-    - [ ] Exercise its methods so SimpleCov accurately reports coverage
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
   - [x] Update or create parser tests that load and parse this fixture
@@ -38,5 +35,9 @@
   - [ ] Add or move RSpec tests for CSV writing:
     - [ ] normal output
     - [ ] handling or reporting errors
+
+- [ ] Add RSpec coverage for `transcript_processor.rb`
+  - [ ] Require `transcript_processor.rb` in a new or existing spec
+  - [ ] Exercise its methods so SimpleCov accurately reports coverage
 
 - [ ] 
