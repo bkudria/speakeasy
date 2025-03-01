@@ -20,12 +20,19 @@
   - [x] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
   - [x] Test that the script validates input files and directories correctly.
 
-- [ ] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
+- [x] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
   - [x] Create a new file named `transcript_parser.rb` with a `TranscriptParser` class.
   - [x] Move only the transcript-related JSON parsing code from `TranscriptProcessor` to `TranscriptParser`.
   - [x] Keep any CSV generation code in `TranscriptProcessor`.
   - [x] Update `TranscriptProcessor` to call `TranscriptParser` for parsing and accessing transcript data.
   - [x] Add or move RSpec tests ensuring `TranscriptParser` functionality is correctly covered.
+
+- [ ] Write a one-off script to generate a test fixture with a fake and humorous meeting transcript, based on the `asrOutput.json` file present
+  - [ ] Remove any of the data from `asrOutput.json` that represents any content not from the middle 15 minutes of the transcript
+  - [ ] Replace the remaining data with a fake transcript.
+  - [ ] Replace timestamp data with artificial but realistic and self-consistent timestamps.
+  
+- [ ] Improve the parser tests, and use the new transcript fixture file
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module.
