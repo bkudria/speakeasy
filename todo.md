@@ -8,7 +8,8 @@
     - [x] Fail tests if coverage decreases from the prior run
 
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
-  - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
+  - Assume the fixture file exists and is correct.
+  - Use placeholder values as comparison values, and temporarily disable the tests. I replace placeholder data with what the correct values should be, and re-enable the tests
   - [x] Update or create parser tests that load and parse this fixture
   - [ ] Confirm coverage for:
     - [ ] normal transcript data
