@@ -1,7 +1,10 @@
 - [x] Install and configure the `simplecov` gem, for code coverage
   - SimpleCov's README is here: https://raw.githubusercontent.com/simplecov-ruby/simplecov/refs/heads/main/README.md
-  - [ ] Running tests should print what percentage of code is covered
-  - [ ] There should be a coverage ratchet - tests should fail if coverage decreases from the prior run
+  - [ ] Ensure tests print the coverage percentage clearly
+  - [ ] Implement a coverage ratchet:
+    - [ ] Set a minimum acceptable coverage threshold
+    - [ ] Ensure tests fail if coverage dips below that threshold
+    - [ ] Ensure tests fail if coverage decreases from the prior run
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
   - [x] Update or create parser tests that load and parse this fixture
