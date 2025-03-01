@@ -27,6 +27,12 @@
   - [ ] Verify the new structure is testable, adding or moving tests as needed.
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
+  - [ ] Extract the CSV data generation logic into a new `CsvGenerator` class or module.
+  - [ ] Ensure `TranscriptProcessor` uses `CsvGenerator` to generate transcript data rows.
+  - [ ] Add or move tests for CSV data generation logic.
 - [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
+  - [ ] Extract the CSV writing logic into a new `CsvWriter` class or module.
+  - [ ] Ensure `TranscriptProcessor` calls `CsvWriter` for writing CSV files.
+  - [ ] Add or move tests for CSV writing logic.
 
 - [ ] 
