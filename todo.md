@@ -4,7 +4,7 @@
   - [x] Remove any of the data from `asrOutput.json` that represents any content not from the middle 15 minutes of the transcript
   - [ ] Replace the remaining data with a fake transcript.
     - To generate fake data, you may run `llm` with one prompt argument, but do not run this command more than 50 times. Be sure to specify content length and format in your prompt.
-  - [ ] Replace timestamp data with artificial but realistic and self-consistent timestamps.
+  - [x] Replace timestamp data with artificial but realistic and self-consistent timestamps.
   
 - [ ] Improve the parser tests, and use the new transcript fixture file
   - [ ] Ensure the one-off script's fake transcript fixture is correctly checked into the repository

@@ -100,3 +100,49 @@ jq --argjson start "$START_TIME" \
 
 echo "Filtered transcript saved to $OUTPUT_JSON"
 echo "Done removing data outside the middle 15 minutes."
+
+# Generate fake transcript content using llm
+echo "Generating fake transcript content..."
+OUTPUT_FAKED="faked_${OUTPUT_JSON}"
+
+# Use llm to generate fake transcript content
+llm "Generate a humorous fake meeting transcript with 10-15 segments of dialogue between 3-4 speakers discussing a fictional product launch. Keep each segment short (1-2 sentences). Format as plain text with each line being a different speaker's turn. Don't include speaker names or timestamps." > fake_content.txt
+
+# Replace the transcript content in the filtered JSON
+jq --slurpfile content fake_content.txt '
+  .results.audio_segments |= map(.transcript = ($content[0] | split("\n") | .[0:length] | .[_index_] // "This is placeholder text."))
+  |
+  .results.items |= map(
+    if .alternatives then
+      .alternatives |= map(.content = "fake word")
+    else
+      .
+    end
+  )
+' "$OUTPUT_JSON" > "$OUTPUT_FAKED"
+
+rm fake_content.txt
+echo "Fake transcript content generated and saved to $OUTPUT_FAKED"
+
+# Replace timestamps with artificial but realistic values:
+STARTING_TIMESTAMP=60  # arbitrary start in seconds
+DURATION_INCREMENT=3   # each segment length in seconds
+OUTPUT_FINAL="final_${OUTPUT_JSON}"
+
+jq --argjson st "$STARTING_TIMESTAMP" \
+   --argjson inc "$DURATION_INCREMENT" '
+  .results.audio_segments |=
+    (reduce range(0; length) as $i (.;
+       .[$i].start_time = (($st + ($i * $inc)) | tostring) |
+       .[$i].end_time = (($st + ($i * $inc) + $inc) | tostring)
+    ))
+  |
+  .results.items |=
+    (reduce range(0; length) as $j (.;
+       .[$j].start_time = (($st + ($j * $inc)) | tostring) |
+       .[$j].end_time = (($st + ($j * $inc) + $inc) | tostring)
+    ))
+' "$OUTPUT_FAKED" > "$OUTPUT_FINAL"
+
+echo "Timestamps replaced in $OUTPUT_FINAL"
+echo "Fake transcript generation complete."
