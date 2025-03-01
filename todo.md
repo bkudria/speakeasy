@@ -15,7 +15,7 @@
     - generate and use sample malformed data, or
     - parse the fixture file, and mutate the parse result so that it become malformed
   - [x] Update or create parser tests that load and parse this fixture
-  - [ ] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
+  - [x] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
   - [ ] Confirm coverage for:
     - [ ] normal transcript data
       - [ ] Ensure fixture "asrOutput.json" is loaded without error
