@@ -3,7 +3,7 @@
   - [x] Ensure tests print the coverage percentage clearly
   - [ ] Implement a coverage ratchet:
     - [x] Configure SimpleCov to enforce a minimum acceptable coverage threshold
-    - [ ] Fail tests if coverage dips below that threshold
+    - [x] Fail tests if coverage dips below that threshold
     - [ ] Track and compare coverage from a prior run
     - [ ] Fail tests if coverage decreases from the prior run
 
