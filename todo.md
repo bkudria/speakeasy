@@ -24,7 +24,7 @@
       - [ ] Validate `items` matches expected placeholder
     - [x] missing fields
     - [ ] malformed fields
-      - [ ] Introduce placeholder expectations for malformed JSON in asrOutput.json
+      - [ ] Introduce expectations with sample malformed transcript JSON
     - [ ] error handling
       - [ ] Introduce placeholder expectations for missing audio file scenario
       - [ ] Introduce placeholder expectations for invalid JSON structure scenario

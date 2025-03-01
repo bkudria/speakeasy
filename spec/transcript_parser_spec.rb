@@ -71,10 +71,9 @@ RSpec.describe TranscriptParser, "missing fields" do
 
     expect { parser.parse }.not_to raise_error
 
-    # Replace these placeholder expectations with the correct values once the fixture is finalized.
-    expect(parser.speaker_count).to eq(999)  # placeholder: change as needed
-    expect(parser.audio_segments.size).to eq(999)  # placeholder: change as needed
-    expect(parser.items.size).to eq(999)  # placeholder: change as needed
+    expect(parser.speaker_count).to eq(5)
+    expect(parser.audio_segments.size).to eq(23)
+    expect(parser.items.size).to eq(602)
 
     # If the parser sets default values or discards incomplete data, add appropriate expectations, e.g.:
     # expect(parser.audio_segments.first["transcript"]).to eq("PLACEHOLDER_TEXT")
