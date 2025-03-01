@@ -21,9 +21,9 @@
   - [x] Test that the script validates input files and directories correctly.
 
 - [ ] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
-  - [ ] Extract only the code involved in parsing and using the transcript JSON structure and data, not code that relates to generating and writing the CSV file
-  - [ ] Create a new `TranscriptParser` class/module in a separate file.
-  - [ ] Move the transcript parsing functionality from `TranscriptProcessor` into the new class/module.
-  - [ ] Ensure the main script uses the new class/module for parsing.
+  - [ ] Extract the transcript-parsing code (JSON structure/data) out of `TranscriptProcessor` to a new `TranscriptParser`.
+  - [ ] Keep CSV generation logic in `TranscriptProcessor`, isolating parsing logic in `TranscriptParser`.
+  - [ ] Ensure `TranscriptProcessor` calls `TranscriptParser` for transcript operations.
+  - [ ] Verify the new structure is testable, adding or moving tests as needed.
 
 - [ ] 
