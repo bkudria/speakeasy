@@ -17,7 +17,7 @@ INPUT_JSON="$1"
 OUTPUT_JSON="filtered_asrOutput.json"
 
 # 1) Find the largest end_time in audio_segments to determine total duration
-TOTAL_DURATION=$(jq '[.results.audio_segments[].end_time | tonumber] | max' "$INPUT_JSON")
+TOTAL_DURATION=$(jq '[.results.audio_segments[] | select(.end_time != null) | .end_time | tonumber] | max' "$INPUT_JSON")
 
 # Convert 15 minutes to seconds
 MIDDLE_WINDOW=900
