@@ -9,7 +9,7 @@
 
   - [x] Run `bundle install` to install RSpec.
 
-  - [ ] Initialize RSpec by running `rspec --init`.
+  - [x] Initialize RSpec by running `rspec --init`.
 
   - [ ] Create a `spec` directory for test files.
 
