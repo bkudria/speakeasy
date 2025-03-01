@@ -13,7 +13,7 @@ class TranscriptProcessor
 
     @transcript_path = transcript_path
     @audio_path = audio_path
-    @transcript = TranscriptParser.new(transcript_path).parse
+    @parser = TranscriptParser.new(transcript_path)
     @base_filename = File.basename(audio_path, ".*")
     @output_dir = Dir.pwd
   end
@@ -101,13 +101,13 @@ class TranscriptProcessor
   def extract_speaker_audio
     puts "\n=== Step 1: Extracting speaker audio ==="
 
-    num_speakers = @transcript.dig("results", "speaker_labels", "speakers").to_i
+    num_speakers = @parser.speaker_count
     puts "Detected #{num_speakers} speakers in the transcript."
 
     speaker_segments = {}
 
     # Group segments by speaker
-    @transcript.dig("results", "audio_segments").each do |segment|
+    @parser.audio_segments.each do |segment|
       speaker = segment["speaker_label"]
       speaker_segments[speaker] ||= []
       speaker_segments[speaker] << {
@@ -195,7 +195,7 @@ class TranscriptProcessor
     current_row = nil
     error_count = 0
 
-    segments = @transcript.dig("results", "audio_segments")
+    segments = @parser.audio_segments
     total_segments = segments.size
 
     segments.each_with_index do |segment, index|
@@ -211,7 +211,7 @@ class TranscriptProcessor
         # Get confidence values for this segment
         confidence_values = []
         segment["items"].each do |item_id|
-          item = @transcript.dig("results", "items").find { |i| i["id"].to_s == item_id.to_s }
+          item = @parser.items.find { |i| i["id"].to_s == item_id.to_s }
           if item && item.dig("alternatives", 0, "confidence")
             confidence_values << item.dig("alternatives", 0, "confidence").to_f
           end
