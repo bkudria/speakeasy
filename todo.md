@@ -17,12 +17,12 @@
   - [x] Update or create parser tests that load and parse this fixture
   - [x] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
   - [ ] Confirm coverage for:
-    - [ ] normal transcript data
+    - [x] normal transcript data
       - [x] Ensure fixture "asrOutput.json" is loaded without error
-      - [ ] Validate `speaker_count` matches expected placeholder
-      - [ ] Validate `audio_segments` matches expected placeholder
-      - [ ] Validate `items` matches expected placeholder
-    - [x] missing fields
+      - [x] Validate `speaker_count` matches expected placeholder
+      - [x] Validate `audio_segments` matches expected placeholder
+      - [x] Validate `items` matches expected placeholder
+    - [ ] missing fields
     - [ ] malformed fields
       - [ ] Introduce expectations with sample malformed transcript JSON
     - [ ] error handling
@@ -36,6 +36,7 @@
     - [ ] items
   - [ ] Add assertions that confirm correct identification of speakers and segments
   
+- [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code that is already covered by another spec, and the specs should test all functionality of the code the cover.
 - [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the correct structure so the user can organize it themselves
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
