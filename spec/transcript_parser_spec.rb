@@ -50,3 +50,16 @@ RSpec.describe TranscriptParser do
     end
   end
 end
+
+describe 'with fixture file' do
+  let(:fixture_path) { File.join(File.dirname(__FILE__), 'fixture', 'asrOutput.json') }
+  subject(:fixture_parser) { TranscriptParser.new(fixture_path) }
+
+  it 'parses the fixture file successfully' do
+    data = fixture_parser.parse
+    expect(data).not_to be_empty
+    expect(data['results']).to have_key('speaker_labels')
+    expect(data['results']).to have_key('audio_segments')
+    expect(data['results']).to have_key('items')
+  end
+end
