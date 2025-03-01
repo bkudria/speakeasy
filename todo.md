@@ -11,7 +11,7 @@
 
   - [x] Initialize RSpec by running `rspec --init`.
 
-  - [ ] Create a `spec` directory for test files.
+  - [x] Create a `spec` directory for test files.
 
   - [ ] Verify RSpec setup by running a sample test.
 
