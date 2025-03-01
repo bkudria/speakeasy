@@ -13,6 +13,6 @@
 
   - [x] Create a `spec` directory for test files.
 
-  - [ ] Verify RSpec setup by running a sample test.
+  - [x] Verify RSpec setup by running a sample test.
 
 - [ ] 
