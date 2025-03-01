@@ -18,8 +18,13 @@
   - [ ] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
   - [ ] Confirm coverage for:
     - [ ] normal transcript data
+      - [ ] Ensure fixture "asrOutput.json" is loaded without error
+      - [ ] Validate `speaker_count` matches expected placeholder
+      - [ ] Validate `audio_segments` matches expected placeholder
+      - [ ] Validate `items` matches expected placeholder
     - [x] missing fields
     - [ ] malformed fields
+      - [ ] Introduce placeholder expectations for malformed JSON in asrOutput.json
     - [ ] error handling
       - [ ] Introduce placeholder expectations for missing audio file scenario
       - [ ] Introduce placeholder expectations for invalid JSON structure scenario
