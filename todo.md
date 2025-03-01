@@ -11,6 +11,7 @@
   - Assume the fixture file exists and is correct.
   - Use placeholder values as comparison values, and temporarily disable the tests. I replace placeholder data with what the correct values should be, and re-enable the tests
   - [x] Update or create parser tests that load and parse this fixture
+  - [ ] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
   - [ ] Confirm coverage for:
     - [ ] normal transcript data
     - [x] missing fields
