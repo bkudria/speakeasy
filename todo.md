@@ -21,7 +21,7 @@
   - [x] Test that the script validates input files and directories correctly.
 
 - [ ] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
-  - [ ] Create a new file named `transcript_parser.rb` with a `TranscriptParser` class.
+  - [x] Create a new file named `transcript_parser.rb` with a `TranscriptParser` class.
   - [ ] Move only the transcript-related JSON parsing code from `TranscriptProcessor` to `TranscriptParser`.
   - [ ] Keep any CSV generation code in `TranscriptProcessor`.
   - [ ] Update `TranscriptProcessor` to call `TranscriptParser` for parsing and accessing transcript data.
