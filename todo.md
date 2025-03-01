@@ -15,7 +15,7 @@
 
   - [x] Verify RSpec setup by running a sample test.
 
-- [ ] Write basic tests to ensure the script works as expected.
+- [x] Write basic tests to ensure the script works as expected.
 
   - [x] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
   - [x] Test that the script validates input files and directories correctly.
