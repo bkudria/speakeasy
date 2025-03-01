@@ -5,6 +5,17 @@ SimpleCov.start do
 end
 
 SimpleCov.at_exit do
+  result = SimpleCov.result
+  current_coverage = result.covered_percent
+  coverage_tracking_file = 'coverage/.last_run_coverage'
+  if File.exist?(coverage_tracking_file)
+    previous_coverage = File.read(coverage_tracking_file).to_f
+    puts "Previous coverage: #{previous_coverage}%"
+  else
+    puts "No prior coverage data found."
+  end
+  File.write(coverage_tracking_file, current_coverage.round(2))
+
   SimpleCov.result.format!
   puts "Total Coverage: #{SimpleCov.result.covered_percent.round(2)}%"
 end

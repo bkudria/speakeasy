@@ -4,7 +4,7 @@
   - [ ] Implement a coverage ratchet:
     - [x] Configure SimpleCov to enforce a minimum acceptable coverage threshold
     - [x] Fail tests if coverage dips below that threshold
-    - [ ] Track and compare coverage from a prior run
+    - [x] Track and compare coverage from a prior run
     - [ ] Fail tests if coverage decreases from the prior run
 
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
