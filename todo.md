@@ -20,6 +20,8 @@
   - [x] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
   - [x] Test that the script validates input files and directories correctly.
 
-- [ ] Refactor the main script so that the code related to parsing the transcript is seperate and could be covered by unit tests.
+- [ ] Refactor the main script so that the code related to parsing the transcript is separate and could be covered by unit tests.
+  - [ ] Extract transcript-parsing logic from `TranscriptProcessor` into a separate class/module.
+  - [ ] Create dedicated RSpec tests for the new parsing class/module.
 
 - [ ] 
