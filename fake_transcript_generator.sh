@@ -105,12 +105,12 @@ echo "Done removing data outside the middle 15 minutes."
 echo "Generating fake transcript content..."
 OUTPUT_FAKED="faked_${OUTPUT_JSON}"
 
-# Use llm to generate fake transcript content
+# Use llm to generate fake transcript content (plain text, not JSON)
 llm "Generate a humorous fake meeting transcript with 10-15 segments of dialogue between 3-4 speakers discussing a fictional product launch. Keep each segment short (1-2 sentences). Format as plain text with each line being a different speaker's turn. Don't include speaker names or timestamps." > fake_content.txt
 
 # Replace the transcript content in the filtered JSON
-jq --slurpfile content fake_content.txt '
-  .results.audio_segments |= map(.transcript = ($content[0] | split("\n") | .[0:length] | .[_index_] // "This is placeholder text."))
+jq --rawfile content fake_content.txt '
+  .results.audio_segments |= map(.transcript = ($content | split("\n") | .[0:length] | .[_index_] // "This is placeholder text."))
   |
   .results.items |= map(
     if .alternatives then
