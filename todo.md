@@ -20,4 +20,15 @@
   - [x] Test that the script accepts the correct command-line arguments and handles missing or invalid inputs gracefully.
   - [x] Test that the script validates input files and directories correctly.
 
+- [ ] Write advanced tests.
+
+  - [ ] Create test fixtures based on `asrOutput.json`.
+    - [ ] Write a one-off script to generate a test fixture with a fake and humorous meeting transcript.
+      - [ ] Remove most of the original data in `asrOutput.json`.
+      - [ ] Replace the remaining data with a fake transcript.
+      - [ ] Replace timestamp data with artificial but realistic and self-consistent timestamps.
+  - [ ] Use the test fixture to test complex scenarios.
+    - [ ] Test how the script handles multiple speakers with overlapping dialogues.
+    - [ ] Test the script's error handling with malformed or unexpected data.
+
 - [ ] 
