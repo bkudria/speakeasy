@@ -110,7 +110,12 @@ llm "Generate a humorous fake meeting transcript with 10-15 segments of dialogue
 
 # Replace the transcript content in the filtered JSON
 jq --rawfile content fake_content.txt '
-  .results.audio_segments |= map(.transcript = ($content | split("\n") | .[0:length] | .[_index_] // "This is placeholder text."))
+  .results.audio_segments |=
+    (reduce range(0; length) as $i (.;
+       .[$i].transcript = (
+         ($content | split("\n"))[$i] // "This is placeholder text."
+       )
+     ))
   |
   .results.items |= map(
     if .alternatives then
