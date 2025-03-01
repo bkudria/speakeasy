@@ -7,7 +7,7 @@
 
   - [x] Add `rspec` to the `Gemfile`.
 
-  - [ ] Run `bundle install` to install RSpec.
+  - [x] Run `bundle install` to install RSpec.
 
   - [ ] Initialize RSpec by running `rspec --init`.
 
