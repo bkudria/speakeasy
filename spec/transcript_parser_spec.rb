@@ -63,3 +63,21 @@ describe 'with fixture file' do
     expect(data['results']).to have_key('items')
   end
 end
+
+RSpec.describe TranscriptParser, "missing fields" do
+  it "handles missing fields in the fixture gracefully" do
+    fixture_path = File.join(File.dirname(__FILE__), 'fixture', 'asrOutput.json')
+    parser = TranscriptParser.new(fixture_path)
+
+    expect { parser.parse }.not_to raise_error
+
+    # Replace these placeholder expectations with the correct values once the fixture is finalized.
+    expect(parser.speaker_count).to eq(999)  # placeholder: change as needed
+    expect(parser.audio_segments.size).to eq(999)  # placeholder: change as needed
+    expect(parser.items.size).to eq(999)  # placeholder: change as needed
+
+    # If the parser sets default values or discards incomplete data, add appropriate expectations, e.g.:
+    # expect(parser.audio_segments.first["transcript"]).to eq("PLACEHOLDER_TEXT")
+    # etc.
+  end
+end
