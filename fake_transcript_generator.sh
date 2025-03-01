@@ -27,8 +27,41 @@ HALF_WINDOW=$((MIDDLE_WINDOW / 2))
 START_TIME=$(awk -v dur="$TOTAL_DURATION" -v hw="$HALF_WINDOW" 'BEGIN { print dur/2 - hw }')
 END_TIME=$(awk -v dur="$TOTAL_DURATION" -v hw="$HALF_WINDOW" 'BEGIN { print dur/2 + hw }')
 
+MIN_ID=$(jq --argjson start "$START_TIME" \
+            --argjson end "$END_TIME" \
+            '[.results.items[] 
+               | select(
+                   ((.start_time | tonumber) < $end)
+                   and 
+                   ((.end_time   | tonumber) > $start)
+                   and
+                   (.start_time != null) 
+                   and 
+                   (.end_time != null)
+                 ) 
+               | .id
+             ] 
+             | min' "$INPUT_JSON")
+
+MAX_ID=$(jq --argjson start "$START_TIME" \
+            --argjson end "$END_TIME" \
+            '[.results.items[] 
+               | select(
+                   ((.start_time | tonumber) < $end)
+                   and 
+                   ((.end_time   | tonumber) > $start)
+                   and
+                   (.start_time != null) 
+                   and 
+                   (.end_time != null)
+                 ) 
+               | .id
+             ] 
+             | max' "$INPUT_JSON")
+
 echo "Total duration: $TOTAL_DURATION seconds"
 echo "Keeping segments in [$START_TIME, $END_TIME]"
+echo "Keeping item IDs in [${MIN_ID}, ${MAX_ID}] (for items with no time data)"
 
 # 3) Filter audio_segments to keep only those overlapping with [START_TIME, END_TIME]
 #    We also filter items in .results.items similarly, based on their start_time.
