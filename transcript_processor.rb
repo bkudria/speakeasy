@@ -390,7 +390,8 @@ audio_path = audio_files.max_by { |f| File.size(f) }
 puts "Using largest audio file: #{audio_path}"
 
 # Find the transcript file
-transcript_path = File.join(directory_path, "asrOutput.json")
+transcript_path = File.join("asrOutput.json")
+
 unless File.exist?(transcript_path)
   abort "Error: Transcript file 'asrOutput.json' not found in directory '#{directory_path}'."
 end
