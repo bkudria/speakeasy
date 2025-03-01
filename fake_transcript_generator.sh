@@ -31,13 +31,13 @@ MIN_ID=$(jq --argjson start "$START_TIME" \
             --argjson end "$END_TIME" \
             '[.results.items[] 
                | select(
-                   ((.start_time | tonumber) < $end)
-                   and 
-                   ((.end_time   | tonumber) > $start)
-                   and
                    (.start_time != null) 
                    and 
                    (.end_time != null)
+                   and
+                   ((.start_time | tonumber) < $end)
+                   and 
+                   ((.end_time   | tonumber) > $start)
                  ) 
                | .id
              ] 
@@ -47,13 +47,13 @@ MAX_ID=$(jq --argjson start "$START_TIME" \
             --argjson end "$END_TIME" \
             '[.results.items[] 
                | select(
-                   ((.start_time | tonumber) < $end)
-                   and 
-                   ((.end_time   | tonumber) > $start)
-                   and
                    (.start_time != null) 
                    and 
                    (.end_time != null)
+                   and
+                   ((.start_time | tonumber) < $end)
+                   and 
+                   ((.end_time   | tonumber) > $start)
                  ) 
                | .id
              ] 
@@ -72,16 +72,20 @@ jq --argjson start "$START_TIME" \
    --argjson maxid "$MAX_ID" \
    '
    .results.audio_segments |= map(select(
+        (.start_time != null and .end_time != null)
+        and
         ( ( .start_time | tonumber ) < $end )
-      and
+        and
         ( ( .end_time   | tonumber ) > $start )
    ))
    |
    .results.items |= map(select(
       (
-        (.start_time != null and (.start_time | tonumber) < $end)
+        (.start_time != null and .end_time != null)
         and
-        (.end_time != null   and (.end_time   | tonumber) > $start)
+        ((.start_time | tonumber) < $end)
+        and
+        ((.end_time   | tonumber) > $start)
       )
       or
       (
