@@ -2,7 +2,7 @@
   - SimpleCov's README is here: https://raw.githubusercontent.com/simplecov-ruby/simplecov/refs/heads/main/README.md
   - [x] Ensure tests print the coverage percentage clearly
   - [ ] Implement a coverage ratchet:
-    - [ ] Configure SimpleCov to enforce a minimum acceptable coverage threshold
+    - [x] Configure SimpleCov to enforce a minimum acceptable coverage threshold
     - [ ] Fail tests if coverage dips below that threshold
     - [ ] Track and compare coverage from a prior run
     - [ ] Fail tests if coverage decreases from the prior run
