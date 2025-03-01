@@ -1,13 +1,5 @@
 
-- [ ] Write a one-off script to generate a test fixture with a fake and humorous meeting transcript, based on the `asrOutput.json` file present.
-  - this will be run once to generate the fixture, so no need to write tests for this script, and no need to update the spec for it. it will be deleted once it is run. it can be a ruby script, or a shell script. `jq` is available to use for shell scripts.
-  - [x] Remove any of the data from `asrOutput.json` that represents any content not from the middle 15 minutes of the transcript
-  - [ ] Replace the remaining data with a fake transcript.
-    - To generate fake data, you may run `llm` with one prompt argument, but do not run this command more than 50 times. Be sure to specify content length and format in your prompt.
-  - [x] Replace timestamp data with artificial but realistic and self-consistent timestamps.
-  
-- [ ] Improve the parser tests, and use the new transcript fixture file
-  - [ ] Ensure the one-off script's fake transcript fixture is correctly checked into the repository
+- [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - [ ] Update or create parser tests that load and parse this fixture
   - [ ] Confirm coverage for normal transcript data, missing or malformed fields, and error handling
   - [ ] Verify speaker_count, audio_segments, and items class methods behave correctly
