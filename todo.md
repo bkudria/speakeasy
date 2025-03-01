@@ -17,6 +17,10 @@
     - [x] missing fields
     - [ ] malformed fields
     - [ ] error handling
+      - [ ] Introduce placeholder expectations for missing audio file scenario
+      - [ ] Introduce placeholder expectations for invalid JSON structure scenario
+      - [ ] Confirm the parser aborts if three consecutive segment errors occur
+      - [ ] Verify appropriate exit code is returned when errors persist
   - [ ] Verify:
     - [ ] speaker_count
     - [ ] audio_segments
