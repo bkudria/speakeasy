@@ -35,6 +35,8 @@ echo "Keeping segments in [$START_TIME, $END_TIME]"
 
 jq --argjson start "$START_TIME" \
    --argjson end "$END_TIME" \
+   --argjson minid "$MIN_ID" \
+   --argjson maxid "$MAX_ID" \
    '
    .results.audio_segments |= map(select(
         ( ( .start_time | tonumber ) < $end )
@@ -43,9 +45,19 @@ jq --argjson start "$START_TIME" \
    ))
    |
    .results.items |= map(select(
-        ( ( .start_time | tonumber ) < $end )
-      and
-        ( ( .end_time   | tonumber ) > $start )
+      (
+        (.start_time != null and (.start_time | tonumber) < $end)
+        and
+        (.end_time != null   and (.end_time   | tonumber) > $start)
+      )
+      or
+      (
+        (.start_time == null or .end_time == null)
+        and
+        (.id | tonumber) >= $minid
+        and
+        (.id | tonumber) <= $maxid
+      )
    ))
    ' "$INPUT_JSON" > "$OUTPUT_JSON"
 
