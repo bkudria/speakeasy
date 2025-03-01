@@ -7,9 +7,13 @@
     - [x] Track and compare coverage from a prior run
     - [x] Fail tests if coverage decreases from the prior run
 
-- [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
-  - Assume the fixture file exists and is correct.
-  - Use placeholder values as comparison values, and temporarily disable the tests. I replace placeholder data with what the correct values should be, and re-enable the tests
+- [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json as the source of well-formed transcript JSON
+  - the fixture file will always contain well-formed and correct data.
+  - Use placeholder values as comparison values, and temporarily disable the tests. The user will replace placeholder data with what the correct values should be, and re-enable the tests
+  - Use only the digit `9` for placeholder numbers, and only uppercase letters for placeholder strings. If you see other values, that means they are not placeholders any more because the user updated them, you should not change them.
+  - To write tests for malformed data, do not modify the fixture file. Instead, in the specs, either:
+    - generate and use sample malformed data, or
+    - parse the fixture file, and mutate the parse result so that it become malformed
   - [x] Update or create parser tests that load and parse this fixture
   - [ ] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data, continue using or add in-spec sample data
   - [ ] Confirm coverage for:
@@ -26,6 +30,8 @@
     - [ ] audio_segments
     - [ ] items
   - [ ] Add assertions that confirm correct identification of speakers and segments
+  
+- [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the correct structure so the user can organize it themselves
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
