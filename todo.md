@@ -17,12 +17,16 @@
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
   - [ ] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
   - [ ] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
-  - [ ] Add or move RSpec tests for CSV data generation, covering normal output and error cases
+  - [ ] Add or move RSpec tests for CSV data generation:
+    - [ ] normal output generation
+    - [ ] error cases
 
 - [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_writer.rb` with a `CsvWriter` class or module
   - [ ] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
   - [ ] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
-  - [ ] Add or move RSpec tests for CSV writing, including tests for handling or reporting errors
+  - [ ] Add or move RSpec tests for CSV writing:
+    - [ ] normal output
+    - [ ] handling or reporting errors
 
 - [ ] 
