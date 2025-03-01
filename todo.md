@@ -1,7 +1,7 @@
 
 - [ ] Write a one-off script to generate a test fixture with a fake and humorous meeting transcript, based on the `asrOutput.json` file present.
   - this will be run once to generate the fixture, so no need to write tests for this script, and no need to update the spec for it. it will be deleted once it is run. it can be a ruby script, or a shell script. `jq` is available to use for shell scripts.
-  - [ ] Remove any of the data from `asrOutput.json` that represents any content not from the middle 15 minutes of the transcript
+  - [x] Remove any of the data from `asrOutput.json` that represents any content not from the middle 15 minutes of the transcript
   - [ ] Replace the remaining data with a fake transcript.
   - [ ] Replace timestamp data with artificial but realistic and self-consistent timestamps.
   

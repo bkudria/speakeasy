@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# 
+# This script removes any data in asrOutput.json that is not in the middle
+# 15 minutes of the transcript. To run:
+#   ./fake_transcript_generator.sh <path_to_asrOutput.json>
+#
+# NOTE: This script addresses only the first sub-task: removing out-of-range data.
+
+set -e
+
+if [ -z "$1" ] || [ ! -f "$1" ]; then
+  echo "Usage: $0 path/to/asrOutput.json"
+  exit 1
+fi
+
+INPUT_JSON="$1"
+OUTPUT_JSON="filtered_asrOutput.json"
+
+# 1) Find the largest end_time in audio_segments to determine total duration
+TOTAL_DURATION=$(jq '[.results.audio_segments[].end_time | tonumber] | max' "$INPUT_JSON")
+
+# Convert 15 minutes to seconds
+MIDDLE_WINDOW=900
+HALF_WINDOW=$((MIDDLE_WINDOW / 2))
+
+# 2) Calculate the start and end of the middle 15 minutes
+START_TIME=$(awk -v dur="$TOTAL_DURATION" -v hw="$HALF_WINDOW" 'BEGIN { print dur/2 - hw }')
+END_TIME=$(awk -v dur="$TOTAL_DURATION" -v hw="$HALF_WINDOW" 'BEGIN { print dur/2 + hw }')
+
+echo "Total duration: $TOTAL_DURATION seconds"
+echo "Keeping segments in [$START_TIME, $END_TIME]"
+
+# 3) Filter audio_segments to keep only those overlapping with [START_TIME, END_TIME]
+#    We also filter items in .results.items similarly, based on their start_time.
+
+jq --argjson start "$START_TIME" \
+   --argjson end "$END_TIME" \
+   '
+   .results.audio_segments |= map(select(
+        ( ( .start_time | tonumber ) < $end )
+      and
+        ( ( .end_time   | tonumber ) > $start )
+   ))
+   |
+   .results.items |= map(select(
+        ( ( .start_time | tonumber ) < $end )
+      and
+        ( ( .end_time   | tonumber ) > $start )
+   ))
+   ' "$INPUT_JSON" > "$OUTPUT_JSON"
+
+echo "Filtered transcript saved to $OUTPUT_JSON"
+echo "Done removing data outside the middle 15 minutes."
