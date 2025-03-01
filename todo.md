@@ -1,8 +1,15 @@
 - [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json
   - You may not add this fixture directly, use placeholder data and temporarily disable tests. I replace placeholder data with what the correct values should be.
   - [x] Update or create parser tests that load and parse this fixture
-  - [ ] Confirm coverage for normal transcript data, missing/malformed fields, and error handling
-  - [ ] Verify speaker_count, audio_segments, and items class methods behave correctly
+  - [ ] Confirm coverage for:
+    - [ ] normal transcript data
+    - [ ] missing fields
+    - [ ] malformed fields
+    - [ ] error handling
+  - [ ] Verify:
+    - [ ] speaker_count
+    - [ ] audio_segments
+    - [ ] items
   - [ ] Add assertions that confirm correct identification of speakers and segments
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
