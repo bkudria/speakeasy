@@ -25,7 +25,7 @@
   - [x] Move only the transcript-related JSON parsing code from `TranscriptProcessor` to `TranscriptParser`.
   - [x] Keep any CSV generation code in `TranscriptProcessor`.
   - [x] Update `TranscriptProcessor` to call `TranscriptParser` for parsing and accessing transcript data.
-  - [ ] Add or move RSpec tests ensuring `TranscriptParser` functionality is correctly covered.
+  - [x] Add or move RSpec tests ensuring `TranscriptParser` functionality is correctly covered.
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module.
