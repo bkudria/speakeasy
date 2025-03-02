@@ -183,7 +183,7 @@ class TranscriptProcessor
     rows << current_row if current_row
 
     # Write to CSV
-    csv_writer.write_transcript(rows, @csv_base_name)
+    csv_writer.write_transcript(rows, "transcript")
     
     @rows = rows
   end
