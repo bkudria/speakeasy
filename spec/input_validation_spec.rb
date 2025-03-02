@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'open3'
 require 'tmpdir'
 
-RSpec.describe 'Input Validation' do
+RSpec.describe 'TranscriptProcessor input validation' do
   context 'when the transcript file is missing' do
     it 'exits with a non-zero status and shows an error message' do
       Dir.mktmpdir do |tmpdir|

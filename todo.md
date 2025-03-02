@@ -33,10 +33,10 @@
       - [x] Introduce placeholder expectations for missing audio file scenario
       - [x] Introduce placeholder expectations for invalid JSON structure scenario
   
-- [ ] Improve Specs
-  - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
+- [x] Improve Specs
+  - [x] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
       that is already covered by another spec, and the specs should test all functionality of the code the cover.
-  - [ ] Bring the specs in-line with agreed-upon RSpec best practices
+  - [x] Bring the specs in-line with agreed-upon RSpec best practices
 
 - [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
       correct structure so the user can organize it themselves
