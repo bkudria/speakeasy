@@ -2,8 +2,8 @@ require 'spec_helper'
 require_relative '../lib/transcript_processor'
 
 RSpec.describe TranscriptProcessor do
-  let(:valid_json_path) { 'spec/fixtures/asrOutput.json' }
-  let(:valid_audio_path) { 'spec/fixtures/audio.m4a' }
+  let(:valid_json_path) { 'spec/fixture/asrOutput.json' }
+  let(:valid_audio_path) { 'spec/fixture/audio.m4a' }
   
   describe "#initialize" do
     it "initializes with valid inputs" do
