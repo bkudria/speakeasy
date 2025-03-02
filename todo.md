@@ -36,6 +36,10 @@
 - [x] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
       correct structure so the user can organize it themselves
 
+- [ ] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
+
+- [ ] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
+
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
   - [ ] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
@@ -51,6 +55,8 @@
   - [ ] Add or move RSpec tests for CSV writing:
     - [ ] normal output
     - [ ] handling or reporting errors
+
+- [ ] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
 
 - [ ] Add RSpec coverage for `transcript_processor.rb`
   - [ ] Require `transcript_processor.rb` in a new or existing spec
