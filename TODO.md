@@ -14,16 +14,16 @@
   - [ ] Execute the corresponding command to open the directory.
 
 - [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
-  - Verify each step in the specification matches current code behavior
-  - Update any outdated references to data structures, input formats, or behaviors
+  - [ ] Verify each step in the specification matches current code behavior
+  - [ ] Update any outdated references to data structures, input formats, or behaviors
 
 - [ ] Document the code with comments for un-intuitive parts of the code
-  - Highlight any unusual logic in "csv_generator.rb" and "transcript_processor.rb"
-  - Note assumptions about the transcript JSON structure
+  - [ ] Highlight any unusual logic in `csv_generator.rb` and `transcript_processor.rb`
+  - [ ] Note assumptions about the transcript JSON structure
 
 - [ ] Write a `README.md` for end-users
-  - Explain how to install, run, and provide input to the script
-  - Include usage examples
+  - [ ] Explain how to install, run, and provide input to the script
+  - [ ] Include usage examples
 
 - [ ] Improve Specs
   - [x] Ensure code that prints output does not interfere with RSpec output
@@ -34,13 +34,8 @@
   - [ ] Only test custom logic rather than external library behavior
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and correct it in the output CSV
-  - Sometimes, the JSON will incorrectly tag the first word or words of a speaker's sentence as belonging to the previous speaker
-  - So, e.g. it'll have something like this:
-      Alice: "Ok, does anyone have any other questions? Yeah"
-      Bob: "I had a question."
-    When in reality, it was:
-      Alice: "Ok, does anyone have any other questions?"
-      Bob: "Yeah, I had a question."
-  - We should be able to detect this case by detecting the sentence boundaries and try to re-align them with transcript
-    row boundaries. (We can also do this for transcript rows that have the same speaker)
-  - Maybe there are other or better ways to solve this? Could we a local LLM to assist? Help wanted, please suggest options!
+  - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
+  - [ ] Realign them with the correct speaker label in the final CSV
+  - [ ] (Note) Maybe there are other or better ways to solve this? Help wanted, please suggest options!
+
+- [ ] 
