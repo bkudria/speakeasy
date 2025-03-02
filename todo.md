@@ -33,7 +33,7 @@
       - [x] Introduce placeholder expectations for missing audio file scenario
       - [x] Introduce placeholder expectations for invalid JSON structure scenario
   
-- [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
+- [x] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
       correct structure so the user can organize it themselves
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
