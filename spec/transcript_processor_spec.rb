@@ -178,7 +178,12 @@ RSpec.describe TranscriptProcessor do
         allow(Dir).to receive(:glob).with(anything).and_call_original
 
         # Run the processor
-        processor = TranscriptProcessor.new(test_json_path, test_audio_path, input: StringIO.new("go\n"))
+        processor = TranscriptProcessor.new(
+          test_json_path, 
+          test_audio_path, 
+          input: StringIO.new("go\n"), 
+          output_dir: tmpdir
+        )
         processor.process
 
         # Verify that a CSV file was created

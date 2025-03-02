@@ -10,14 +10,14 @@ require_relative 'csv_generator'
 require_relative 'low_confidence_detector'
 
 class TranscriptProcessor
-  def initialize(transcript_path, audio_path, input: STDIN)
+  def initialize(transcript_path, audio_path, input: STDIN, output_dir: Dir.pwd)
     validate_inputs(transcript_path, audio_path)
 
     @transcript_path = transcript_path
     @audio_path = audio_path
     @parser = TranscriptParser.new(transcript_path)
     @base_filename = File.basename(audio_path, ".*")
-    @output_dir = Dir.pwd
+    @output_dir = output_dir
     @input = input
   end
 
