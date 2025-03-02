@@ -19,7 +19,7 @@
   - [x] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
   - [x] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
   - [ ] Add or move RSpec tests for CSV data generation:
-    - [ ] normal output generation
+    - [x] normal output generation
     - [ ] error cases
 
 - [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
