@@ -6,16 +6,16 @@
 
 - [x] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
 
+- [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
+  - [ ] Verify each step in the specification matches current code behavior
+  - [ ] Update any outdated references to data structures, input formats, or behaviors
+
 - [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to the files and identify the speakers.
   - [ ] Detect the operating system within the script.
     - [ ] On **macOS**, use `open <directory>`.
     - [ ] On **Windows**, use `start <directory>`.
     - [ ] On **Linux**, use `xdg-open <directory>`.
   - [ ] Execute the corresponding command to open the directory.
-
-- [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
-  - [ ] Verify each step in the specification matches current code behavior
-  - [ ] Update any outdated references to data structures, input formats, or behaviors
 
 - [ ] Document the code with comments for un-intuitive parts of the code
   - [ ] Highlight any unusual logic in `csv_generator.rb` and `transcript_processor.rb`
