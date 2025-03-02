@@ -102,7 +102,6 @@
                                                                     Step 2: CSV Generation
 
  1 The script generates a CSV file with the following naming convention:
-    • Base name matches the audio filename with a .csv extension # AI this isn't true anymore, remove! AI!
     • If a file with that name exists, append an incrementing number (e.g., name.1.csv, name.2.csv)
  2 The CSV contains these columns:
     • ID: Auto-incrementing integer starting at 1
