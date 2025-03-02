@@ -25,7 +25,7 @@ class TranscriptProcessor
     puts "Starting Amazon Transcribe processing script"
 
     # Check for existing named speaker files
-    named_speaker_files = Dir.glob("spk_*_*.m4a")
+    named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
     if named_speaker_files.any?
       puts "\nNamed speaker files detected. Skipping speaker audio extraction step."
       wait_for_speaker_identification(skip: true)
@@ -36,7 +36,7 @@ class TranscriptProcessor
     end
 
     # Check for existing unnamed speaker files
-    unnamed_speaker_files = Dir.glob("spk_*.m4a") - named_speaker_files
+    unnamed_speaker_files = Dir.glob(File.join(@output_dir, "spk_*.m4a")) - named_speaker_files
     if unnamed_speaker_files.any?
       puts "\nUnnamed speaker files detected."
       puts "Please identify each speaker by renaming the audio files:"
@@ -46,7 +46,7 @@ class TranscriptProcessor
         sleep 1
       end
       # After renaming, restart the process to check for named speaker files
-      named_speaker_files = Dir.glob("spk_*_*.m4a")
+      named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
       if named_speaker_files.any?
         puts "\nNamed speaker files detected after renaming. Skipping speaker audio extraction step."
         wait_for_speaker_identification(skip: true)
@@ -121,7 +121,7 @@ class TranscriptProcessor
 
     # Find speaker identifications from renamed files
     speaker_identities = {}
-    Dir.glob("spk_*.m4a").each do |file|
+    Dir.glob(File.join(@output_dir, "spk_*.m4a")).each do |file|
       if file =~ /spk_(\d+)_(.+)\.m4a/
         speaker_label = "spk_#{$1}"
         speaker_name = $2
