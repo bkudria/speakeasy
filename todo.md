@@ -26,7 +26,7 @@
   - [x] Create a new file named `csv_writer.rb` with a `CsvWriter` class or module
   - [x] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
   - [x] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
-  - [ ] Add or move RSpec tests for CSV writing:
+  - [x] Add or move RSpec tests for CSV writing:
     - [x] normal output
     - [x] handling or reporting errors
 
