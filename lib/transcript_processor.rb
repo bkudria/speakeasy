@@ -16,7 +16,7 @@ class TranscriptProcessor
     @transcript_path = transcript_path
     @audio_path = audio_path
     @parser = TranscriptParser.new(transcript_path)
-    @base_filename = File.basename(audio_path, ".*")
+    @csv_base_name = File.basename(transcript_path, ".*")
     @output_dir = output_dir
     @input = input
   end
@@ -183,7 +183,7 @@ class TranscriptProcessor
     rows << current_row if current_row
 
     # Write to CSV
-    csv_writer.write_transcript(rows, @base_filename)
+    csv_writer.write_transcript(rows, @csv_base_name)
     
     @rows = rows
   end
