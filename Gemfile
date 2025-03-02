@@ -6,6 +6,7 @@ source "https://rubygems.org"
 
 gem "descriptive_statistics", "~> 2.5"
 gem "rspec", "~> 3.12"
+gem "standard"
 
 group :test do
   gem "simplecov", require: false

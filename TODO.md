@@ -2,7 +2,7 @@
 
 - [x] Replace the commented placeholders in the "creates a CSV file" in `spec/transcript_processor_spec.rb` with an actual spec
 
-- [ ] Add the `standard` gem
+- [x] Add the `standard` gem
 
 - [ ] Add the `simplecov_json_formatter` gem, so we can use the coverage report to automatically figure out where we need to add spec
 
