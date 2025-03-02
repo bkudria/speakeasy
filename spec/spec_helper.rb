@@ -1,5 +1,6 @@
 require "simplecov"
 SimpleCov.start do
+  enable_coverage :branch
   track_files "lib/**/*.rb"
   add_filter "spec/"
   refuse_coverage_drop
