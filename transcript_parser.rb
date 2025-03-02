@@ -15,10 +15,14 @@ class TranscriptParser
   end
 
   def audio_segments
-    @parsed_data.dig("results", "audio_segments") || []
+    segments = @parsed_data.dig("results", "audio_segments")
+    return [] unless segments.is_a?(Array)
+    segments
   end
 
   def items
-    @parsed_data.dig("results", "items") || []
+    items = @parsed_data.dig("results", "items")
+    return [] unless items.is_a?(Array)
+    items
   end
 end

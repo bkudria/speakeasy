@@ -26,12 +26,12 @@
       - [x] Validate `speaker_count` matches expected placeholder
       - [x] Validate `audio_segments` matches expected placeholder
       - [x] Validate `items` matches expected placeholder
-    - [ ] missing fields
-    - [ ] malformed fields
-      - [ ] Introduce expectations with sample malformed transcript JSON
-    - [ ] error handling
-      - [ ] Introduce placeholder expectations for missing audio file scenario
-      - [ ] Introduce placeholder expectations for invalid JSON structure scenario
+    - [x] missing fields
+    - [x] malformed fields
+      - [x] Introduce expectations with sample malformed transcript JSON
+    - [x] error handling
+      - [x] Introduce placeholder expectations for missing audio file scenario
+      - [x] Introduce placeholder expectations for invalid JSON structure scenario
       - [ ] Confirm the parser aborts if three consecutive segment errors occur
       - [ ] Verify appropriate exit code is returned when errors persist
   - [ ] Verify:
