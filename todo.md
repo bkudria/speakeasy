@@ -44,6 +44,7 @@
   - [x] Confirm the script aborts if three consecutive segment errors occur
   - [x] Verify appropriate exit code is returned when errors persist
   - [x] Ensure there is a spec testing that the CSV transcript file actually gets created
+  - [ ] Make sure to delete the generated audio file after the spec run
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
@@ -51,7 +52,7 @@
     - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON
           keys parsed), either a unit test or an integration test is sufficient.
     - [ ] Avoid functionally redundant tests - the test suite must remain fast.
-    - [ ] Each line of code must be covered once, and ideally is not covered more than once.
+    - [ ] Each line of code must be covered at least once
   - [ ] Bring the specs in-line with agreed-upon RSpec best practices
   - [ ] Ensure code that prints output does not interfere with rspec's output
 
