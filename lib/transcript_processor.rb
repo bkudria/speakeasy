@@ -188,3 +188,19 @@ class TranscriptProcessor
     @rows = rows
   end
 end
+require "rbconfig"
+
+def open_directory_command
+  host_os = RbConfig::CONFIG["host_os"]
+
+  case host_os
+  when /darwin|mac\s?os/i
+    "open"
+  when /mswin|mingw|cygwin/i
+    "start"
+  when /linux|solaris|bsd/i
+    "xdg-open"
+  else
+    nil
+  end
+end

@@ -99,6 +99,11 @@
  2 The script instructs the user to type `go` and press Enter when done renaming.
  3 If a user doesn't rename a particular speaker file, the script will treat that speaker as unidentified in the CSV output (blank Speaker column).
 
+                                                                 Additional Platform Handling
+
+ • To assist with speaker renaming, the script detects the user's operating system after audio file generation.
+ • It determines which command to use for opening the output directory, but does not execute it yet.
+
                                                                     Step 2: CSV Generation
 
  1 The script generates a CSV file with the following naming convention:

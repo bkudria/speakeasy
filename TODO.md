@@ -11,10 +11,10 @@
   - [x] Update any outdated references to data structures, input formats, or behaviors
 
 - [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to and rename the files:
-  - [ ] Detect the operating system in the script:
-    - [ ] On **macOS**, run `open <directory>`
-    - [ ] On **Windows**, run `start <directory>`
-    - [ ] On **Linux**, run `xdg-open <directory>`
+  - [x] Detect the operating system in the script:
+    - [x] On **macOS**, run `open <directory>`
+    - [x] On **Windows**, run `start <directory>`
+    - [x] On **Linux**, run `xdg-open <directory>`
   - [ ] Execute the correct command to open the directory
 
 - [ ] Document the code with comments for un-intuitive parts:
