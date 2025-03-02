@@ -1,5 +1,4 @@
-- [x] Add RSpec coverage for `transcript_processor.rb`
-  - [ ] Make sure to delete the generated audio file after the spec run
+- [ ] Make sure to delete the generated audio file after the TranscriptProcessor spec is done
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive
@@ -13,7 +12,7 @@
 - [ ] Add the `standard` gem
 
 - [ ] Add an integration test covering an entire run of the script
-  - [ ] Simulate or mock the presence of a valid transcript JSON and audio file
+  - There is a valid transcript JSON file in spec/fixture/asrOutput.json
   - [ ] Verify speaker extraction, speaker identification, CSV generation, CSV writing, and low-confidence detection
   - [ ] Confirm correct script exit behavior and error handling
 
