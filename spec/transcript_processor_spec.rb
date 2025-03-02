@@ -70,8 +70,8 @@ RSpec.describe TranscriptProcessor do
       allow(CsvGenerator).to receive(:new).and_return(csv_generator)
       allow(LowConfidenceDetector).to receive(:new).and_return(low_confidence_detector)
       
-      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
-      allow(Dir).to receive(:glob).with("spk_*.m4a").and_return([])
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return([])
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).and_return([])
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
@@ -85,7 +85,7 @@ RSpec.describe TranscriptProcessor do
     end
     
     it "skips extraction when named speaker files exist" do
-      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return(["spk_0_John.m4a"])
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_John.m4a"])
       
       expect(speaker_extraction).not_to receive(:extract)
       expect(speaker_identification).to receive(:identify).with(skip: true)
@@ -98,15 +98,15 @@ RSpec.describe TranscriptProcessor do
       allow(Dir).to receive(:glob).and_call_original
 
       # First call to check named speaker files → should return []
-      expect(Dir).to receive(:glob).with("spk_*_*.m4a").once.and_return([])
+      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).once.and_return([])
 
       # Then check for unnamed speaker files → returns ["spk_0.m4a"]
-      expect(Dir).to receive(:glob).with("spk_*.m4a").twice.and_return(["spk_0.m4a"])
+      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).twice.and_return(["spk_0.m4a"])
       
       expect(processor).to receive(:puts).with(/Please identify each speaker/)
 
       # After user types "go", the code checks named speaker files again
-      expect(Dir).to receive(:glob).with("spk_*_*.m4a").once.and_return(["spk_0_John.m4a"])
+      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).once.and_return(["spk_0_John.m4a"])
       
       processor.process
     end
@@ -173,8 +173,8 @@ RSpec.describe TranscriptProcessor do
         FileUtils.cp(valid_audio_path, test_audio_path)
 
         # Set up specific stubs for speaker patterns and call original for everything else
-        allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
-        allow(Dir).to receive(:glob).with("spk_*.m4a").and_return([])
+        allow(Dir).to receive(:glob).with(File.join(tmpdir, "spk_*_*.m4a")).and_return([])
+        allow(Dir).to receive(:glob).with(File.join(tmpdir, "spk_*.m4a")).and_return([])
         allow(Dir).to receive(:glob).with(anything).and_call_original
 
         # Run the processor
