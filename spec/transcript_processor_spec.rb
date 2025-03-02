@@ -172,18 +172,10 @@ RSpec.describe TranscriptProcessor do
         test_audio_path = File.join(tmpdir, "audio.m4a")
         FileUtils.cp(valid_audio_path, test_audio_path)
 
-        # Allow Dir.glob to return real results except for speaker files
-        allow(Dir).to receive(:glob) do |args|
-          case args
-          when "spk_*_*.m4a"
-            []
-          when "spk_*.m4a"
-            []
-          else
-            # For everything else (like the CSV check), call the real Dir.glob
-            Dir.glob(args)
-          end
-        end
+        # Set up specific stubs for speaker patterns and call original for everything else
+        allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
+        allow(Dir).to receive(:glob).with("spk_*.m4a").and_return([])
+        allow(Dir).to receive(:glob).with(anything).and_call_original
 
         # Run the processor
         processor = TranscriptProcessor.new(test_json_path, test_audio_path, input: StringIO.new("go\n"))
