@@ -2,6 +2,7 @@ require "json"
 require "fileutils"
 require "open3"
 require "descriptive_statistics"
+require "rbconfig"
 require_relative "transcript_parser"
 require_relative "speaker_extraction"
 require_relative "speaker_identification"
@@ -188,7 +189,6 @@ class TranscriptProcessor
     @rows = rows
   end
 end
-require "rbconfig"
 
 def open_directory_command
   host_os = RbConfig::CONFIG["host_os"]
