@@ -14,7 +14,7 @@
     - [x] normal identification flow
     - [x] error or corner cases
 
-- [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
+- [x] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [x] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
   - [x] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
   - [x] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
