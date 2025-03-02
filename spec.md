@@ -1,7 +1,7 @@
- # Amazon Transcribe Processing Script Specification
+# Speakeasy
 
  ## Overview
- This Ruby script processes Amazon Transcribe JSON output alongside the original audio file to:
+ Speakeasy is a Ruby program that processes Amazon Transcribe JSON output alongside the original audio file to:
  1. Extract individual speaker audio segments
  2. Allow for speaker identification
  3. Generate a structured CSV transcript

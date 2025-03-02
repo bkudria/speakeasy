@@ -11,7 +11,7 @@ RSpec.describe 'TranscriptProcessor input validation' do
         File.write(audio_path, "fake audio content")
 
         # Run the script
-        output, status = Open3.capture2e("ruby bin/transcript_processor #{tmpdir}")
+        output, status = Open3.capture2e("ruby bin/speakeasy #{tmpdir}")
         expect(status).not_to be_success
         expect(output).to match(/Transcript file 'asrOutput.json' not found/i)
       end
@@ -26,7 +26,7 @@ RSpec.describe 'TranscriptProcessor input validation' do
         File.write(transcript_path, '{"results":{}}')
 
         # Run the script
-        output, status = Open3.capture2e("ruby bin/transcript_processor #{tmpdir}")
+        output, status = Open3.capture2e("ruby bin/speakeasy #{tmpdir}")
         expect(status).not_to be_success
         expect(output).to match(/No audio files found/i)
       end
