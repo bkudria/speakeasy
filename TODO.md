@@ -39,10 +39,14 @@
   - [ ] Realign them with the correct speaker label in the final CSV
   - [ ] Word-level confidence & overlap checks
   - [ ] Pause & silence analysis
+  - [ ] Add a note "review" to any rows that meet any of these criteria, if you end up not changing them.
 
 - [ ] Implement the "multiple speakers" note - if a row has segments or items whose timestamp overlaps with previous or
       subsequent rows with differing speakers, both or all 3 rows should have "multiple speakers" in the notes column
+      
+- [ ] As we generate each row, we should examine it's confidence level, and add a "review" note.
+  - [ ] We should support multiple values in the "note" column, seperated by a `,`
 
-- [ ] Provide a manual review step if mis-labeling is suspected
+- [ ] Provide a manual review step if mis-labeling is suspected. This should be after the entire CSV file is written.
 
 - [ ] 
