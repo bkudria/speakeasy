@@ -36,6 +36,6 @@
 - [ ] Detect and correct speaker mis-identification in the input JSON, and correct it in the output CSV
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
   - [ ] Realign them with the correct speaker label in the final CSV
-  - [ ] (Note) Maybe there are other or better ways to solve this? Help wanted, please suggest options!
+  - Maybe there are other or better ways to solve this? Help wanted, please suggest options!
 
 - [ ] 
