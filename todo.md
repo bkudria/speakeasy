@@ -32,8 +32,6 @@
     - [x] error handling
       - [x] Introduce placeholder expectations for missing audio file scenario
       - [x] Introduce placeholder expectations for invalid JSON structure scenario
-      - [ ] Confirm the parser aborts if three consecutive segment errors occur
-      - [ ] Verify appropriate exit code is returned when errors persist
   - [ ] Verify:
     - [ ] speaker_count
     - [ ] audio_segments
@@ -64,5 +62,7 @@
 - [ ] Add RSpec coverage for `transcript_processor.rb`
   - [ ] Require `transcript_processor.rb` in a new or existing spec
   - [ ] Exercise its methods so SimpleCov accurately reports coverage
+  - [ ] Confirm the script aborts if three consecutive segment errors occur
+  - [ ] Verify appropriate exit code is returned when errors persist
 
 - [ ] 
