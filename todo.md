@@ -53,10 +53,7 @@
     - [ ] Each line of code must be covered once, and ideally is not covered more than once.
   - [ ] Bring the specs in-line with agreed-upon RSpec best practices
 
-- [ ] Add Ruby style checks with RuboCop (or a similar tool)
-  - [ ] Configure the style checker
-  - [ ] Ensure the existing codebase passes the style check
-  - [ ] Update CI (if present) to run style checks
+- [ ] Add the `standard` gem
 
 - [ ] Add an integration test covering an entire run of the script
   - [ ] Simulate or mock the presence of a valid transcript JSON and audio file
