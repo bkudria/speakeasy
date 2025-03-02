@@ -28,5 +28,18 @@ RSpec.describe CsvGenerator do
       expect(row[:confidence_median]).to be_within(0.001).of(0.85)
       expect(row[:note]).to eq('unknown')  # Adjust as needed
     end
+    
+    it 'marks the row with "error" in the note field if the segment has_error is true' do
+      segment = {
+        id: 999,
+        speaker: 'Speaker_Problem',
+        transcript: 'Error in segment',
+        items: [],
+        has_error: true,
+        speaker_count: 1
+      }
+      row = csv_generator.build_row(segment)
+      expect(row[:note]).to eq('error')
+    end
   end
 end

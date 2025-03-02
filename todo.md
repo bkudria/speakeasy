@@ -20,7 +20,7 @@
   - [x] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
   - [ ] Add or move RSpec tests for CSV data generation:
     - [x] normal output generation
-    - [ ] error cases
+    - [x] error cases
 
 - [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_writer.rb` with a `CsvWriter` class or module
