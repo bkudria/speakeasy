@@ -29,10 +29,10 @@ class CsvWriter
           row[:id].to_s,
           row[:speaker].to_s,
           row[:transcript].to_s,
-          row[:confidence_min].to_s,
-          row[:confidence_max].to_s,
-          row[:confidence_mean].to_s,
-          row[:confidence_median].to_s,
+          format_confidence(row[:confidence_min]),
+          format_confidence(row[:confidence_max]),
+          format_confidence(row[:confidence_mean]),
+          format_confidence(row[:confidence_median]),
           row[:note].to_s
         ]
       end
@@ -53,5 +53,10 @@ class CsvWriter
     end
     
     filename
+  end
+  
+  def format_confidence(value)
+    return "" if value.nil?
+    value.round(2).to_s
   end
 end
