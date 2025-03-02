@@ -7,7 +7,7 @@
 - [x] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
 
 - [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
-  - [ ] Verify each step in the specification matches current code behavior
+  - [x] Verify each step in the specification matches current code behavior
   - [ ] Update any outdated references to data structures, input formats, or behaviors
 
 - [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to the files and identify the speakers.
