@@ -33,14 +33,6 @@
       - [x] Introduce placeholder expectations for missing audio file scenario
       - [x] Introduce placeholder expectations for invalid JSON structure scenario
   
-- [ ] Improve Specs
-  - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
-      that is already covered by another spec, and the specs should test all functionality of the code the cover.
-     - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON keys parsed), either a unit test or an integration test is sufficient.
-     - [ ] Avoid functionally redundant tests - the test suite must remain fast.
-     - [ ] Each line of code must be covered once, and ideally is not covered more than once.
-  - [ ] Bring the specs in-line with agreed-upon RSpec best practices
-
 - [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
       correct structure so the user can organize it themselves
 
@@ -65,5 +57,13 @@
   - [ ] Exercise its methods so SimpleCov accurately reports coverage
   - [ ] Confirm the script aborts if three consecutive segment errors occur
   - [ ] Verify appropriate exit code is returned when errors persist
+
+- [ ] Improve Specs
+  - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
+      that is already covered by another spec, and the specs should test all functionality of the code the cover.
+     - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON keys parsed), either a unit test or an integration test is sufficient.
+     - [ ] Avoid functionally redundant tests - the test suite must remain fast.
+     - [ ] Each line of code must be covered once, and ideally is not covered more than once.
+  - [ ] Bring the specs in-line with agreed-upon RSpec best practices
 
 - [ ] 
