@@ -4,7 +4,7 @@
 
 - [x] Add the `standard` gem
 
-- [ ] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
+- [x] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
 
 - [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to the files and identify the speakers.
   - [ ] Detect the operating system within the script.
