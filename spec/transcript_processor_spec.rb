@@ -1,3 +1,4 @@
+require 'tmpdir'
 require 'spec_helper'
 require_relative '../lib/transcript_processor'
 require 'open3'
