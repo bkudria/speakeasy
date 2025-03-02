@@ -1,60 +1,14 @@
-- [x] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
-  - [x] Create a new file named `speaker_extraction.rb` with a `SpeakerExtraction` class or module
-  - [x] Move all audio extraction logic from `TranscriptProcessor` to `SpeakerExtraction`
-  - [x] Ensure `TranscriptProcessor` calls `SpeakerExtraction`
-  - [x] Add or move RSpec tests for audio extraction:
-    - [x] normal audio extraction
-    - [x] error scenarios
-
-- [x] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
-  - [x] Create a new file named `speaker_identification.rb` with a `SpeakerIdentification` class or module
-  - [x] Move the speaker identification logic (e.g., `wait_for_speaker_identification`) from `TranscriptProcessor` to `SpeakerIdentification`
-  - [x] Ensure `TranscriptProcessor` calls `SpeakerIdentification`
-  - [x] Add or move RSpec tests for speaker identification:
-    - [x] normal identification flow
-    - [x] error or corner cases
-
-- [x] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
-  - [x] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
-  - [x] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
-  - [x] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
-  - [x] Add or move RSpec tests for CSV data generation:
-    - [x] normal output generation
-    - [x] error cases
-
-- [x] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
-  - [x] Create a new file named `csv_writer.rb` with a `CsvWriter` class or module
-  - [x] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
-  - [x] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
-  - [x] Add or move RSpec tests for CSV writing:
-    - [x] normal output
-    - [x] handling or reporting errors
-
-- [x] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
-  - [x] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
-  - [x] Move low-confidence detection logic (e.g., `identify_segments_to_review`) from `TranscriptProcessor`
-  - [x] Ensure `TranscriptProcessor` calls `LowConfidenceDetector`
-  - [x] Add or move RSpec tests for low-confidence detection:
-    - [x] normal detection
-    - [x] corner/error cases
-
 - [x] Add RSpec coverage for `transcript_processor.rb`
-  - [x] Require `transcript_processor.rb` in a new or existing spec
-  - [x] Exercise its methods so SimpleCov accurately reports coverage
-  - [x] Confirm the script aborts if three consecutive segment errors occur
-  - [x] Verify appropriate exit code is returned when errors persist
-  - [x] Ensure there is a spec testing that the CSV transcript file actually gets created
   - [ ] Make sure to delete the generated audio file after the spec run
 
 - [ ] Improve Specs
-  - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
-        that is already covered by another spec, and the specs should test all functionality of the code they cover.
-    - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON
-          keys parsed), either a unit test or an integration test is sufficient.
-    - [ ] Avoid functionally redundant tests - the test suite must remain fast.
-    - [ ] Each line of code must be covered at least once
-  - [ ] Bring the specs in-line with agreed-upon RSpec best practices
-  - [ ] Ensure code that prints output does not interfere with rspec's output
+  - [ ] Refactor specs to ensure they are mutually exclusive
+  - [ ] Make specs collectively exhaustive
+  - [ ] Avoid functionally redundant tests
+  - [ ] Only test custom logic
+  - [ ] Ensure each line of code is tested at least once
+  - [ ] Adopt RSpec best practices
+  - [ ] Ensure code that prints output does not interfere with RSpec output
 
 - [ ] Add the `standard` gem
 
