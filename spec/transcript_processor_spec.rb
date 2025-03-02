@@ -1,7 +1,13 @@
 require 'spec_helper'
 require_relative '../lib/transcript_processor'
+require 'open3'
+require 'fileutils'
 
 RSpec.describe TranscriptProcessor do
+  before(:all) do
+    FileUtils.mkdir_p("spec/fixture")
+    system("ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t 0.5 -q:a 9 spec/fixture/audio.m4a")
+  end
   let(:valid_json_path) { 'spec/fixture/asrOutput.json' }
   let(:valid_audio_path) { 'spec/fixture/audio.m4a' }
   
