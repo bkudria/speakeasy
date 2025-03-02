@@ -18,7 +18,7 @@
   - [x] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
   - [x] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
   - [x] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
-  - [ ] Add or move RSpec tests for CSV data generation:
+  - [x] Add or move RSpec tests for CSV data generation:
     - [x] normal output generation
     - [x] error cases
 
