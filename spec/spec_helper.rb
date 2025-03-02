@@ -27,6 +27,17 @@ end
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # Capture stdout to prevent it from interfering with RSpec output
+  original_stdout = $stdout
+
+  config.before(:suite) do
+    $stdout = StringIO.new
+  end
+
+  config.after(:suite) do
+    $stdout = original_stdout
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
