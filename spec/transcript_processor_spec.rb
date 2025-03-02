@@ -164,13 +164,22 @@ RSpec.describe TranscriptProcessor do
     end
     
     it "creates a CSV file" do
-      # Integration test with real file system
-      # This would require setting up fixtures and cleaning up after the test
-      # For a complete test, you would:
-      # 1. Create temporary fixture files
-      # 2. Run the processor
-      # 3. Verify the CSV file exists
-      # 4. Clean up temporary files
+      Dir.mktmpdir do |tmpdir|
+        # Copy our valid fixtures into a temp directory
+        test_json_path = File.join(tmpdir, "asrOutput.json")
+        FileUtils.cp(valid_json_path, test_json_path)
+
+        test_audio_path = File.join(tmpdir, "audio.m4a")
+        FileUtils.cp(valid_audio_path, test_audio_path)
+
+        # Run the processor
+        processor = TranscriptProcessor.new(test_json_path, test_audio_path, input: StringIO.new("go\n"))
+        processor.process
+
+        # Verify that a CSV file was created
+        csv_files = Dir.glob(File.join(tmpdir, "*.csv"))
+        expect(csv_files).not_to be_empty
+      end
     end
   end
 end

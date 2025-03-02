@@ -1,6 +1,6 @@
 - [x] Make sure to delete the generated audio file after the TranscriptProcessor spec is done
 
-- [ ] Replace the commented placeholders in the "creates a CSV file" in `spec/transcript_processor_spec.rb` with an actual spec
+- [x] Replace the commented placeholders in the "creates a CSV file" in `spec/transcript_processor_spec.rb` with an actual spec
 
 - [ ] Improve Specs
   - [x] Ensure code that prints output does not interfere with RSpec output
