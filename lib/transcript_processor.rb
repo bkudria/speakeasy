@@ -6,6 +6,7 @@ require_relative 'transcript_parser'
 require_relative 'speaker_extraction'
 require_relative 'speaker_identification'
 require_relative 'csv_writer'
+require_relative 'csv_generator'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
@@ -124,11 +125,12 @@ class TranscriptProcessor
     rows = []
     current_row = nil
     csv_writer = CsvWriter.new(@output_dir)
+    csv_gen = CsvGenerator.new
 
     segments = @parser.audio_segments
     
     segments.each_with_index do |segment, index|
-      result = csv_writer.process_segment(segment, index, current_row, speaker_identities, @parser)
+      result = csv_gen.process_segment(segment, index, current_row, speaker_identities, @parser)
       
       if result[:start_new_row]
         # Add the current row to our list if it exists
