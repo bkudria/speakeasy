@@ -10,7 +10,7 @@ require_relative 'csv_generator'
 require_relative 'low_confidence_detector'
 
 class TranscriptProcessor
-  def initialize(transcript_path, audio_path)
+  def initialize(transcript_path, audio_path, input: STDIN)
     validate_inputs(transcript_path, audio_path)
 
     @transcript_path = transcript_path
@@ -18,6 +18,7 @@ class TranscriptProcessor
     @parser = TranscriptParser.new(transcript_path)
     @base_filename = File.basename(audio_path, ".*")
     @output_dir = Dir.pwd
+    @input = input
   end
 
   def process
@@ -41,7 +42,7 @@ class TranscriptProcessor
       puts "Please identify each speaker by renaming the audio files:"
       puts "  Example: rename 'spk_0.m4a' to 'spk_0_Alex.m4a' if the speaker is Alex"
       puts "\nType `go` and press enter after renaming the files..."
-      until STDIN.gets.strip.downcase == "go"
+      until @input.gets.strip.downcase == "go"
         sleep 1
       end
       # After renaming, restart the process to check for named speaker files

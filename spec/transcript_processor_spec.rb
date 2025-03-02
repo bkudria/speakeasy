@@ -53,7 +53,8 @@ RSpec.describe TranscriptProcessor do
   end
   
   describe "#process" do
-    let(:processor) { TranscriptProcessor.new(valid_json_path, valid_audio_path) }
+    let(:mock_input) { StringIO.new("go\n") }
+    let(:processor) { TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input) }
     let(:parser) { instance_double("TranscriptParser") }
     let(:speaker_extraction) { instance_double("SpeakerExtraction") }
     let(:speaker_identification) { instance_double("SpeakerIdentification") }
@@ -76,7 +77,6 @@ RSpec.describe TranscriptProcessor do
       allow(parser).to receive(:audio_segments).and_return([])
       allow(csv_writer).to receive(:write_transcript)
       allow(low_confidence_detector).to receive(:identify_segments_to_review)
-      allow(STDIN).to receive(:gets).and_return("go\n")
       allow(processor).to receive(:puts)
     end
     
@@ -98,7 +98,6 @@ RSpec.describe TranscriptProcessor do
       allow(Dir).to receive(:glob).with("spk_*.m4a").and_return(["spk_0.m4a"])
       
       expect(processor).to receive(:puts).with(/Please identify each speaker/)
-      expect(STDIN).to receive(:gets).and_return("go\n")
       
       # After "go", check again for named files
       allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return(["spk_0_John.m4a"])
