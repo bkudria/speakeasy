@@ -16,6 +16,7 @@
     - [ ] On **Windows**, use `start <directory>`.
     - [ ] On **Linux**, use `xdg-open <directory>`.
   - [ ] Execute the corresponding command to open the directory.
+  
 
 - [ ] Document the code with comments for un-intuitive parts of the code
   - [ ] Highlight any unusual logic in `csv_generator.rb` and `transcript_processor.rb`
@@ -36,6 +37,9 @@
 - [ ] Detect and correct speaker mis-identification in the input JSON, and correct it in the output CSV
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
   - [ ] Realign them with the correct speaker label in the final CSV
-  - Maybe there are other or better ways to solve this? Help wanted, please suggest options!
+  - Maybe there are other or better ways to solve this? Help wanted, please suggest options! # any suggestions AI?
+
+- [ ] Implement the "multiple speakers" note - if a row has segments or items whose timestamp overlaps with previous or
+      subsequent rows with differing speakers, both or all 3 rows should have "multiple speakers" in the notes column
 
 - [ ] 
