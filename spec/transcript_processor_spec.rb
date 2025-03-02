@@ -196,4 +196,29 @@ RSpec.describe TranscriptProcessor do
       end
     end
   end
+  
+  describe "#open_output_directory" do
+    let(:processor) do
+      TranscriptProcessor.new(valid_json_path, valid_audio_path, input: StringIO.new, output_dir: "spec/fixture")
+    end
+
+    context "when the system command is recognized" do
+      it "calls system with the correct command" do
+        allow(processor).to receive(:open_directory_command).and_return("open")
+        expect(processor).to receive(:system).with("open spec/fixture")
+
+        processor.send(:open_output_directory)
+      end
+    end
+
+    context "when the system command is nil" do
+      it "prints a warning instead of calling system" do
+        allow(processor).to receive(:open_directory_command).and_return(nil)
+        expect(processor).not_to receive(:system)
+        expect(processor).to receive(:puts).with("Unable to open directory automatically for this platform.")
+
+        processor.send(:open_output_directory)
+      end
+    end
+  end
 end
