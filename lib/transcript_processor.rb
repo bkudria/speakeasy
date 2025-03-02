@@ -7,6 +7,7 @@ require_relative 'speaker_extraction'
 require_relative 'speaker_identification'
 require_relative 'csv_writer'
 require_relative 'csv_generator'
+require_relative 'low_confidence_detector'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
@@ -68,7 +69,9 @@ class TranscriptProcessor
     generate_csv_transcript
 
     # Step 3: Identify segments to review
-    identify_segments_to_review
+    puts "\n=== Step 3: Identifying segments to review ==="
+    detector = LowConfidenceDetector.new
+    detector.identify_segments_to_review(@rows)
 
     puts "Processing complete!"
   end
@@ -180,40 +183,4 @@ class TranscriptProcessor
     @rows = rows
   end
 
-  def identify_segments_to_review
-    puts "\n=== Step 3: Identifying segments to review ==="
-
-    low_confidence_threshold = 0.75
-    review_segments = @rows.select { |row| row[:confidence_mean] < low_confidence_threshold }
-
-    if review_segments.empty?
-      puts "No low-confidence segments found that require review."
-      return
-    end
-
-    puts "The following segments have low confidence scores (below #{low_confidence_threshold}) and should be reviewed:"
-
-    # Group consecutive IDs
-    groups = []
-    current_group = [review_segments.first[:id]]
-
-    review_segments[1..-1].each do |segment|
-      if segment[:id] == current_group.last + 1
-        current_group << segment[:id]
-      else
-        groups << current_group
-        current_group = [segment[:id]]
-      end
-    end
-    groups << current_group unless current_group.empty?
-
-    # Display groups
-    groups.each do |group|
-      if group.size == 1
-        puts "  Segment ID: #{group.first}"
-      else
-        puts "  Segment IDs: #{group.first}-#{group.last}"
-      end
-    end
-  end
 end

@@ -30,10 +30,10 @@
     - [x] normal output
     - [x] handling or reporting errors
 
-- [ ] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
-  - [ ] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
-  - [ ] Move low-confidence detection logic (e.g., `identify_segments_to_review`) from `TranscriptProcessor`
-  - [ ] Ensure `TranscriptProcessor` calls `LowConfidenceDetector`
+- [x] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
+  - [x] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
+  - [x] Move low-confidence detection logic (e.g., `identify_segments_to_review`) from `TranscriptProcessor`
+  - [x] Ensure `TranscriptProcessor` calls `LowConfidenceDetector`
   - [ ] Add or move RSpec tests for low-confidence detection:
     - [ ] normal detection
     - [ ] corner/error cases
