@@ -53,6 +53,7 @@
     - [ ] Avoid functionally redundant tests - the test suite must remain fast.
     - [ ] Each line of code must be covered once, and ideally is not covered more than once.
   - [ ] Bring the specs in-line with agreed-upon RSpec best practices
+  - [ ] Ensure code that prints output does not interfere with rspec's output
 
 - [ ] Add the `standard` gem
 
