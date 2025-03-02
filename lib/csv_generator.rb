@@ -4,6 +4,20 @@ class CsvGenerator
   end
 
   def build_row(segment)
+    # Early return for error/empty segments
+    if segment[:has_error] || segment[:items].nil? || segment[:items].empty?
+      return {
+        id: segment[:id],
+        speaker: segment[:speaker],
+        transcript: segment[:transcript],
+        confidence_min: nil,
+        confidence_max: nil,
+        confidence_mean: nil,
+        confidence_median: nil,
+        note: "error"
+      }
+    end
+    
     # Example logic for computing confidence metrics, etc.
     confidence_values = segment[:items].map { |i| i[:confidence].to_f }
     note_value = determine_note(segment)
