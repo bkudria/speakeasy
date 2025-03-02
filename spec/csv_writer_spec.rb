@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../csv_writer'
+require_relative '../lib/csv_writer'
 
 RSpec.describe CsvWriter do
   describe "#write_transcript" do
