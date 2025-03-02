@@ -1,7 +1,7 @@
 - [x] Make sure to delete the generated audio file after the TranscriptProcessor spec is done
 
 - [ ] Improve Specs
-  - [ ] Ensure code that prints output does not interfere with RSpec output
+  - [x] Ensure code that prints output does not interfere with RSpec output
   - [ ] Refactor specs to ensure they are mutually exclusive
   - [ ] Make specs collectively exhaustive
   - [ ] Avoid functionally redundant tests

@@ -27,15 +27,18 @@ end
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  # Capture stdout to prevent it from interfering with RSpec output
+  # Capture stdout and stderr to prevent them from interfering with RSpec output
   original_stdout = $stdout
+  original_stderr = $stderr
 
   config.before(:suite) do
     $stdout = StringIO.new
+    $stderr = StringIO.new
   end
 
   config.after(:suite) do
     $stdout = original_stdout
+    $stderr = original_stderr
   end
 
   # rspec-expectations config goes here. You can use an alternate
