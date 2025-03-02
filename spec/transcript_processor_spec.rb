@@ -8,6 +8,10 @@ RSpec.describe TranscriptProcessor do
     FileUtils.mkdir_p("spec/fixture")
     system("ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t 0.5 -q:a 9 spec/fixture/audio.m4a")
   end
+  
+  after(:all) do
+    FileUtils.rm_f("spec/fixture/audio.m4a")
+  end
   let(:valid_json_path) { 'spec/fixture/asrOutput.json' }
   let(:valid_audio_path) { 'spec/fixture/audio.m4a' }
   

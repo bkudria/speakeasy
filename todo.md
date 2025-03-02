@@ -1,4 +1,4 @@
-- [ ] Make sure to delete the generated audio file after the TranscriptProcessor spec is done
+- [x] Make sure to delete the generated audio file after the TranscriptProcessor spec is done
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive
