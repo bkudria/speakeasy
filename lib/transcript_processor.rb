@@ -5,6 +5,7 @@ require 'open3'
 require 'descriptive_statistics'
 require_relative 'transcript_parser'
 require_relative 'speaker_extraction'
+require_relative 'speaker_identification'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
@@ -103,15 +104,7 @@ class TranscriptProcessor
   end
 
   def wait_for_speaker_identification(skip: false)
-    return if skip
-    
-    puts "\n=== Speaker Identification ==="
-    puts "Please identify each speaker by renaming the audio files:"
-    puts "  Example: rename 'spk_0.m4a' to 'spk_0_John.m4a' if the speaker is John"
-    puts "\nType `go` and press enter when you have finished identifying speakers..."
-    until STDIN.gets.match("go")
-      sleep 1
-    end
+    SpeakerIdentification.new(@parser, @audio_path, @output_dir).identify(skip: skip)
   end
 
   def generate_csv_transcript

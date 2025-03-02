@@ -6,13 +6,13 @@
     - [x] normal audio extraction
     - [x] error scenarios
 
-- [ ] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
-  - [ ] Create a new file named `speaker_identification.rb` with a `SpeakerIdentification` class or module
-  - [ ] Move the speaker identification logic (e.g., `wait_for_speaker_identification`) from `TranscriptProcessor` to `SpeakerIdentification`
-  - [ ] Ensure `TranscriptProcessor` calls `SpeakerIdentification`
-  - [ ] Add or move RSpec tests for speaker identification:
-    - [ ] normal identification flow
-    - [ ] error or corner cases
+- [x] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
+  - [x] Create a new file named `speaker_identification.rb` with a `SpeakerIdentification` class or module
+  - [x] Move the speaker identification logic (e.g., `wait_for_speaker_identification`) from `TranscriptProcessor` to `SpeakerIdentification`
+  - [x] Ensure `TranscriptProcessor` calls `SpeakerIdentification`
+  - [x] Add or move RSpec tests for speaker identification:
+    - [x] normal identification flow
+    - [x] error or corner cases
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
