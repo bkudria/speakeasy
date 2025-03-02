@@ -37,8 +37,20 @@
       correct structure so the user can organize it themselves
 
 - [ ] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
+  - [ ] Create a new file named `speaker_extraction.rb` with a `SpeakerExtraction` class or module
+  - [ ] Move all audio extraction logic from `TranscriptProcessor` to `SpeakerExtraction`
+  - [ ] Ensure `TranscriptProcessor` calls `SpeakerExtraction`
+  - [ ] Add or move RSpec tests for audio extraction:
+    - [ ] normal audio extraction
+    - [ ] error scenarios
 
 - [ ] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
+  - [ ] Create a new file named `speaker_identification.rb` with a `SpeakerIdentification` class or module
+  - [ ] Move the speaker identification logic (e.g., `wait_for_speaker_identification`) from `TranscriptProcessor` to `SpeakerIdentification`
+  - [ ] Ensure `TranscriptProcessor` calls `SpeakerIdentification`
+  - [ ] Add or move RSpec tests for speaker identification:
+    - [ ] normal identification flow
+    - [ ] error or corner cases
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
   - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
@@ -57,6 +69,12 @@
     - [ ] handling or reporting errors
 
 - [ ] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
+  - [ ] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
+  - [ ] Move low-confidence detection logic (e.g., `identify_segments_to_review`) from `TranscriptProcessor`
+  - [ ] Ensure `TranscriptProcessor` calls `LowConfidenceDetector`
+  - [ ] Add or move RSpec tests for low-confidence detection:
+    - [ ] normal detection
+    - [ ] corner/error cases
 
 - [ ] Add RSpec coverage for `transcript_processor.rb`
   - [ ] Require `transcript_processor.rb` in a new or existing spec
