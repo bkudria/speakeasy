@@ -15,7 +15,7 @@
     - [x] On **macOS**, run `open <directory>`
     - [x] On **Windows**, run `start <directory>`
     - [x] On **Linux**, run `xdg-open <directory>`
-  - [ ] Execute the correct command to open the directory
+  - [x] Execute the correct command to open the directory
 
 - [ ] Document the code with comments for un-intuitive parts:
   - [ ] Highlight any unusual logic in `csv_generator.rb` and `transcript_processor.rb`

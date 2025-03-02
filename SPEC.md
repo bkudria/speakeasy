@@ -102,7 +102,7 @@
                                                                  Additional Platform Handling
 
  • To assist with speaker renaming, the script detects the user's operating system after audio file generation.
- • It determines which command to use for opening the output directory, but does not execute it yet.
+ • It determines which command to use for opening the output directory, and then executes that command to open the directory automatically.
 
                                                                     Step 2: CSV Generation
 
