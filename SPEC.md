@@ -112,9 +112,6 @@
     • Confidence Mean: Average confidence value among items in this segment
     • Confidence Median: Median confidence value among items in this segment
     • Note: One of "multiple speakers", "unknown", or "error"
- 2a. The CSV row-building logic is encapsulated in a separate `CsvGenerator` class (csv_generator.rb).
-     This class is responsible for computing confidence metrics, setting the `Note` field 
-     (e.g., "multiple speakers", "unknown", "error"), and returning row data for each segment.
  3 Row segmentation rules:
     • Start a new row when a different speaker begins talking
     • Start a new row when there is more than 1 second of silence
