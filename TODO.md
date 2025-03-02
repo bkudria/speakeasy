@@ -6,6 +6,12 @@
 
 - [ ] Add the `simplecov_json_formatter` gem, so we can use the coverage report to automatically figure out where we need to add spec
 
+- [ ] Ensure spec.md is correct, complete, and up-to-date
+
+- [ ] Document the code with comments for un-intuitive parts of the code
+
+- [ ] Write a README.md for end-users
+
 - [ ] Improve Specs
   - [x] Ensure code that prints output does not interfere with RSpec output
   - [ ] Adopt RSpec best practices
