@@ -6,7 +6,7 @@
 
 - [x] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
 
-- [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
+- [x] Ensure `SPEC.md` is correct, complete, and up-to-date
   - [x] Verify each step in the specification matches current code behavior
   - [x] Update any outdated references to data structures, input formats, or behaviors
 
