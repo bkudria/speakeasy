@@ -5,7 +5,7 @@ require 'descriptive_statistics'
 require_relative 'transcript_parser'
 require_relative 'speaker_extraction'
 require_relative 'speaker_identification'
-require_relative '../csv_writer'
+require_relative 'csv_writer'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
