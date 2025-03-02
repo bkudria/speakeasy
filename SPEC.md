@@ -8,10 +8,9 @@
  4. Highlight segments requiring review
 
  ## Input
- The script accepts one command-line argument:
- 1. Path to a directory containing:
-    - The JSON transcript file (named "asrOutput.json")
-    - The original audio file (largest audio file in the directory)
+ The script accepts two command-line arguments:
+ 1. Path to the JSON transcript file
+ 2. Path to the original audio file
 
  ## JSON Structure
  The Amazon Transcribe JSON follows this structure:
@@ -97,7 +96,7 @@
  1 After extraction, the script pauses and instructs the user to identify speakers by renaming files:
     • Original: spk_0.m4a
     • Renamed: spk_0_Ben.m4a (if speaker is identified as "Ben")
- 2 The script informs the user to press Enter when done with renaming.
+ 2 The script instructs the user to type `go` and press Enter when done renaming.
  3 If a user doesn't rename a particular speaker file, the script will treat that speaker as unidentified in the CSV output (blank Speaker column).
 
                                                                     Step 2: CSV Generation
