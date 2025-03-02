@@ -34,9 +34,9 @@
   - [x] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
   - [x] Move low-confidence detection logic (e.g., `identify_segments_to_review`) from `TranscriptProcessor`
   - [x] Ensure `TranscriptProcessor` calls `LowConfidenceDetector`
-  - [ ] Add or move RSpec tests for low-confidence detection:
-    - [ ] normal detection
-    - [ ] corner/error cases
+  - [x] Add or move RSpec tests for low-confidence detection:
+    - [x] normal detection
+    - [x] corner/error cases
 
 - [ ] Add RSpec coverage for `transcript_processor.rb`
   - [ ] Require `transcript_processor.rb` in a new or existing spec
