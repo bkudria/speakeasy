@@ -43,6 +43,7 @@
   - [ ] Exercise its methods so SimpleCov accurately reports coverage
   - [ ] Confirm the script aborts if three consecutive segment errors occur
   - [ ] Verify appropriate exit code is returned when errors persist
+  - [ ] Ensure there is a spec testing that the CSV transcript file actually gets created
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
