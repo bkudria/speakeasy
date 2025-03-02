@@ -66,5 +66,25 @@ RSpec.describe CsvWriter do
       # Clean up
       FileUtils.remove_entry(output_dir)
     end
+    
+    context "when writing rows with errors" do
+      it "stops after three consecutive errors" do
+        output_dir = Dir.mktmpdir
+        csv_writer = CsvWriter.new(output_dir)
+
+        # Three consecutive rows mocked to cause errors
+        rows = [
+          { id: 1, speaker: "X", transcript: "Some text", note: "error" },
+          { id: 2, speaker: "Y", transcript: "Some text", note: "error" },
+          { id: 3, speaker: "Z", transcript: "Some text", note: "error" }
+        ]
+
+        expect do
+          csv_writer.write_transcript(rows, "error_test")
+        end.to raise_error(SystemExit)
+
+        FileUtils.remove_entry(output_dir)
+      end
+    end
   end
 end

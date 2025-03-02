@@ -28,7 +28,7 @@
   - [x] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
   - [ ] Add or move RSpec tests for CSV writing:
     - [x] normal output
-    - [ ] handling or reporting errors
+    - [x] handling or reporting errors
 
 - [ ] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
   - [ ] Create a new file named `low_confidence_detector.rb` with a `LowConfidenceDetector` class or module
