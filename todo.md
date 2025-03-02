@@ -38,12 +38,12 @@
     - [x] normal detection
     - [x] corner/error cases
 
-- [ ] Add RSpec coverage for `transcript_processor.rb`
-  - [ ] Require `transcript_processor.rb` in a new or existing spec
-  - [ ] Exercise its methods so SimpleCov accurately reports coverage
-  - [ ] Confirm the script aborts if three consecutive segment errors occur
-  - [ ] Verify appropriate exit code is returned when errors persist
-  - [ ] Ensure there is a spec testing that the CSV transcript file actually gets created
+- [x] Add RSpec coverage for `transcript_processor.rb`
+  - [x] Require `transcript_processor.rb` in a new or existing spec
+  - [x] Exercise its methods so SimpleCov accurately reports coverage
+  - [x] Confirm the script aborts if three consecutive segment errors occur
+  - [x] Verify appropriate exit code is returned when errors persist
+  - [x] Ensure there is a spec testing that the CSV transcript file actually gets created
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code

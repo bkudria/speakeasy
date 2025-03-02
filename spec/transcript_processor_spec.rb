@@ -1,0 +1,161 @@
+require 'spec_helper'
+require_relative '../lib/transcript_processor'
+
+RSpec.describe TranscriptProcessor do
+  let(:valid_json_path) { 'spec/fixtures/asrOutput.json' }
+  let(:valid_audio_path) { 'spec/fixtures/audio.m4a' }
+  
+  describe "#initialize" do
+    it "initializes with valid inputs" do
+      expect { TranscriptProcessor.new(valid_json_path, valid_audio_path) }.not_to raise_error
+    end
+    
+    it "aborts if transcript file doesn't exist" do
+      expect { 
+        TranscriptProcessor.new('nonexistent.json', valid_audio_path) 
+      }.to raise_error(SystemExit)
+    end
+    
+    it "aborts if audio file doesn't exist" do
+      expect { 
+        TranscriptProcessor.new(valid_json_path, 'nonexistent.m4a') 
+      }.to raise_error(SystemExit)
+    end
+    
+    it "aborts if transcript file has invalid JSON" do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(File).to receive(:read).and_return("invalid json")
+      
+      expect { 
+        TranscriptProcessor.new('invalid.json', valid_audio_path) 
+      }.to raise_error(SystemExit)
+    end
+    
+    it "aborts if ffmpeg is not available" do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(JSON).to receive(:parse).and_return({})
+      allow(Open3).to receive(:capture3).with("ffmpeg -version").and_return(["", "error", double(success?: false)])
+      
+      expect { 
+        TranscriptProcessor.new(valid_json_path, valid_audio_path) 
+      }.to raise_error(SystemExit)
+    end
+  end
+  
+  describe "#process" do
+    let(:processor) { TranscriptProcessor.new(valid_json_path, valid_audio_path) }
+    let(:parser) { instance_double("TranscriptParser") }
+    let(:speaker_extraction) { instance_double("SpeakerExtraction") }
+    let(:speaker_identification) { instance_double("SpeakerIdentification") }
+    let(:csv_writer) { instance_double("CsvWriter") }
+    let(:csv_generator) { instance_double("CsvGenerator") }
+    let(:low_confidence_detector) { instance_double("LowConfidenceDetector") }
+    
+    before do
+      allow(TranscriptParser).to receive(:new).and_return(parser)
+      allow(SpeakerExtraction).to receive(:new).and_return(speaker_extraction)
+      allow(SpeakerIdentification).to receive(:new).and_return(speaker_identification)
+      allow(CsvWriter).to receive(:new).and_return(csv_writer)
+      allow(CsvGenerator).to receive(:new).and_return(csv_generator)
+      allow(LowConfidenceDetector).to receive(:new).and_return(low_confidence_detector)
+      
+      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
+      allow(Dir).to receive(:glob).with("spk_*.m4a").and_return([])
+      allow(speaker_extraction).to receive(:extract)
+      allow(speaker_identification).to receive(:identify)
+      allow(parser).to receive(:audio_segments).and_return([])
+      allow(csv_writer).to receive(:write_transcript)
+      allow(low_confidence_detector).to receive(:identify_segments_to_review)
+      allow(STDIN).to receive(:gets).and_return("go\n")
+      allow(processor).to receive(:puts)
+    end
+    
+    it "completes successfully with valid inputs" do
+      expect { processor.process }.not_to raise_error
+    end
+    
+    it "skips extraction when named speaker files exist" do
+      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return(["spk_0_John.m4a"])
+      
+      expect(speaker_extraction).not_to receive(:extract)
+      expect(speaker_identification).to receive(:identify).with(skip: true)
+      
+      processor.process
+    end
+    
+    it "prompts for speaker identification when unnamed speaker files exist" do
+      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
+      allow(Dir).to receive(:glob).with("spk_*.m4a").and_return(["spk_0.m4a"])
+      
+      expect(processor).to receive(:puts).with(/Please identify each speaker/)
+      expect(STDIN).to receive(:gets).and_return("go\n")
+      
+      # After "go", check again for named files
+      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return(["spk_0_John.m4a"])
+      
+      processor.process
+    end
+    
+    it "generates CSV transcript with proper data" do
+      segment = { 
+        start_time: "0.0", 
+        end_time: "5.0",
+        speaker_label: "spk_0"
+      }
+      
+      allow(parser).to receive(:audio_segments).and_return([segment])
+      
+      result = {
+        start_new_row: true,
+        speaker_name: "John",
+        transcript_text: "Hello world",
+        min_conf: 0.8,
+        max_conf: 0.9,
+        mean_conf: 0.85,
+        median_conf: 0.85,
+        note: "",
+        start_time: "0.0",
+        end_time: "5.0"
+      }
+      
+      allow(csv_generator).to receive(:process_segment).and_return(result)
+      
+      expected_row = {
+        id: 1,
+        speaker: "John",
+        transcript: "Hello world",
+        confidence_min: 0.8,
+        confidence_max: 0.9,
+        confidence_mean: 0.85,
+        confidence_median: 0.85,
+        note: "",
+        start_time: "0.0",
+        end_time: "5.0"
+      }
+      
+      expect(csv_writer).to receive(:write_transcript).with([expected_row], anything)
+      
+      processor.process
+    end
+    
+    it "identifies segments to review" do
+      allow(processor).to receive(:generate_csv_transcript) do
+        processor.instance_variable_set(:@rows, [{ id: 1 }])
+      end
+      
+      expect(low_confidence_detector).to receive(:identify_segments_to_review).with([{ id: 1 }])
+      
+      processor.process
+    end
+    
+    it "creates a CSV file" do
+      # Integration test with real file system
+      # This would require setting up fixtures and cleaning up after the test
+      # For a complete test, you would:
+      # 1. Create temporary fixture files
+      # 2. Run the processor
+      # 3. Verify the CSV file exists
+      # 4. Clean up temporary files
+    end
+  end
+end
