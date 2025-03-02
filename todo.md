@@ -1,41 +1,3 @@
-- [x] Install and configure the `simplecov` gem, for code coverage
-  - SimpleCov's README is here: https://raw.githubusercontent.com/simplecov-ruby/simplecov/refs/heads/main/README.md
-  - [x] Ensure tests print the coverage percentage clearly
-  - [x] Implement a coverage ratchet:
-    - [x] Configure SimpleCov to enforce a minimum acceptable coverage threshold
-    - [x] Fail tests if coverage dips below that threshold
-    - [x] Track and compare coverage from a prior run
-    - [x] Fail tests if coverage decreases from the prior run
-
-- [x] Improve the parser tests, using fixture file spec/fixture/asrOutput.json as the source of well-formed transcript
-      JSON
-  - the fixture file will always contain well-formed and correct data.
-  - Use placeholder values as comparison values, and temporarily disable the tests. The user will replace placeholder
-    data with what the correct values should be, and re-enable the tests
-  - Use only the digit `9` for placeholder numbers, and only uppercase letters for placeholder strings. If you see other
-    values, that means they are not placeholders any more because the user updated them, you should not change them.
-  - To write tests for malformed data, do not modify the fixture file. Instead, in the specs, either:
-    - generate and use sample malformed data, or
-    - parse the fixture file, and mutate the parse result so that it become malformed
-  - [x] Update or create parser tests that load and parse this fixture
-  - [x] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data,
-        continue using or add in-spec sample data
-  - [x] Confirm coverage for:
-    - [x] normal transcript data
-      - [x] Ensure fixture "asrOutput.json" is loaded without error
-      - [x] Validate `speaker_count` matches expected placeholder
-      - [x] Validate `audio_segments` matches expected placeholder
-      - [x] Validate `items` matches expected placeholder
-    - [x] missing fields
-    - [x] malformed fields
-      - [x] Introduce expectations with sample malformed transcript JSON
-    - [x] error handling
-      - [x] Introduce placeholder expectations for missing audio file scenario
-      - [x] Introduce placeholder expectations for invalid JSON structure scenario
-  
-- [x] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
-      correct structure so the user can organize it themselves
-
 - [ ] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
   - [ ] Create a new file named `speaker_extraction.rb` with a `SpeakerExtraction` class or module
   - [ ] Move all audio extraction logic from `TranscriptProcessor` to `SpeakerExtraction`
@@ -84,10 +46,21 @@
 
 - [ ] Improve Specs
   - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
-      that is already covered by another spec, and the specs should test all functionality of the code the cover.
-     - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON keys parsed), either a unit test or an integration test is sufficient.
-     - [ ] Avoid functionally redundant tests - the test suite must remain fast.
-     - [ ] Each line of code must be covered once, and ideally is not covered more than once.
+        that is already covered by another spec, and the specs should test all functionality of the code they cover.
+    - [ ] Only test custom logic. If logic is only standard straightforward Ruby (e.g. accessor methods, exposing JSON
+          keys parsed), either a unit test or an integration test is sufficient.
+    - [ ] Avoid functionally redundant tests - the test suite must remain fast.
+    - [ ] Each line of code must be covered once, and ideally is not covered more than once.
   - [ ] Bring the specs in-line with agreed-upon RSpec best practices
+
+- [ ] Add Ruby style checks with RuboCop (or a similar tool)
+  - [ ] Configure the style checker
+  - [ ] Ensure the existing codebase passes the style check
+  - [ ] Update CI (if present) to run style checks
+
+- [ ] Add an integration test covering an entire run of the script
+  - [ ] Simulate or mock the presence of a valid transcript JSON and audio file
+  - [ ] Verify speaker extraction, speaker identification, CSV generation, CSV writing, and low-confidence detection
+  - [ ] Confirm correct script exit behavior and error handling
 
 - [ ] 
