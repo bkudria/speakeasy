@@ -11,18 +11,21 @@ class TranscriptParser
   end
 
   def speaker_count
-    @parsed_data.dig("results", "speaker_labels", "speakers").to_i
+    speaker_labels = @parsed_data.dig("results", "speaker_labels")
+    if speaker_labels.is_a?(Hash)
+      speaker_labels["speakers"].to_i
+    else
+      0
+    end
   end
 
   def audio_segments
     segments = @parsed_data.dig("results", "audio_segments")
-    return [] unless segments.is_a?(Array)
-    segments
+    segments.is_a?(Array) ? segments : []
   end
 
   def items
-    items = @parsed_data.dig("results", "items")
-    return [] unless items.is_a?(Array)
-    items
+    items_val = @parsed_data.dig("results", "items")
+    items_val.is_a?(Array) ? items_val : []
   end
 end
