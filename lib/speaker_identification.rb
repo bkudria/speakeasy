@@ -1,4 +1,4 @@
-require 'json'
+require "json"
 
 class SpeakerIdentification
   def initialize(parser, audio_path, output_dir)
@@ -9,7 +9,7 @@ class SpeakerIdentification
 
   def identify(skip: false)
     return if skip
-    
+
     puts "\n=== Speaker Identification ==="
     puts "Please identify each speaker by renaming the audio files:"
     puts "  Example: rename 'spk_0.m4a' to 'spk_0_John.m4a' if the speaker is John"

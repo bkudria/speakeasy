@@ -1,13 +1,13 @@
-require 'json'
-require 'fileutils'
-require 'open3'
-require 'descriptive_statistics'
-require_relative 'transcript_parser'
-require_relative 'speaker_extraction'
-require_relative 'speaker_identification'
-require_relative 'csv_writer'
-require_relative 'csv_generator'
-require_relative 'low_confidence_detector'
+require "json"
+require "fileutils"
+require "open3"
+require "descriptive_statistics"
+require_relative "transcript_parser"
+require_relative "speaker_extraction"
+require_relative "speaker_identification"
+require_relative "csv_writer"
+require_relative "csv_generator"
+require_relative "low_confidence_detector"
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path, input: STDIN, output_dir: Dir.pwd)
@@ -95,7 +95,7 @@ class TranscriptProcessor
     end
 
     # Check if ffmpeg is available
-    stdout, stderr, status = Open3.capture3("ffmpeg -version")
+    _, _, status = Open3.capture3("ffmpeg -version")
     unless status.success?
       abort "Error: ffmpeg is not installed or not in PATH. Please install ffmpeg to continue."
     end
@@ -136,10 +136,10 @@ class TranscriptProcessor
     csv_gen = CsvGenerator.new
 
     segments = @parser.audio_segments
-    
+
     segments.each_with_index do |segment, index|
       result = csv_gen.process_segment(segment, index, current_row, speaker_identities, @parser)
-      
+
       if result[:start_new_row]
         # Add the current row to our list if it exists
         rows << current_row if current_row
@@ -184,8 +184,7 @@ class TranscriptProcessor
 
     # Write to CSV
     csv_writer.write_transcript(rows, "transcript")
-    
+
     @rows = rows
   end
-
 end

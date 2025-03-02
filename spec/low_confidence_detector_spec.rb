@@ -1,5 +1,5 @@
-require 'spec_helper'
-require_relative '../lib/low_confidence_detector'
+require "spec_helper"
+require_relative "../lib/low_confidence_detector"
 
 RSpec.describe LowConfidenceDetector do
   subject(:detector) { described_class.new(threshold: 0.75) }
@@ -7,8 +7,8 @@ RSpec.describe LowConfidenceDetector do
   describe "#find_low_confidence_segments" do
     it "returns segments below the threshold" do
       rows = [
-        { id: 1, confidence_mean: 0.80 },
-        { id: 2, confidence_mean: 0.60 }
+        {id: 1, confidence_mean: 0.80},
+        {id: 2, confidence_mean: 0.60}
       ]
       result = detector.find_low_confidence_segments(rows)
       expect(result.map { |r| r[:id] }).to eq([2])
@@ -16,8 +16,8 @@ RSpec.describe LowConfidenceDetector do
 
     it "returns an empty array if none are below threshold" do
       rows = [
-        { id: 1, confidence_mean: 0.80 },
-        { id: 2, confidence_mean: 0.78 }
+        {id: 1, confidence_mean: 0.80},
+        {id: 2, confidence_mean: 0.78}
       ]
       result = detector.find_low_confidence_segments(rows)
       expect(result).to be_empty
@@ -32,11 +32,11 @@ RSpec.describe LowConfidenceDetector do
   describe "#identify_segments_to_review" do
     let(:rows) do
       [
-        { id: 1, confidence_mean: 0.80 },
-        { id: 2, confidence_mean: 0.60 },
-        { id: 3, confidence_mean: 0.50 },
-        { id: 5, confidence_mean: 0.40 },
-        { id: 7, confidence_mean: 0.70 }
+        {id: 1, confidence_mean: 0.80},
+        {id: 2, confidence_mean: 0.60},
+        {id: 3, confidence_mean: 0.50},
+        {id: 5, confidence_mean: 0.40},
+        {id: 7, confidence_mean: 0.70}
       ]
     end
 
@@ -52,8 +52,8 @@ RSpec.describe LowConfidenceDetector do
 
     it "handles no low confidence segments" do
       high_confidence_rows = [
-        { id: 1, confidence_mean: 0.80 },
-        { id: 2, confidence_mean: 0.85 }
+        {id: 1, confidence_mean: 0.80},
+        {id: 2, confidence_mean: 0.85}
       ]
       expect { detector.identify_segments_to_review(high_confidence_rows) }.to output(/No low-confidence segments found/).to_stdout
     end

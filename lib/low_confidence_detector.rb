@@ -28,7 +28,7 @@ class LowConfidenceDetector
 
   def group_consecutive_segments(segments)
     return [] if segments.empty?
-    
+
     groups = []
     current_group = [segments.first[:id]]
 
@@ -41,7 +41,7 @@ class LowConfidenceDetector
       end
     end
     groups << current_group unless current_group.empty?
-    
+
     groups
   end
 

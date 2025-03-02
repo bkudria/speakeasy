@@ -1,12 +1,12 @@
-require 'spec_helper'
-require_relative '../lib/csv_writer'
+require "spec_helper"
+require_relative "../lib/csv_writer"
 
 RSpec.describe CsvWriter do
   describe "#write_transcript" do
     it "writes CSV rows correctly for normal output" do
       # Create a temporary directory for output
       output_dir = Dir.mktmpdir
-      
+
       # Create test data
       rows = [
         {
@@ -30,20 +30,20 @@ RSpec.describe CsvWriter do
           note: ""
         }
       ]
-      
+
       # Initialize CsvWriter and write transcript
       csv_writer = CsvWriter.new(output_dir)
       csv_filename = csv_writer.write_transcript(rows, "test_transcript")
-      
+
       # Verify the file exists
       expect(File.exist?(csv_filename)).to be true
-      
+
       # Read the CSV file and verify its contents
       csv_content = CSV.read(csv_filename)
-      
+
       # Check header row
       expect(csv_content[0]).to eq(["ID", "Speaker", "Transcript", "Confidence Min", "Confidence Max", "Confidence Mean", "Confidence Median", "Note"])
-      
+
       # Check data rows
       expect(csv_content[1][0]).to eq("1")
       expect(csv_content[1][1]).to eq("Speaker 1")
@@ -53,7 +53,7 @@ RSpec.describe CsvWriter do
       expect(csv_content[1][5]).to eq("0.88")
       expect(csv_content[1][6]).to eq("0.89")
       expect(csv_content[1][7]).to eq("")
-      
+
       expect(csv_content[2][0]).to eq("2")
       expect(csv_content[2][1]).to eq("Speaker 2")
       expect(csv_content[2][2]).to eq("This is a test")
@@ -62,11 +62,11 @@ RSpec.describe CsvWriter do
       expect(csv_content[2][5]).to eq("0.85")
       expect(csv_content[2][6]).to eq("0.86")
       expect(csv_content[2][7]).to eq("")
-      
+
       # Clean up
       FileUtils.remove_entry(output_dir)
     end
-    
+
     context "when writing rows with errors" do
       it "stops after three consecutive errors" do
         output_dir = Dir.mktmpdir
@@ -74,9 +74,9 @@ RSpec.describe CsvWriter do
 
         # Three consecutive rows mocked to cause errors
         rows = [
-          { id: 1, speaker: "X", transcript: "Some text", note: "error" },
-          { id: 2, speaker: "Y", transcript: "Some text", note: "error" },
-          { id: 3, speaker: "Z", transcript: "Some text", note: "error" }
+          {id: 1, speaker: "X", transcript: "Some text", note: "error"},
+          {id: 2, speaker: "Y", transcript: "Some text", note: "error"},
+          {id: 3, speaker: "Z", transcript: "Some text", note: "error"}
         ]
 
         expect do

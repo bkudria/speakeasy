@@ -1,10 +1,10 @@
-require 'spec_helper'
-require 'open3'
-require 'tmpdir'
+require "spec_helper"
+require "open3"
+require "tmpdir"
 
-RSpec.describe 'TranscriptProcessor input validation' do
-  context 'when the transcript file is missing' do
-    it 'exits with a non-zero status and shows an error message' do
+RSpec.describe "TranscriptProcessor input validation" do
+  context "when the transcript file is missing" do
+    it "exits with a non-zero status and shows an error message" do
       Dir.mktmpdir do |tmpdir|
         # Create a dummy audio file in tmpdir
         audio_path = File.join(tmpdir, "test_audio.wav")
@@ -18,8 +18,8 @@ RSpec.describe 'TranscriptProcessor input validation' do
     end
   end
 
-  context 'when no audio file is found' do
-    it 'exits with a non-zero status and shows an error message' do
+  context "when no audio file is found" do
+    it "exits with a non-zero status and shows an error message" do
       Dir.mktmpdir do |tmpdir|
         # Create a dummy transcript file but no audio
         transcript_path = File.join(tmpdir, "asrOutput.json")

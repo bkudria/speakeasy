@@ -1,4 +1,4 @@
-require 'json'
+require "json"
 
 class TranscriptParser
   def initialize(transcript_path)

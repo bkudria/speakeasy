@@ -41,7 +41,7 @@ class SpeakerExtraction
       cmd = "ffmpeg -hide_banner -loglevel error -y -f concat -safe 0 -i #{temp_file} -c copy #{output_file}"
       puts "  Extracting audio segments..."
 
-      stdout, stderr, status = Open3.capture3(cmd)
+      _, stderr, status = Open3.capture3(cmd)
 
       if status.success?
         puts "  Successfully created #{output_file}"
