@@ -18,7 +18,7 @@ class CsvGenerator
     confidence_values = []
     segment["items"].each do |item_id|
       item = parser.items.find { |i| i["id"].to_s == item_id.to_s }
-      if item && item.dig("alternatives", 0, "confidence")
+      if item&.dig("alternatives", 0, "confidence")
         confidence_values << item.dig("alternatives", 0, "confidence").to_f
       end
     end

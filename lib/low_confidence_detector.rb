@@ -32,7 +32,7 @@ class LowConfidenceDetector
     groups = []
     current_group = [segments.first[:id]]
 
-    segments[1..-1].each do |segment|
+    segments[1..].each do |segment|
       if segment[:id] == current_group.last + 1
         current_group << segment[:id]
       else

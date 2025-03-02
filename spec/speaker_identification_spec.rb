@@ -9,7 +9,7 @@ RSpec.describe SpeakerIdentification do
 
   context "normal identification flow" do
     it "completes speaker identification" do
-      allow(STDIN).to receive(:gets).and_return("go")
+      allow($stdin).to receive(:gets).and_return("go")
 
       expect { identification.identify }.to output(/Speaker Identification/).to_stdout
       expect { identification.identify }.to output(/rename 'spk_0.m4a' to 'spk_0_John.m4a'/).to_stdout

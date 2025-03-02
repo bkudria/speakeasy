@@ -10,7 +10,7 @@ require_relative "csv_generator"
 require_relative "low_confidence_detector"
 
 class TranscriptProcessor
-  def initialize(transcript_path, audio_path, input: STDIN, output_dir: Dir.pwd)
+  def initialize(transcript_path, audio_path, input: $stdin, output_dir: Dir.pwd)
     validate_inputs(transcript_path, audio_path)
 
     @transcript_path = transcript_path
