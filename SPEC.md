@@ -8,9 +8,9 @@
  4. Highlight segments requiring review
 
  ## Input
- The script accepts two command-line arguments:
- 1. Path to the JSON transcript file
- 2. Path to the original audio file
+ The script accepts one command-line argument - a directory containing:
+ 1. the JSON transcript file
+ 2. the original audio file
 
  ## JSON Structure
  The Amazon Transcribe JSON follows this structure:
