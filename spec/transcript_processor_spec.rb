@@ -205,7 +205,8 @@ RSpec.describe TranscriptProcessor do
     context "when the system command is recognized" do
       it "calls system with the correct command" do
         allow(processor).to receive(:open_directory_command).and_return("open")
-        expect(processor).to receive(:system).with("open spec/fixture")
+        allow(Kernel).to receive(:system)
+        expect(Kernel).to receive(:system).with("open spec/fixture")
 
         processor.send(:open_output_directory)
       end
@@ -214,7 +215,7 @@ RSpec.describe TranscriptProcessor do
     context "when the system command is nil" do
       it "prints a warning instead of calling system" do
         allow(processor).to receive(:open_directory_command).and_return(nil)
-        expect(processor).not_to receive(:system)
+        expect(Kernel).not_to receive(:system)
         expect(processor).to receive(:puts).with("Unable to open directory automatically for this platform.")
 
         processor.send(:open_output_directory)

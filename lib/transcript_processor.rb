@@ -211,7 +211,7 @@ end
 def open_output_directory
   command = open_directory_command
   if command
-    system("#{command} #{@output_dir}")
+    Kernel.system("#{command} #{@output_dir}")
   else
     puts "Unable to open directory automatically for this platform."
   end
