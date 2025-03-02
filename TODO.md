@@ -37,9 +37,12 @@
 - [ ] Detect and correct speaker mis-identification in the input JSON, and correct it in the output CSV
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
   - [ ] Realign them with the correct speaker label in the final CSV
-  - Maybe there are other or better ways to solve this? Help wanted, please suggest options! # any suggestions AI?
+  - [ ] Word-level confidence & overlap checks
+  - [ ] Pause & silence analysis
 
 - [ ] Implement the "multiple speakers" note - if a row has segments or items whose timestamp overlaps with previous or
       subsequent rows with differing speakers, both or all 3 rows should have "multiple speakers" in the notes column
+
+- [ ] Provide a manual review step if mis-labeling is suspected
 
 - [ ] 
