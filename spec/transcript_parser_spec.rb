@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../transcript_parser'
+require_relative '../lib/transcript_parser'
 
 RSpec.describe TranscriptParser do
   let(:fixture_path) { File.join(File.dirname(__FILE__), 'fixture', 'asrOutput.json') }
