@@ -5,6 +5,16 @@ require "open3"
 require "fileutils"
 
 RSpec.describe TranscriptProcessor do
+  before do
+    allow(Kernel).to receive(:system) do |cmd|
+      case cmd
+      when /\A(open|start|xdg-open)\s/
+        true  # Stub these so they do NOT actually open anything
+      else
+        Kernel.system(cmd)  # Pass all other commands (like ffmpeg) through
+      end
+    end
+  end
   before(:all) do
     FileUtils.mkdir_p("spec/fixture")
     system("ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t 0.5 -q:a 9 -loglevel error -nostats spec/fixture/audio.m4a")
@@ -205,7 +215,6 @@ RSpec.describe TranscriptProcessor do
     context "when the system command is recognized" do
       it "calls system with the correct command" do
         allow(processor).to receive(:open_directory_command).and_return("open")
-        allow(Kernel).to receive(:system)
         expect(Kernel).to receive(:system).with("open spec/fixture")
 
         processor.send(:open_output_directory)

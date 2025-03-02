@@ -10,7 +10,7 @@
   - [x] Verify that each step in the specification matches the current code behavior
   - [x] Update any outdated references to data structures, input formats, or behaviors
 
-- [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to and rename the files:
+- [x] After generating speaker audio files, open the working directory in the system file manager so the user can listen to and rename the files:
   - [x] Detect the operating system in the script:
     - [x] On **macOS**, run `open <directory>`
     - [x] On **Windows**, run `start <directory>`
