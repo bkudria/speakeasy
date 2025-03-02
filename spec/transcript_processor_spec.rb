@@ -178,6 +178,9 @@ RSpec.describe TranscriptProcessor do
         allow(Dir).to receive(:glob).with(File.join(tmpdir, "spk_*.m4a")).and_return([])
         allow(Dir).to receive(:glob).with(anything).and_call_original
 
+        # Override the global stub to use the real CsvWriter
+        allow(CsvWriter).to receive(:new).and_call_original
+
         # Run the processor
         processor = TranscriptProcessor.new(
           test_json_path, 
