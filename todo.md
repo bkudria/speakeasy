@@ -27,7 +27,7 @@
   - [x] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
   - [x] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
   - [ ] Add or move RSpec tests for CSV writing:
-    - [ ] normal output
+    - [x] normal output
     - [ ] handling or reporting errors
 
 - [ ] Refactor the main script so that the code related to low confidence segment detection is separate and could be covered by unit tests.
