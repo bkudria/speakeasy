@@ -37,7 +37,7 @@
       correct structure so the user can organize it themselves
 
 - [ ] Refactor the main script so that the code related to generating the CSV data is separate and could be covered by unit tests.
-  - [ ] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
+  - [x] Create a new file named `csv_generator.rb` with a `CsvGenerator` class or module
   - [ ] Move CSV row-building logic (including Note field logic for "multiple speakers", "unknown", "error") from `TranscriptProcessor` to `CsvGenerator`
   - [ ] Ensure `TranscriptProcessor` utilizes `CsvGenerator` for building transcript data rows
   - [ ] Add or move RSpec tests for CSV data generation:
