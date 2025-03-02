@@ -1,10 +1,10 @@
-- [ ] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
-  - [ ] Create a new file named `speaker_extraction.rb` with a `SpeakerExtraction` class or module
-  - [ ] Move all audio extraction logic from `TranscriptProcessor` to `SpeakerExtraction`
-  - [ ] Ensure `TranscriptProcessor` calls `SpeakerExtraction`
-  - [ ] Add or move RSpec tests for audio extraction:
-    - [ ] normal audio extraction
-    - [ ] error scenarios
+- [x] Refactor the main script so that the code related to speaker audio extraction is separate and could be covered by unit tests.
+  - [x] Create a new file named `speaker_extraction.rb` with a `SpeakerExtraction` class or module
+  - [x] Move all audio extraction logic from `TranscriptProcessor` to `SpeakerExtraction`
+  - [x] Ensure `TranscriptProcessor` calls `SpeakerExtraction`
+  - [x] Add or move RSpec tests for audio extraction:
+    - [x] normal audio extraction
+    - [x] error scenarios
 
 - [ ] Refactor the main script so that the code related to speaker identification is separate and could be covered by unit tests.
   - [ ] Create a new file named `speaker_identification.rb` with a `SpeakerIdentification` class or module
