@@ -120,6 +120,9 @@ class TranscriptProcessor
   def generate_csv_transcript
     puts "\n=== Step 2: Generating CSV transcript ==="
 
+    # Open the directory for the user to rename files
+    open_output_directory
+    
     # Find speaker identifications from renamed files
     speaker_identities = {}
     Dir.glob(File.join(@output_dir, "spk_*.m4a")).each do |file|
@@ -202,5 +205,14 @@ def open_directory_command
     "xdg-open"
   else
     nil
+  end
+end
+
+def open_output_directory
+  command = open_directory_command
+  if command
+    system("#{command} #{@output_dir}")
+  else
+    puts "Unable to open directory automatically for this platform."
   end
 end
