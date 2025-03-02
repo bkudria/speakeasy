@@ -69,9 +69,7 @@ class TranscriptProcessor
     generate_csv_transcript
 
     # Step 3: Identify segments to review
-    puts "\n=== Step 3: Identifying segments to review ==="
-    detector = LowConfidenceDetector.new
-    detector.identify_segments_to_review(@rows)
+    identify_segments_to_review
 
     puts "Processing complete!"
   end
@@ -100,6 +98,12 @@ class TranscriptProcessor
     unless status.success?
       abort "Error: ffmpeg is not installed or not in PATH. Please install ffmpeg to continue."
     end
+  end
+
+  def identify_segments_to_review
+    puts "\n=== Step 3: Identifying segments to review ==="
+    detector = LowConfidenceDetector.new
+    detector.identify_segments_to_review(@rows)
   end
 
   def extract_speaker_audio
