@@ -101,7 +101,7 @@ RSpec.describe TranscriptProcessor do
       expect(Dir).to receive(:glob).with("spk_*_*.m4a").once.and_return([])
 
       # Then check for unnamed speaker files → returns ["spk_0.m4a"]
-      expect(Dir).to receive(:glob).with("spk_*.m4a").once.and_return(["spk_0.m4a"])
+      expect(Dir).to receive(:glob).with("spk_*.m4a").twice.and_return(["spk_0.m4a"])
       
       expect(processor).to receive(:puts).with(/Please identify each speaker/)
 
