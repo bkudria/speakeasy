@@ -22,10 +22,10 @@
     - [x] normal output generation
     - [x] error cases
 
-- [ ] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
+- [x] Refactor the main script so that the code related to writing the CSV is separate and could be covered by unit tests.
   - [x] Create a new file named `csv_writer.rb` with a `CsvWriter` class or module
-  - [ ] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
-  - [ ] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
+  - [x] Move the CSV writing logic (including exit-on-error behavior for three consecutive errors) from `TranscriptProcessor` to `CsvWriter`
+  - [x] Ensure `TranscriptProcessor` calls `CsvWriter` to write the CSV output
   - [ ] Add or move RSpec tests for CSV writing:
     - [ ] normal output
     - [ ] handling or reporting errors

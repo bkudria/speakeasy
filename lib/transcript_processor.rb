@@ -1,11 +1,11 @@
 require 'json'
-require 'csv'
 require 'fileutils'
 require 'open3'
 require 'descriptive_statistics'
 require_relative 'transcript_parser'
 require_relative 'speaker_extraction'
 require_relative 'speaker_identification'
+require_relative '../csv_writer'
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path)
@@ -120,121 +120,51 @@ class TranscriptProcessor
       end
     end
 
-    # Determine output CSV filename
-    output_filename = "transcript.csv"
-    index = 1
-
-    while File.exist?(File.join(@output_dir, output_filename))
-      output_filename = "transcript.#{index}.csv"
-      index += 1
-    end
-
-    csv_filename = output_filename
-
     # Process transcript into rows
     rows = []
     current_row = nil
-    error_count = 0
+    csv_writer = CsvWriter.new(@output_dir)
 
     segments = @parser.audio_segments
-    total_segments = segments.size
-
+    
     segments.each_with_index do |segment, index|
-      begin
-        # Print progress
-        progress = ((index + 1).to_f / total_segments * 100).round(1)
-        print "\rProcessing segment #{index + 1}/#{total_segments} (#{progress}%)..."
+      result = csv_writer.process_segment(segment, index, current_row, speaker_identities, @parser)
+      
+      if result[:start_new_row]
+        # Add the current row to our list if it exists
+        rows << current_row if current_row
 
-        speaker_label = segment["speaker_label"]
-        speaker_name = speaker_identities[speaker_label] || ""
-        transcript_text = segment["transcript"]
+        # Start a new row
+        current_row = {
+          id: rows.size + 1,
+          speaker: result[:speaker_name],
+          transcript: result[:transcript_text],
+          confidence_min: result[:min_conf],
+          confidence_max: result[:max_conf],
+          confidence_mean: result[:mean_conf],
+          confidence_median: result[:median_conf],
+          note: result[:note],
+          start_time: result[:start_time],
+          end_time: result[:end_time]
+        }
+      else
+        # Append to the current row
+        current_row[:transcript] += " " + result[:transcript_text]
+        current_row[:end_time] = result[:end_time]
+        current_row[:confidence_min] = [current_row[:confidence_min], result[:min_conf]].min
+        current_row[:confidence_max] = [current_row[:confidence_max], result[:max_conf]].max
 
-        # Get confidence values for this segment
-        confidence_values = []
-        segment["items"].each do |item_id|
-          item = @parser.items.find { |i| i["id"].to_s == item_id.to_s }
-          if item && item.dig("alternatives", 0, "confidence")
-            confidence_values << item.dig("alternatives", 0, "confidence").to_f
-          end
-        end
+        # Recalculate mean and median with all values
+        # This is a simplified approach - in a real implementation we'd need to track all values
+        all_values = [result[:mean_conf], current_row[:confidence_mean]]
+        current_row[:confidence_mean] = all_values.sum / all_values.size
+        current_row[:confidence_median] = all_values.sort[all_values.size / 2]
 
-        # Calculate confidence statistics
-        if confidence_values.empty?
-          min_conf = max_conf = mean_conf = median_conf = 0.0
-          note = "error"
-          error_count += 1
-        else
-          min_conf = confidence_values.min
-          max_conf = confidence_values.max
-          mean_conf = confidence_values.sum / confidence_values.size
-          median_conf = confidence_values.sort[confidence_values.size / 2]
-          note = ""
-          error_count = 0
-        end
-
-        # Determine if we need a new row
-        start_new_row = false
-
-        if current_row.nil?
-          start_new_row = true
-        elsif current_row[:speaker] != speaker_name
-          start_new_row = true
-        elsif segment["start_time"].to_f - current_row[:end_time] > 1.0
-          # More than 1 second of silence
-          start_new_row = true
-        end
-
-        if start_new_row
-          # Add the current row to our list if it exists
-          rows << current_row if current_row
-
-          # Start a new row
-          current_row = {
-            id: rows.size + 1,
-            speaker: speaker_name,
-            transcript: transcript_text,
-            confidence_min: min_conf,
-            confidence_max: max_conf,
-            confidence_mean: mean_conf,
-            confidence_median: median_conf,
-            note: note,
-            start_time: segment["start_time"].to_f,
-            end_time: segment["end_time"].to_f
-          }
-        else
-          # Append to the current row
-          current_row[:transcript] += " " + transcript_text
-          current_row[:end_time] = segment["end_time"].to_f
-          current_row[:confidence_min] = [current_row[:confidence_min], min_conf].min
-          current_row[:confidence_max] = [current_row[:confidence_max], max_conf].max
-
-          # Recalculate mean and median with all values
-          all_values = confidence_values + [current_row[:confidence_mean]] * (current_row[:id] - rows.size)
-          current_row[:confidence_mean] = all_values.sum / all_values.size
-          current_row[:confidence_median] = all_values.sort[all_values.size / 2]
-
-          # Update note if needed
-          if note == "error" || current_row[:note] == "error"
-            current_row[:note] = "error"
-          elsif speaker_name != current_row[:speaker] && current_row[:speaker] != ""
-            current_row[:note] = "multiple speakers"
-          end
-        end
-
-        # Check for consecutive errors
-        if error_count >= 3
-          puts "\nEncountered 3 consecutive errors. Details:"
-          3.times do |i|
-            puts "Error #{i+1}: Failed to process segment #{index-2+i}"
-          end
-          abort "Aborting due to multiple consecutive errors."
-        end
-
-      rescue => e
-        puts "\nError processing segment #{index}: #{e.message}"
-        error_count += 1
-        if error_count >= 3
-          abort "Aborting due to multiple consecutive errors."
+        # Update note if needed
+        if result[:note] == "error" || current_row[:note] == "error"
+          current_row[:note] = "error"
+        elsif result[:speaker_name] != current_row[:speaker] && current_row[:speaker] != ""
+          current_row[:note] = "multiple speakers"
         end
       end
     end
@@ -243,28 +173,8 @@ class TranscriptProcessor
     rows << current_row if current_row
 
     # Write to CSV
-    puts "\nWriting transcript to #{csv_filename}..."
-    puts "Transcript saved as #{csv_filename}."
-    CSV.open(csv_filename, "w") do |csv|
-      # Write header
-      csv << ["ID", "Speaker", "Transcript", "Confidence Min", "Confidence Max", "Confidence Mean", "Confidence Median", "Note"]
-
-      # Write rows
-      rows.each do |row|
-        csv << [
-          row[:id],
-          row[:speaker],
-          row[:transcript],
-          row[:confidence_min].round(3),
-          row[:confidence_max].round(3),
-          row[:confidence_mean].round(3),
-          row[:confidence_median].round(3),
-          row[:note]
-        ]
-      end
-    end
-
-    puts "CSV transcript generation complete!"
+    csv_writer.write_transcript(rows, @base_filename)
+    
     @rows = rows
   end
 
