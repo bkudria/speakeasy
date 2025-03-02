@@ -6,6 +6,13 @@
 
 - [ ] Add the `simplecov_json_formatter` gem, so we can use the coverage report to identify untested code regions
 
+- [ ] After generating speaker audio files, open the working directory in the system file manager so the user can listen to the files and identify the speakers.
+  - [ ] Detect the operating system within the script.
+    - [ ] On **macOS**, use `open <directory>`.
+    - [ ] On **Windows**, use `start <directory>`.
+    - [ ] On **Linux**, use `xdg-open <directory>`.
+  - [ ] Execute the corresponding command to open the directory.
+
 - [ ] Ensure `SPEC.md` is correct, complete, and up-to-date
   - Verify each step in the specification matches current code behavior
   - Update any outdated references to data structures, input formats, or behaviors
@@ -25,11 +32,15 @@
   - [ ] Make specs collectively exhaustive
   - [ ] Avoid functionally redundant tests
   - [ ] Only test custom logic rather than external library behavior
-  - [ ] Ensure each line of code is tested at least once
 
-- [ ] Add an integration test covering an entire run of the script
-  - There is a valid transcript JSON file in `spec/fixture/asrOutput.json`
-  - [ ] Verify speaker extraction, speaker identification, CSV generation, CSV writing, and low-confidence detection
-  - [ ] Confirm correct script exit behavior and error handling
-
-- [ ] 
+- [ ] Detect and correct speaker mis-identification in the input JSON, and correct it in the output CSV
+  - Sometimes, the JSON will incorrectly tag the first word or words of a speaker's sentence as belonging to the previous speaker
+  - So, e.g. it'll have something like this:
+      Alice: "Ok, does anyone have any other questions? Yeah"
+      Bob: "I had a question."
+    When in reality, it was:
+      Alice: "Ok, does anyone have any other questions?"
+      Bob: "Yeah, I had a question."
+  - We should be able to detect this case by detecting the sentence boundaries and try to re-align them with transcript
+    row boundaries. (We can also do this for transcript rows that have the same speaker)
+  - Maybe there are other or better ways to solve this? Could we a local LLM to assist? Help wanted, please suggest options!
