@@ -6,7 +6,7 @@ require 'fileutils'
 RSpec.describe TranscriptProcessor do
   before(:all) do
     FileUtils.mkdir_p("spec/fixture")
-    system("ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t 0.5 -q:a 9 spec/fixture/audio.m4a")
+    system("ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t 0.5 -q:a 9 -loglevel error -nostats spec/fixture/audio.m4a")
   end
   
   after(:all) do
