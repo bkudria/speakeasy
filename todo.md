@@ -7,7 +7,7 @@
     - [x] Track and compare coverage from a prior run
     - [x] Fail tests if coverage decreases from the prior run
 
-- [ ] Improve the parser tests, using fixture file spec/fixture/asrOutput.json as the source of well-formed transcript
+- [x] Improve the parser tests, using fixture file spec/fixture/asrOutput.json as the source of well-formed transcript
       JSON
   - the fixture file will always contain well-formed and correct data.
   - Use placeholder values as comparison values, and temporarily disable the tests. The user will replace placeholder
@@ -20,7 +20,7 @@
   - [x] Update or create parser tests that load and parse this fixture
   - [x] Update any specs that use well-formed sample data to use the fixture data instead. To test malformed data,
         continue using or add in-spec sample data
-  - [ ] Confirm coverage for:
+  - [x] Confirm coverage for:
     - [x] normal transcript data
       - [x] Ensure fixture "asrOutput.json" is loaded without error
       - [x] Validate `speaker_count` matches expected placeholder
@@ -32,14 +32,12 @@
     - [x] error handling
       - [x] Introduce placeholder expectations for missing audio file scenario
       - [x] Introduce placeholder expectations for invalid JSON structure scenario
-  - [ ] Verify:
-    - [ ] speaker_count
-    - [ ] audio_segments
-    - [ ] items
-  - [ ] Add assertions that confirm correct identification of speakers and segments
   
-- [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
+- [ ] Improve Specs
+  - [ ] Refactor specs to ensure they are mutually exclusive, and collectively exhaustive. No spec should test only code
       that is already covered by another spec, and the specs should test all functionality of the code the cover.
+  - [ ] Bring the specs in-line with agreed-upon RSpec best practices
+
 - [ ] Organize the repo according to best practices for Ruby projects. Either run the commands yourself, or output the
       correct structure so the user can organize it themselves
 
