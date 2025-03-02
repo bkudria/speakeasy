@@ -94,13 +94,19 @@ RSpec.describe TranscriptProcessor do
     end
     
     it "prompts for speaker identification when unnamed speaker files exist" do
-      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return([])
-      allow(Dir).to receive(:glob).with("spk_*.m4a").and_return(["spk_0.m4a"])
+      # Use and_call_original so other unrelated Dir.glob calls still behave normally
+      allow(Dir).to receive(:glob).and_call_original
+
+      # First call to check named speaker files → should return []
+      expect(Dir).to receive(:glob).with("spk_*_*.m4a").once.and_return([])
+
+      # Then check for unnamed speaker files → returns ["spk_0.m4a"]
+      expect(Dir).to receive(:glob).with("spk_*.m4a").once.and_return(["spk_0.m4a"])
       
       expect(processor).to receive(:puts).with(/Please identify each speaker/)
-      
-      # After "go", check again for named files
-      allow(Dir).to receive(:glob).with("spk_*_*.m4a").and_return(["spk_0_John.m4a"])
+
+      # After user types "go", the code checks named speaker files again
+      expect(Dir).to receive(:glob).with("spk_*_*.m4a").once.and_return(["spk_0_John.m4a"])
       
       processor.process
     end
