@@ -2,6 +2,7 @@ require "simplecov"
 SimpleCov.start do
   track_files "lib/**/*.rb"
   add_filter "spec/"
+  refuse_coverage_drop
 end
 
 SimpleCov.at_exit do
