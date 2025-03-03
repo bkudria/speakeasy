@@ -8,3 +8,8 @@
 
 - [ ] Thorough Error Logging with Time Stamps
   - Provide clearer debugging by including timestamps and error categories in logs.
+
+- [ ] Write a `README.md` for end-users:
+  - [ ] Explain how to install the script
+  - [ ] Explain how to run and provide input
+  - [ ] Show usage examples

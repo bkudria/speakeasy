@@ -13,11 +13,6 @@
   - [x] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
   - [x] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
-- [ ] Write a `README.md` for end-users:
-  - [ ] Explain how to install the script
-  - [ ] Explain how to run and provide input
-  - [ ] Show usage examples
-
 - [ ] Improve Specs:
   - [x] Ensure code that prints output does not interfere with RSpec output
   - [ ] Adopt RSpec best practices (e.g., use `describe/context/it` instead of `should`)
