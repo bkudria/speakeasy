@@ -9,7 +9,7 @@
   - For each of the tasks below, only document behavior, logic, or motivation that is not immediately obvious from skimming the adjacent code
   - [x] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
   - [x] Document how consecutive errors are handled and how it's used in CsvGenerator
-  - [ ] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
+  - [x] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
   - [ ] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
   - [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 

@@ -28,6 +28,10 @@ class SpeakerExtraction
       output_file = "#{speaker}.m4a"
 
       # Create a temporary file with segment timestamps
+      # This file follows ffmpeg's concat demuxer format, listing each segment to extract
+      # from the main audio file with precise timestamps. This approach allows ffmpeg
+      # to efficiently extract and concatenate multiple segments without creating
+      # intermediate files for each segment.
       temp_file = "#{speaker}_segments.txt"
       File.open(temp_file, "w") do |f|
         segments.each do |segment|

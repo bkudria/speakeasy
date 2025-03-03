@@ -81,7 +81,10 @@
  2 Each audio file contains the concatenated segments for a single speaker, using the start_time and end_time from audio_segments.
  3 The script uses ffmpeg to extract the audio segments efficiently.
  4 Output files are named according to speaker labels (e.g., spk_0.m4a).
- 5 The script displays progress for each speaker extraction and the overall step.
+ 5 The script creates a temporary text file for each speaker containing segment timestamps.
+   This file is used by ffmpeg's concat demuxer to efficiently extract and join multiple
+   segments without creating intermediate files for each segment.
+ 6 The script displays progress for each speaker extraction and the overall step.
  6 Upon completion, the script prints a summary showing:
     • Total number of speakers detected
     • Number of segments per speaker
