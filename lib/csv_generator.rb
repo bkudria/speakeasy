@@ -49,7 +49,9 @@ class CsvGenerator
       start_new_row = true
     end
 
-    # Check for consecutive errors
+    # When a segment is invalid, note is set to "error". If we detect 3 consecutive
+    # errors, we provide details on each prior error and terminate the program.
+    # This ensures serious or recurring issues are caught early.
     if @error_count >= 3
       puts "\nEncountered 3 consecutive errors. Details:"
       3.times do |i|

@@ -129,6 +129,10 @@
 
  • If the script encounters unexpected conditions while processing a segment, it marks the row with "error" in the Note field.
  • If three consecutive error rows occur, the script prints detailed descriptions of each error and exits.
+ 
+ For CSV generation, the script tracks consecutive errors in memory. Each invalid segment increments an
+ internal error counter, which resets to zero for valid segments. Exceeding three consecutive errors
+ triggers a forced stop to avoid generating a corrupted CSV.
 
                                                                   Step 3: Review Suggestions
 
