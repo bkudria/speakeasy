@@ -23,8 +23,6 @@ class TranscriptProcessor
   end
 
   def process
-    # TODO: document the nested logic checking for named vs unnamed speaker files
-
     puts "Starting Amazon Transcribe processing script"
 
     # Check for existing named speaker files

@@ -6,8 +6,6 @@ class SpeakerExtraction
   end
 
   def extract
-    # TODO: document the creation of a temporary segments file for ffmpeg
-
     num_speakers = @parser.speaker_count
     puts "Detected #{num_speakers} speakers in the transcript."
 

@@ -5,8 +5,6 @@ class CsvGenerator
   end
 
   def process_segment(segment, index, current_row, speaker_identities, parser)
-    # TODO: document how consecutive errors are handled and how it's used
-
     # Print progress
     total_segments = parser.audio_segments.size
     progress = ((index + 1).to_f / total_segments * 100).round(1)

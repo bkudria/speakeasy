@@ -11,8 +11,6 @@ class TranscriptParser
   end
 
   def speaker_count
-    # TODO: document the assumption that 'speaker_labels' is always a Hash
-
     speaker_labels = @parsed_data.dig("results", "speaker_labels")
     if speaker_labels.is_a?(Hash)
       speaker_labels["speakers"].to_i
