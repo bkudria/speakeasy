@@ -6,12 +6,12 @@
     - code that is particularly difficult to understand or change
     - code that appears simple but has un-intuitive or surprising behavior
   - [x] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
-
-- [ ] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
-- [ ] Document how consecutive errors are handled and how it's used in CsvGenerator
-- [ ] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
-- [ ] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
-- [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
+  - For each of the tasks below, only document behavior, logic, or motivation that is not immediately obvious from skimming the adjacent code
+  - [ ] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
+  - [ ] Document how consecutive errors are handled and how it's used in CsvGenerator
+  - [ ] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
+  - [ ] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
+  - [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
 - [ ] Write a `README.md` for end-users:
   - [ ] Explain how to install the script
