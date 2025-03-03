@@ -1,11 +1,17 @@
 - [ ] Document the code with comments for un-intuitive parts:
-  - [ ] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
+  - [x] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
     - areas that include assumptions about the transcript JSON structure
     - areas where just reading the code wouldn't lead to a full understanding
     - areas where the code does not impart the full motivation
     - code that is particularly difficult to understand or change
     - code that appears simple but has un-intuitive or surprising behavior
-  - [ ] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
+  - [x] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
+
+- [ ] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
+- [ ] Document how consecutive errors are handled and how it's used in CsvGenerator
+- [ ] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
+- [ ] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
+- [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
 - [ ] Write a `README.md` for end-users:
   - [ ] Explain how to install the script
