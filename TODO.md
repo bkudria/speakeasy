@@ -1,6 +1,11 @@
 - [ ] Document the code with comments for un-intuitive parts:
-  - [ ] Highlight any unusual logic in `csv_generator.rb` and `transcript_processor.rb`
-  - [ ] Note assumptions about the transcript JSON structure
+  - [ ] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
+    - areas that include assumptions about the transcript JSON structure
+    - areas where just reading the code wouldn't lead to a full understanding
+    - areas where the code does not impart the full motivation
+    - code that is particularly difficult to understand or change
+    - code that appears simple but has un-intuitive or surprising behavior
+  - [ ] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
 
 - [ ] Write a `README.md` for end-users:
   - [ ] Explain how to install the script
@@ -30,24 +35,26 @@
 
 - [ ] Provide a manual review step if mis-labeling is suspected. This step should occur after the entire CSV is written.
 
+- [ ] Add JSON Schema Validation
+  - Ensures the transcript JSON strictly follows Amazon Transcribe’s structure before processing.
+
 - [ ] Implement Logging
   - [ ] Add a configurable logging mechanism to capture debug/info/warning/error messages
   - [ ] Allow logs to be toggled or directed to a file
+  - [ ] Ensure all program output (including from external `system` calls) goes through the logger, and update
+        spec_helper.rb to capture logs and output them only if a spec fails, instead of mocking the global stdout/stderr
+        streams.
 
 - [ ] Add CLI Flags
   - [ ] Allow users to set options (confidence threshold, paths, skipping steps, etc.) via command-line flags
   - [ ] Provide help text for each flag
 
-- [ ] Create Integration Tests
-  - [ ] Add end-to-end tests that run the entire script with sample JSON/audio input
-  - [ ] Verify all steps work together correctly
-
-- [ ] Automate OS Detection Tests
-  - [ ] Test the script's "open directory" logic on each supported OS
-  - [ ] Consider using CI with different OS runners
-
 - [ ] Enhance Environmental Checks
   - [ ] Add checks for FFmpeg installation and other external dependencies
   - [ ] Guide the user if dependencies are missing
+
+- [ ] Add Concurrency for Segment Processing
+  - Reasoning: Parallelize the segment processing to speed up CSV generation for large transcripts.
+  - use the ruby-concurrency gem
 
 - [ ] 
