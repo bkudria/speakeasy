@@ -8,6 +8,8 @@ class SpeakerIdentification
   end
 
   def identify(skip: false)
+    # TODO: document the logic waiting for user to type 'go' to proceed
+
     return if skip
 
     puts "\n=== Speaker Identification ==="
