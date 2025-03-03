@@ -10,7 +10,7 @@
   - [x] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
   - [x] Document how consecutive errors are handled and how it's used in CsvGenerator
   - [x] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
-  - [ ] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
+  - [x] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
   - [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
 - [ ] Write a `README.md` for end-users:

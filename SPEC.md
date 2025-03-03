@@ -152,3 +152,9 @@ After CSV generation, the script identifies segments with low confidence scores 
  • It checks for proper JSON formatting in the transcript file
  • It verifies the audio file can be processed by ffmpeg
  • All errors are reported with clear, actionable messages
+
+## Assumptions
+
+ • Speakeasy expects that the `"speaker_labels"` field in Amazon Transcribe JSON is always a
+   valid object (Hash). If this field is absent or provided as a different type, the script
+   will interpret the speaker count as zero and skip extracting speaker-specific audio.

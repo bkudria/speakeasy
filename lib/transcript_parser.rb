@@ -10,6 +10,8 @@ class TranscriptParser
     @parsed_data
   end
 
+  # We assume the "speaker_labels" key in the JSON is always a Hash.
+  # If it isn't, this method defaults the speaker count to 0.
   def speaker_count
     speaker_labels = @parsed_data.dig("results", "speaker_labels")
     if speaker_labels.is_a?(Hash)
