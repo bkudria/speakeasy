@@ -104,6 +104,11 @@
       checking if the user has typed "go". This ensures the user has adequate time
       to rename the speaker files before continuing to the next step.
  3 If a user doesn't rename a particular speaker file, the script will treat that speaker as unidentified in the CSV output (blank Speaker column).
+ 4 If the script detects any files matching the pattern `spk_*_*.m4a`, it treats those
+   speakers as already identified, so speaker audio extraction is skipped. Otherwise, if
+   it detects only files named like `spk_#.m4a`, the user is prompted to rename them to
+   indicate the correct speaker name. If no named files are found after this prompt,
+   the script exits with an error.
 
                                                                  Additional Platform Handling
 

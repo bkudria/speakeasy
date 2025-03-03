@@ -26,6 +26,9 @@ class TranscriptProcessor
     puts "Starting Amazon Transcribe processing script"
 
     # Check for existing named speaker files
+    # If we detect any files matching "spk_*_*.m4a", we assume the user has already
+    # named the speakers, so we skip extraction. Otherwise, we look for unnamed
+    # speaker files ("spk_#.m4a"), prompt the user to rename them, and then retry.
     named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
     if named_speaker_files.any?
       puts "\nNamed speaker files detected. Skipping speaker audio extraction step."

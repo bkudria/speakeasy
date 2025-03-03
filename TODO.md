@@ -11,7 +11,7 @@
   - [x] Document how consecutive errors are handled and how it's used in CsvGenerator
   - [x] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
   - [x] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
-  - [ ] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
+  - [x] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
 - [ ] Write a `README.md` for end-users:
   - [ ] Explain how to install the script
