@@ -97,6 +97,9 @@
     • Original: spk_0.m4a
     • Renamed: spk_0_Ben.m4a (if speaker is identified as "Ben")
  2 The script instructs the user to type `go` and press Enter when done renaming.
+    • Internally, the script loops and sleeps for a brief interval, repeatedly
+      checking if the user has typed "go". This ensures the user has adequate time
+      to rename the speaker files before continuing to the next step.
  3 If a user doesn't rename a particular speaker file, the script will treat that speaker as unidentified in the CSV output (blank Speaker column).
 
                                                                  Additional Platform Handling
