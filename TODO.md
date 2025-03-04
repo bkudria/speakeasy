@@ -1,3 +1,19 @@
+- [ ] Migrate transcript construction to use individual items instead of audio_segments
+  - [ ] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping.
+  - [ ] Adjust CsvGenerator (and related code in TranscriptProcessor) to iterate over items for row construction, rather than audio_segments.
+  - [ ] Ensure speaker_label handling is consistent at the item level, preserving speaker continuity when forming rows.
+  - [ ] Add or update specs to confirm the new item-driven approach produces correct transcripts (with speaker labels, punctuation, confidence stats).
+
+- [ ] Implement optional punctuation-based boundary detection
+  - [ ] Create or update logic to detect sentence boundaries from punctuation tokens.
+  - [ ] Use punctuation to form row segments, ensuring short fragments aren’t merged incorrectly.
+  - [ ] Write new specs or update existing ones to verify punctuation-based segmentation (including edge cases).
+
+- [ ] Validate final CSV rows under the new item-based workflow
+  - [ ] Confirm row-level confidence calculations (min, max, mean, median) match the aggregated items.
+  - [ ] Validate that each row’s speaker and transcript text are correct after item grouping.
+  - [ ] Ensure existing integration specs (or new ones) pass with this approach.
+
 - [ ] Write specs for mis-labeled segments and misaligned sentences in the input JSON
   - We will follow TDD to separate detection specs from correction specs, writing failing specs first
   - Generally, these mis-alignments are only one or two words, and corrected rows should reflect complete sentences
