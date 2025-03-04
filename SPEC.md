@@ -138,7 +138,8 @@ If the input audio format is incompatible with ffmpeg, the script will display a
 
 After CSV generation, the script identifies segments with low confidence scores for user review:
 
-- Low confidence threshold: segments with mean confidence below 0.75
+- Low confidence threshold: segments with mean confidence below 0.75 by default,
+  but this threshold can be changed when initializing the detector or via CLI flags.
 
 ## General Error Handling
 

@@ -58,4 +58,47 @@ RSpec.describe LowConfidenceDetector do
       expect { detector.identify_segments_to_review(high_confidence_rows) }.to output(/No low-confidence segments found/).to_stdout
     end
   end
+
+  context "with a custom threshold" do
+    let(:rows) do
+      [
+        {id: 1, confidence_mean: 0.85},
+        {id: 2, confidence_mean: 0.95}
+      ]
+    end
+
+    it "finds low-confidence segments below 0.9" do
+      detector = described_class.new(threshold: 0.9)
+      result = detector.find_low_confidence_segments(rows)
+      expect(result.map { |r| r[:id] }).to eq([1])
+    end
+
+    it "does not find any segments below 0.80" do
+      detector = described_class.new(threshold: 0.80)
+      result = detector.find_low_confidence_segments(rows)
+      expect(result).to be_empty
+    end
+  end
+
+  context "with edge case threshold values" do
+    it "treats threshold = 1.0 as requiring 1.0 or higher to pass" do
+      detector = described_class.new(threshold: 1.0)
+      rows = [
+        {id: 1, confidence_mean: 0.9999},
+        {id: 2, confidence_mean: 1.0}
+      ]
+      result = detector.find_low_confidence_segments(rows)
+      expect(result.map { |r| r[:id] }).to eq([1])
+    end
+
+    it "treats threshold = 0.0 as allowing all segments to pass" do
+      detector = described_class.new(threshold: 0.0)
+      rows = [
+        {id: 1, confidence_mean: 0.10},
+        {id: 2, confidence_mean: 0.50}
+      ]
+      result = detector.find_low_confidence_segments(rows)
+      expect(result).to be_empty
+    end
+  end
 end
