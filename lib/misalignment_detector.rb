@@ -21,4 +21,24 @@ class MisalignmentDetector
   end
 
   # Add any other helper methods here as needed
+
+  def check_word_confidence
+    # TODO: Implementation needed
+  end
+
+  def check_pause_silences
+    # TODO: Implementation needed
+  end
+
+  def check_time_adjacency
+    # TODO: Implementation needed
+  end
+
+  def check_cross_speaker_transitions
+    # TODO: Implementation needed
+  end
+
+  def check_aggregated_confidence_drops
+    # TODO: Implementation needed
+  end
 end

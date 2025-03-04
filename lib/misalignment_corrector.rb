@@ -20,4 +20,11 @@ class MisalignmentCorrector
   def mark_review_if_unsure
     # TODO: Implementation needed
   end
+  def reassign_words_by_timing
+    # TODO: Implementation needed
+  end
+
+  def handle_uncertain_speaker
+    # TODO: Implementation needed
+  end
 end
