@@ -3,6 +3,7 @@ require "json"
 
 RSpec.describe CsvGenerator do
   describe "#build_row" do
+    # TODO: improve - test additional edge cases, e.g. empty items array
     let(:csv_generator) { described_class.new }
 
     it "returns expected row data for normal segment" do

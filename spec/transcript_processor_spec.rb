@@ -6,6 +6,7 @@ require "fileutils"
 
 RSpec.describe TranscriptProcessor do
   before do
+    # TODO: improve - refactor stubs/mocks into shared contexts for readability
     allow(Kernel).to receive(:system) do |cmd|
       case cmd
       when /\A(open|start|xdg-open)\s/

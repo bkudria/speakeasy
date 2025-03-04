@@ -4,6 +4,7 @@ require_relative "../lib/low_confidence_detector"
 RSpec.describe LowConfidenceDetector do
   subject(:detector) { described_class.new(threshold: 0.75) }
 
+  # TODO: improve - add tests for configurable threshold and edge case values
   describe "#find_low_confidence_segments" do
     it "returns segments below the threshold" do
       rows = [

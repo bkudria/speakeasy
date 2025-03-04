@@ -3,6 +3,7 @@ require "speaker_extraction"
 
 RSpec.describe SpeakerExtraction do
   context "normal extraction" do
+    # TODO: improve - implement ffmpeg extraction tests or mock approach
     it "extracts speaker audio successfully" do
       # ...
     end

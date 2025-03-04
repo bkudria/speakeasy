@@ -3,6 +3,7 @@ require_relative "../lib/csv_writer"
 
 RSpec.describe CsvWriter do
   describe "#write_transcript" do
+    # TODO: improve - verify behavior with mixed error and valid segments
     it "writes CSV rows correctly for normal output" do
       # Create a temporary directory for output
       output_dir = Dir.mktmpdir

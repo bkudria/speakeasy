@@ -9,7 +9,7 @@
 
 - [ ] Improve Specs:
   - [x] Ensure code that prints output does not interfere with RSpec output
-  - [ ] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
+  - [x] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
     - Add a `TODO: improve` comment in each spec or block needing improvement
 
   - [ ] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task

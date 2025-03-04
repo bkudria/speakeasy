@@ -4,6 +4,7 @@ require_relative "../lib/transcript_parser"
 RSpec.describe TranscriptParser do
   let(:fixture_path) { File.join(File.dirname(__FILE__), "fixture", "asrOutput.json") }
   subject(:parser) { TranscriptParser.new(fixture_path) }
+  # TODO: improve - add thorough tests for partial/missing fields beyond standard fixture
 
   describe "#initialize" do
     it "loads JSON data from the transcript file" do
