@@ -1,4 +1,14 @@
 
+- [ ] Implement optional punctuation-based boundary detection
+  - [ ] Create or update logic to detect sentence boundaries from punctuation tokens.
+  - [ ] Use punctuation to form row segments, ensuring short fragments aren’t merged incorrectly.
+  - [ ] Write new specs or update existing ones to verify punctuation-based segmentation (including edge cases).
+
+- [ ] Validate final CSV rows under the new item-based workflow
+  - [ ] Confirm row-level confidence calculations (min, max, mean, median) match the aggregated items.
+  - [ ] Validate that each row’s speaker and transcript text are correct after item grouping.
+  - [ ] Ensure existing integration specs (or new ones) pass with this approach.
+
 - [ ] Add JSON Schema Validation
   - Ensures the transcript JSON strictly follows Amazon Transcribe’s structure before processing.
 
