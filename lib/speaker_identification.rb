@@ -19,7 +19,8 @@ class SpeakerIdentification
     # Each time through the loop, we check stdin for "go" and
     # sleep briefly before checking again.
     puts "\nType `go` and press enter when you have finished identifying speakers..."
-    until @input.gets.match("go")
+    until (line = @input.gets)&.match(/go/)
+      break unless line  # stops if input is exhausted
       sleep 1
     end
   end

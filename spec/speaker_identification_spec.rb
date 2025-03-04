@@ -9,7 +9,8 @@ RSpec.describe SpeakerIdentification do
 
   context "normal identification flow" do
     it "completes speaker identification" do
-      input = StringIO.new("go\n")
+      # Provide two 'go' lines for the two calls:
+      input = StringIO.new("go\ngo\n")
       identification = SpeakerIdentification.new(parser, audio_path, output_dir, input: input)
 
       expect { identification.identify }.to output(/Speaker Identification/).to_stdout
