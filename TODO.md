@@ -7,7 +7,7 @@
   - [x] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
   - [x] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
 
-- [ ] Improve Specs:
+- [x] Improve Specs:
   - [x] Ensure code that prints output does not interfere with RSpec output
   - [x] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
     - Add a `TODO: improve` comment in each spec or block needing improvement
@@ -19,12 +19,19 @@
   - [x] Add tests for configurable threshold and edge case values in LowConfidenceDetector
   - [x] Implement ffmpeg extraction tests or mock approach in SpeakerExtraction specs
 
-- [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
-  - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
-  - [ ] Realign these segments with the correct speaker label in the final CSV
-  - [ ] Perform word-level confidence and overlap checks
-  - [ ] Perform pause and silence analysis
-  - [ ] Add a "review" note to any rows you do not automatically correct
+- [ ] Write specs for detecting and correcting speaker mis-identifications/sentence mis-alignements in the input JSON,
+      and outputting appropriate rows in the CSV:
+      - We will implement the functionality later - for now, the specs should fail.
+  - [ ] The specs should test that the program can detect incorrectly-labeled segments by analyzing sentence boundaries,
+        using the punctuation data in the Amazon Transcribe JSON data
+  - [ ] The specs should test that the program does not adjust speaker labels. Instead, the program should move sentence
+        fragments to the correct speaker row, such that speakers complete their sentences
+  - Generally, the mis-alignments are only one or two words. This is the case we want to fix, not the case when one speaker interrupts another.
+  - If there is an ambiguous segment and the correct owner of the sentence fragment cannot be determined, the program
+    may both keep the fragment in the old row, and add it to the new row. In such cases, both rows should have "review
+    in their note." 
+  - [ ] The specs should test that the program perform word-level confidence and overlap checks
+  - [ ] The specs should test that the program performs pause and silence analysis
 
 - [ ] Implement a "multiple speakers" note:
   - [ ] If a row's timestamps overlap with previous or subsequent rows that have different speakers, mark all involved rows with "multiple speakers" in the Note column
