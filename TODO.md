@@ -1,4 +1,4 @@
-- [ ] Document the code with comments for un-intuitive parts:
+- [x] Document the code with comments for un-intuitive parts:
   - [x] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
     - areas that include assumptions about the transcript JSON structure
     - areas where just reading the code wouldn't lead to a full understanding
