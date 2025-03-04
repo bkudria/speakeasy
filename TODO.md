@@ -17,7 +17,6 @@
   - [x] Add thorough tests for partial/missing fields beyond standard fixture in TranscriptParser
   - [x] Test additional edge cases in CsvGenerator (e.g., empty items array)
   - [x] Add tests for configurable threshold and edge case values in LowConfidenceDetector
-  - [ ] Consider shared examples for repeated 'missing' checks in input validation specs
   - [ ] Implement ffmpeg extraction tests or mock approach in SpeakerExtraction specs
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
