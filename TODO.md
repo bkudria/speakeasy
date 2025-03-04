@@ -11,8 +11,9 @@
   - [x] Ensure code that prints output does not interfere with RSpec output
   - [ ] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
     - Add a `TODO: improve` comment in each spec or block needing improvement
-    - Remove the `TODO: improve` comment once that improvement is made
-    - For each improvement identified, add a new bullet under this task describing what needs to be done
+
+  - [ ] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task
+        after the one on this line) under this task describing what needs to be done, and remove the comment.
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
