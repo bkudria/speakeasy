@@ -4,6 +4,26 @@
 
   - [ ] Detection specs:
     - [ ] Add specs for detecting incorrectly labeled segments by analyzing sentence boundaries (punctuation data)
+      - Misalignment examples:
+        - Sore Throat:
+          - Misaligned:
+              Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better. Thank
+              Gloria: you. I appreciate it.
+          - Corrected:
+              Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better.
+              Gloria: Thank you. I appreciate it.
+        - Real Words:
+          - Misaligned:
+              Bob: It's a good talent to be able to say that. It's not actually
+              Gloria: you. I appreciate it.
+          - Corrected:
+              Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better.
+              Jim: a real word. I learned that
+        - Not a misalignment: even if Jim doesn't have a complete sentence, Bob starts a new sentence, indicating that
+          Bob interrupted Jim. This transcript is correct:
+            Jim: Hey Bob, question. Is it your intention or your recommendation that we fill up all 22 slots next Wednesday? That would be a
+            Bob: I mean, I think that is the ideal scenario.
+
     - [ ] Add specs that test word-level confidence and overlap to verify alignment
     - [ ] Add specs that test pause/silence data to confirm correct segmentation
     - [ ] Add specs for time-based adjacency checks for short offsets from expected boundaries
