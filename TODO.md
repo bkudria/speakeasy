@@ -3,12 +3,11 @@
   - Generally, these mis-alignments are only one or two words. Once corrected, the result should generally reflect that
     speakers usually their sentences.
   - Write failing specs only, we will implement this functionality later
-  - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries using punctuation data
-  - [ ] For short mis-alignments (1–2 words), move them to the correct speaker row
-  - [ ] If an ambiguous fragment cannot be determined, duplicate it in both rows with "review" in the Note
-  - [ ] Check word-level confidence and overlap to verify alignment
-  - [ ] Check pause and silence data to confirm correct segmentation
-
+  - [ ] Add specs for detecting incorrectly labeled segments by analyzing sentence boundaries using punctuation data
+  - [ ] Add specs the test that for short mis-alignments (1–2 words), the program moves them to the correct speaker row
+  - [ ] Add specs that test that if an ambiguous fragment cannot be determined, the program will duplicate it in both rows with "review" in the Note
+  - [ ] Add specs that test that the program shecks word-level confidence and overlap to verify alignment
+  - [ ] Add specs that test that the program checks pause and silence data to confirm correct segmentation
   - [ ] Add specs for time-based adjacency checks for short offset from expected boundaries
   - [ ] Add specs for cross-speaker transition checks (without textual cues) to verify trailing words actually belong to the next speaker
   - [ ] Add specs for aggregated confidence trending to detect abrupt confidence drops that might indicate misalignment
