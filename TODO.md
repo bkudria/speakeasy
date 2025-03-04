@@ -9,6 +9,10 @@
   - [ ] Check word-level confidence and overlap to verify alignment
   - [ ] Check pause and silence data to confirm correct segmentation
 
+  - [ ] Add specs for time-based adjacency checks for short offset from expected boundaries
+  - [ ] Add specs for cross-speaker transition checks (without textual cues) to verify trailing words actually belong to the next speaker
+  - [ ] Add specs for aggregated confidence trending to detect abrupt confidence drops that might indicate misalignment
+
 - [ ] Implement a "multiple speakers" note:
   - [ ] If any row's timestamps overlap with other rows bearing different speakers, mark all involved rows with "multiple speakers" in the Note column
 
