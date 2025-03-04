@@ -4,7 +4,6 @@ require "tmpdir"
 
 RSpec.describe "TranscriptProcessor input validation" do
   context "when the transcript file is missing" do
-    # TODO: improve - consider shared examples for repeated 'missing' checks
     it "exits with a non-zero status and shows an error message" do
       Dir.mktmpdir do |tmpdir|
         # Create a dummy audio file in tmpdir

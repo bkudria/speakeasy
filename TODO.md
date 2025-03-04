@@ -14,6 +14,12 @@
 
   - [ ] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task
         after the one on this line) under this task describing what needs to be done, and remove the comment.
+  - [ ] Remove direct $stdin usage from SpeakerIdentification specs and inject test input instead
+  - [ ] Add thorough tests for partial/missing fields beyond standard fixture in TranscriptParser
+  - [ ] Test additional edge cases in CsvGenerator (e.g., empty items array)
+  - [ ] Add tests for configurable threshold and edge case values in LowConfidenceDetector
+  - [ ] Consider shared examples for repeated 'missing' checks in input validation specs
+  - [ ] Implement ffmpeg extraction tests or mock approach in SpeakerExtraction specs
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries

@@ -7,7 +7,6 @@ RSpec.describe SpeakerIdentification do
   let(:output_dir) { "path/to/output" }
   let(:identification) { SpeakerIdentification.new(parser, audio_path, output_dir) }
 
-  # TODO: improve - consider removing direct $stdin usage, inject test input
   context "normal identification flow" do
     it "completes speaker identification" do
       allow($stdin).to receive(:gets).and_return("go")
