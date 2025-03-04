@@ -41,5 +41,22 @@ RSpec.describe CsvGenerator do
       row = csv_generator.build_row(segment)
       expect(row[:note]).to eq("error")
     end
+
+    it "returns an error note and nil confidences if items array is empty" do
+      segment = {
+        id: 2,
+        speaker: "Speaker_Empty",
+        transcript: "No items here",
+        items: [],
+        speaker_count: 1
+      }
+      row = csv_generator.build_row(segment)
+
+      expect(row[:note]).to eq("error")
+      expect(row[:confidence_min]).to be_nil
+      expect(row[:confidence_max]).to be_nil
+      expect(row[:confidence_mean]).to be_nil
+      expect(row[:confidence_median]).to be_nil
+    end
   end
 end

@@ -15,7 +15,7 @@
         after the one on this line) under this task describing what needs to be done, and remove the comment.
   - [x] Remove direct $stdin usage from SpeakerIdentification specs and inject test input instead
   - [x] Add thorough tests for partial/missing fields beyond standard fixture in TranscriptParser
-  - [ ] Test additional edge cases in CsvGenerator (e.g., empty items array)
+  - [x] Test additional edge cases in CsvGenerator (e.g., empty items array)
   - [ ] Add tests for configurable threshold and edge case values in LowConfidenceDetector
   - [ ] Consider shared examples for repeated 'missing' checks in input validation specs
   - [ ] Implement ffmpeg extraction tests or mock approach in SpeakerExtraction specs
