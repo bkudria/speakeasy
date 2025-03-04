@@ -1,12 +1,6 @@
 - [x] Document the code with comments for un-intuitive parts:
   - [x] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
-    - areas that include assumptions about the transcript JSON structure
-    - areas where just reading the code wouldn't lead to a full understanding
-    - areas where the code does not impart the full motivation
-    - code that is particularly difficult to understand or change
-    - code that appears simple but has un-intuitive or surprising behavior
   - [x] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
-  - For each of the tasks below, only document behavior, logic, or motivation that is not immediately obvious from skimming the adjacent code
   - [x] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
   - [x] Document how consecutive errors are handled and how it's used in CsvGenerator
   - [x] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
@@ -15,13 +9,10 @@
 
 - [ ] Improve Specs:
   - [x] Ensure code that prints output does not interfere with RSpec output
-  - [ ] Identify specs, describe blocks, context blocks, or spec files suitable for improvement, and add a
-        `TODO: improve` comment, according to what needs improvement:
-    - RSpec best practices (e.g., use `describe/context/it` instead of `should`)
-    - Spec tests only functionality already tested by another spec
-    - Block or spec file doesn't fully test the functionality, and no other spec covers it
-    - Spec tests functionality not implemented by the codebase - e.g. it tests library, OS, or other external behavior exclusively
-  - [ ]  Add a task for each spec improvement TODO comment to TODO.md, as a sibling to this sub-task, and remove the comment
+  - [ ] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
+    - Add a `TODO: improve` comment in each spec or block needing improvement
+    - Remove the `TODO: improve` comment once that improvement is made
+    - For each improvement identified, add a new bullet under this task describing what needs to be done
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
