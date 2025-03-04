@@ -121,4 +121,26 @@ RSpec.describe TranscriptParser do
       expect { TranscriptParser.new(fixture_path) }.to raise_error(JSON::ParserError)
     end
   end
+
+  context "more partial fields coverage" do
+    it "handles completely missing results gracefully" do
+      json_data = { "accountId" => "fake", "jobName" => "fake" }
+      allow(File).to receive(:read).and_return(json_data.to_json)
+
+      parser = TranscriptParser.new(fixture_path)
+      expect(parser.speaker_count).to eq(0)
+      expect(parser.audio_segments).to eq([])
+      expect(parser.items).to eq([])
+    end
+
+    it "handles missing transcripts gracefully" do
+      json_data = JSON.parse(File.read(fixture_path))
+      json_data["results"].delete("transcripts")
+      allow(File).to receive(:read).and_return(json_data.to_json)
+
+      parser = TranscriptParser.new(fixture_path)
+      # No method calls rely on transcripts yet, but ensure nothing breaks
+      expect { parser.parse }.not_to raise_error
+    end
+  end
 end
