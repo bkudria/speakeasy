@@ -9,6 +9,8 @@ require_relative "speaker_identification"
 require_relative "csv_writer"
 require_relative "csv_generator"
 require_relative "low_confidence_detector"
+require_relative "misalignment_detector"
+require_relative "misalignment_corrector"
 
 class TranscriptProcessor
   def initialize(transcript_path, audio_path, input: $stdin, output_dir: Dir.pwd)
