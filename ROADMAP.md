@@ -1,3 +1,5 @@
+- [ ] Implement mis-labeled segment detection logic in MisalignmentDetector
+- [ ] Implement code to correct mis-labeled segments in MisalignmentCorrector
 
 - [ ] Implement optional punctuation-based boundary detection
   - [ ] Create or update logic to detect sentence boundaries from punctuation tokens.
@@ -21,6 +23,8 @@
 
 - [ ] Add CLI Flags
   - [ ] Allow users to set options (confidence threshold, paths, skipping steps, etc.) via command-line flags
+  - [ ] Add a CLI option to configure threshold values for confidence-based detection
+  - [ ] Add command-line flags to enable or disable specific misalignment checks
   - [ ] Provide help text for each flag
 
 - [ ] Enhance Environmental Checks
