@@ -19,6 +19,7 @@ RSpec.describe TranscriptParser do
       expect(items).to be_an(Array)
       expect(items.first.keys).to include(:speaker_label, :start_time, :end_time, :content, :confidence, :type)
     end
+  end
 
   describe "#speaker_count" do
     it "returns the number of speakers from JSON data" do
