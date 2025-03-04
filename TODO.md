@@ -15,11 +15,13 @@
 
 - [ ] Improve Specs:
   - [x] Ensure code that prints output does not interfere with RSpec output
-  - [ ] Adopt RSpec best practices (e.g., use `describe/context/it` instead of `should`)
-  - [ ] Refactor specs so each test is mutually exclusive
-  - [ ] Make the specs collectively exhaustive of expected behaviors
-  - [ ] Avoid functionally redundant tests
-  - [ ] Only test custom logic rather than external library behavior
+  - [ ] Identify specs, describe blocks, context blocks, or spec files suitable for improvement, and add a
+        `TODO: improve` comment, according to what needs improvement:
+    - RSpec best practices (e.g., use `describe/context/it` instead of `should`)
+    - Spec tests only functionality already tested by another spec
+    - Block or spec file doesn't fully test the functionality, and no other spec covers it
+    - Spec tests functionality not implemented by the codebase - e.g. it tests library, OS, or other external behavior exclusively
+  - [ ]  Add a task for each spec improvement TODO comment to TODO.md, as a sibling to this sub-task, and remove the comment
 
 - [ ] Detect and correct speaker mis-identification in the input JSON, and fix it in the output CSV:
   - [ ] Detect incorrectly labeled segments by analyzing sentence boundaries
