@@ -207,7 +207,7 @@ RSpec.describe TranscriptProcessor do
       end
     end
   end
-  
+
   describe "#open_output_directory" do
     let(:processor) do
       TranscriptProcessor.new(valid_json_path, valid_audio_path, input: StringIO.new, output_dir: "spec/fixture")

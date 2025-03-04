@@ -1,7 +1,6 @@
-
 class MisalignmentCorrector
   def initialize(rows, issues, options = {})
-    @rows   = rows
+    @rows = rows
     @issues = issues
     @options = options
   end
@@ -20,6 +19,7 @@ class MisalignmentCorrector
   def mark_review_if_unsure
     # TODO: Implementation needed
   end
+
   def reassign_words_by_timing
     # TODO: Implementation needed
   end

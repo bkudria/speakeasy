@@ -21,7 +21,7 @@ RSpec.describe SpeakerExtraction do
         "TranscriptParser",
         speaker_count: 1,
         audio_segments: [
-          { "speaker_label" => "spk_0", "start_time" => "0.0", "end_time" => "2.0" }
+          {"speaker_label" => "spk_0", "start_time" => "0.0", "end_time" => "2.0"}
         ]
       )
     end
@@ -43,9 +43,9 @@ RSpec.describe SpeakerExtraction do
     it "creates a temporary segments file with correct format" do
       file_mock = StringIO.new
       allow(File).to receive(:open).with("spk_0_segments.txt", "w").and_yield(file_mock)
-      
+
       expect { subject.extract }.to output.to_stdout
-      
+
       expect(file_mock.string).to include("file 'test_audio.m4a'")
       expect(file_mock.string).to include("inpoint 0.0")
       expect(file_mock.string).to include("outpoint 2.0")

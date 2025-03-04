@@ -1,4 +1,3 @@
-
 class MisalignmentDetector
   def initialize(rows, options = {})
     @rows = rows

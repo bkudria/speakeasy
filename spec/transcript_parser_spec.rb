@@ -133,7 +133,7 @@ RSpec.describe TranscriptParser do
 
   context "more partial fields coverage" do
     it "handles completely missing results gracefully" do
-      json_data = { "accountId" => "fake", "jobName" => "fake" }
+      json_data = {"accountId" => "fake", "jobName" => "fake"}
       allow(File).to receive(:read).and_return(json_data.to_json)
 
       parser = TranscriptParser.new(fixture_path)
