@@ -1,10 +1,11 @@
 require "json"
 
 class SpeakerIdentification
-  def initialize(parser, audio_path, output_dir)
+  def initialize(parser, audio_path, output_dir, input: $stdin)
     @parser = parser
     @audio_path = audio_path
     @output_dir = output_dir
+    @input = input
   end
 
   def identify(skip: false)
@@ -18,7 +19,7 @@ class SpeakerIdentification
     # Each time through the loop, we check stdin for "go" and
     # sleep briefly before checking again.
     puts "\nType `go` and press enter when you have finished identifying speakers..."
-    until $stdin.gets.match("go")
+    until @input.gets.match("go")
       sleep 1
     end
   end
