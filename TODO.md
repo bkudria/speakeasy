@@ -1,27 +1,6 @@
-- [x] Document the code with comments for un-intuitive parts:
-  - [x] Identify areas of the codebase suitable for documentation, and add a `TODO: document` comment
-  - [x] Add a task for each comment to TODO.md, as a sibling to this task, and remove the comment
-  - [x] Document the logic waiting for user to type 'go' to proceed in SpeakerIdentification
-  - [x] Document how consecutive errors are handled and how it's used in CsvGenerator
-  - [x] Document the creation of a temporary segments file for ffmpeg in SpeakerExtraction
-  - [x] Document the assumption that 'speaker_labels' is always a Hash in TranscriptParser
-  - [x] Document the nested logic checking for named vs unnamed speaker files in TranscriptProcessor
-
-- [x] Improve Specs:
-  - [x] Ensure code that prints output does not interfere with RSpec output
-  - [x] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
-    - Add a `TODO: improve` comment in each spec or block needing improvement
-  - [x] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task
-        after the one on this line) under this task describing what needs to be done, and remove the comment.
-  - [x] Remove direct $stdin usage from SpeakerIdentification specs and inject test input instead
-  - [x] Add thorough tests for partial/missing fields beyond standard fixture in TranscriptParser
-  - [x] Test additional edge cases in CsvGenerator (e.g., empty items array)
-  - [x] Add tests for configurable threshold and edge case values in LowConfidenceDetector
-  - [x] Implement ffmpeg extraction tests or mock approach in SpeakerExtraction specs
 
 - [ ] Write specs for detecting and correcting speaker mis-identifications/sentence mis-alignements in the input JSON,
       and outputting appropriate rows in the CSV:
-      - We will implement the functionality later - for now, the specs should fail.
   - [ ] The specs should test that the program can detect incorrectly-labeled segments by analyzing sentence boundaries,
         using the punctuation data in the Amazon Transcribe JSON data
   - [ ] The specs should test that the program does not adjust speaker labels. Instead, the program should move sentence
