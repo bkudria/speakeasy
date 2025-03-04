@@ -11,8 +11,7 @@
   - [x] Ensure code that prints output does not interfere with RSpec output
   - [x] Review existing spec files to identify any that can be improved or do not follow RSpec best practices
     - Add a `TODO: improve` comment in each spec or block needing improvement
-
-  - [ ] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task
+  - [x] For each improvement identified with a `TODO: improve` comment, add a new sibling sub-task (i.e. add a new task
         after the one on this line) under this task describing what needs to be done, and remove the comment.
   - [ ] Remove direct $stdin usage from SpeakerIdentification specs and inject test input instead
   - [ ] Add thorough tests for partial/missing fields beyond standard fixture in TranscriptParser
