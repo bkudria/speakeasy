@@ -30,4 +30,15 @@ class TranscriptParser
     items_val = @parsed_data.dig("results", "items")
     items_val.is_a?(Array) ? items_val : []
   end
+def parsed_items
+  @parsed_data["results"]["items"].map do |item|
+    {
+      speaker_label: item["speaker_label"],
+      start_time:    item["start_time"]&.to_f,
+      end_time:      item["end_time"]&.to_f,
+      content:       item.dig("alternatives", 0, "content"),
+      confidence:    item.dig("alternatives", 0, "confidence")&.to_f,
+      type:          item["type"]
+    }
+  end
 end

@@ -12,6 +12,14 @@ RSpec.describe TranscriptParser do
     end
   end
 
+  describe "#parsed_items" do
+    it "returns an array of item hashes with expected keys" do
+      parser = TranscriptParser.new("spec/fixture/asrOutput.json")
+      items = parser.parsed_items
+      expect(items).to be_an(Array)
+      expect(items.first.keys).to include(:speaker_label, :start_time, :end_time, :content, :confidence, :type)
+    end
+
   describe "#speaker_count" do
     it "returns the number of speakers from JSON data" do
       expect(parser.speaker_count).to eq(5) # Using actual value from fixture
