@@ -126,7 +126,8 @@ If the input audio format is incompatible with ffmpeg, the script will display a
   - Confidence Max: Maximum confidence value among items in this segment
   - Confidence Mean: Average confidence value among items in this segment
   - Confidence Median: Median confidence value among items in this segment
-  - Note: One of "multiple speakers", "unknown", or "error"
+  - Note: One of "multiple speakers", "unknown", "error", or "review"
+  - The script detects and corrects misaligned sentences or mis-labeled speaker segments.
 3. The script displays a detailed progress bar during CSV generation.
 
 #### Error Handling

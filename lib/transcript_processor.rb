@@ -189,6 +189,10 @@ class TranscriptProcessor
     # Add the last row if it exists
     rows << current_row if current_row
 
+    # Detect and correct misalignments
+    misalignment_issues = MisalignmentDetector.new(rows).detect_issues
+    MisalignmentCorrector.new(rows, misalignment_issues).correct!
+
     # Write to CSV
     csv_writer.write_transcript(rows, "transcript")
 
