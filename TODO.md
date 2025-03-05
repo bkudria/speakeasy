@@ -1,6 +1,16 @@
 - [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
   - [ ] Adjust CsvGenerator (and related code in TranscriptProcessor) to iterate over items for row construction, rather than audio_segments.
+    - [ ] Step 1 (Failing Spec): Ensure CsvGenerator uses item-based data instead of audio_segments
+    - [ ] Step 2 (Implementation): Modify CsvGenerator to process individual items
+    - [ ] Step 3 (Failing Spec): Verify TranscriptProcessor provides item-level data to CsvGenerator
+    - [ ] Step 4 (Implementation): Update TranscriptProcessor to fully rely on items, not audio_segments
+    - [ ] Step 5 (Failing Spec): Check speaker continuity at item level (time gaps, same speaker)
+    - [ ] Step 6 (Implementation): Implement continuity logic to group items in rows
+    - [ ] Step 7 (Failing Spec): Test punctuation, confidence, and multi-speaker transitions at item level
+    - [ ] Step 8 (Implementation): Enhance item-based logic (punctuation, confidence calc, multi-speaker)
+    - [ ] Step 9 (Failing Spec): Integration test with a JSON fixture using items only
+    - [ ] Step 10 (Implementation): Clean up references to audio_segments and confirm end-to-end flow
   - [ ] Ensure speaker_label handling is consistent at the item level, preserving speaker continuity when forming rows.
   - [ ] Add or update specs to confirm the new item-driven approach produces correct transcripts (with speaker labels, punctuation, confidence stats).
 
