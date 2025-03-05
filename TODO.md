@@ -1,20 +1,24 @@
 - [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
   - [ ] Implement CsvGenerator to work with individual items
-    - [ ] Write a new failing spec for CsvGenerator that tests item-based transcript construction
-    - [ ] Implement a method in CsvGenerator to group items by speaker and silence gaps
-    - [ ] Update CsvGenerator to calculate confidence metrics from grouped items
-    - [ ] Add handling for edge cases (missing speakers, overlaps, etc.)
-  - [ ] Update TranscriptProcessor to use the new item-based approach
-    - [ ] Modify generate_csv_transcript to iterate over items instead of audio_segments
-    - [ ] Update row construction logic to handle speaker transitions and silence gaps
-    - [ ] Ensure proper integration with MisalignmentDetector and MisalignmentCorrector
-  - [ ] Update misalignment detection and correction for item-based approach
-    - [ ] Modify MisalignmentDetector to work with item-based transcript rows
-    - [ ] Update MisalignmentCorrector to handle corrections in the new data structure
-  - [ ] Clean up and finalize the migration
-    - [ ] Write integration tests to verify the complete item-based workflow
-    - [ ] Remove all vestigial audio_segments references
+    - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps
+    - [ ] Implement logic to detect natural pauses and segment boundaries
+    - [ ] Add functionality to handle speaker transitions within grouped items
+    - [ ] Implement confidence calculation methods for item groups
+    - [ ] Update build_row method to work with grouped items
+    - [ ] Add special handling for punctuation and non-speech items
+  - [ ] Update TranscriptProcessor workflow
+    - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator
+    - [ ] Update integration with speaker identification
+    - [ ] Ensure proper error handling for the new approach
+  - [ ] Enhance misalignment detection and correction
+    - [ ] Update MisalignmentDetector to work with item-based transcript rows
+    - [ ] Modify MisalignmentCorrector to handle corrections in the new data structure
+    - [ ] Add tests for the updated detection and correction logic
+  - [ ] Testing and finalization
+    - [ ] Create integration tests for the complete item-based workflow
+    - [ ] Remove deprecated audio_segments code
     - [ ] Update documentation to reflect the new architecture
+    - [ ] Perform performance testing and optimization
 
 - [ ] 
