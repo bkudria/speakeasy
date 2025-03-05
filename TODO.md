@@ -1,5 +1,15 @@
 - [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
   - [ ] Adjust CsvGenerator (and related code in TranscriptProcessor) to iterate over items for row construction, rather than audio_segments.
+    - [ ] Step 1A: Write a new failing spec for CsvGenerator (items-based approach)
+    - [ ] Step 1B: Implement changes in CsvGenerator to pass the new spec
+    - [ ] Step 2A: Write a failing spec in TranscriptProcessor for items-based iteration
+    - [ ] Step 2B: Replace references to audio_segments in TranscriptProcessor
+    - [ ] Step 3A: Write an integration spec for speaker/silence logic using items
+    - [ ] Step 3B: Adjust row construction to handle multi-speaker & silence gaps
+    - [ ] Step 4A: Add/fix misalignment-related tests to cover the items-based flow
+    - [ ] Step 4B: Update misalignment detection/correction references to items
+    - [ ] Step 5A: Write a cleanup coverage spec ensuring no reliance on audio_segments
+    - [ ] Step 5B: Remove all vestigial audio_segments references & pass final test
 
 - [ ]
