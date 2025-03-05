@@ -1,15 +1,20 @@
 - [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
-  - [ ] Adjust CsvGenerator (and related code in TranscriptProcessor) to iterate over items for row construction, rather than audio_segments.
-    - [ ] Step 1A: Write a new failing spec for CsvGenerator (items-based approach)
-    - [ ] Step 1B: Implement changes in CsvGenerator to pass the new spec
-    - [ ] Step 2A: Write a failing spec in TranscriptProcessor for items-based iteration
-    - [ ] Step 2B: Replace references to audio_segments in TranscriptProcessor
-    - [ ] Step 3A: Write an integration spec for speaker/silence logic using items
-    - [ ] Step 3B: Adjust row construction to handle multi-speaker & silence gaps
-    - [ ] Step 4A: Add/fix misalignment-related tests to cover the items-based flow
-    - [ ] Step 4B: Update misalignment detection/correction references to items
-    - [ ] Step 5A: Write a cleanup coverage spec ensuring no reliance on audio_segments
-    - [ ] Step 5B: Remove all vestigial audio_segments references & pass final test
+  - [ ] Implement CsvGenerator to work with individual items
+    - [ ] Write a new failing spec for CsvGenerator that tests item-based transcript construction
+    - [ ] Implement a method in CsvGenerator to group items by speaker and silence gaps
+    - [ ] Update CsvGenerator to calculate confidence metrics from grouped items
+    - [ ] Add handling for edge cases (missing speakers, overlaps, etc.)
+  - [ ] Update TranscriptProcessor to use the new item-based approach
+    - [ ] Modify generate_csv_transcript to iterate over items instead of audio_segments
+    - [ ] Update row construction logic to handle speaker transitions and silence gaps
+    - [ ] Ensure proper integration with MisalignmentDetector and MisalignmentCorrector
+  - [ ] Update misalignment detection and correction for item-based approach
+    - [ ] Modify MisalignmentDetector to work with item-based transcript rows
+    - [ ] Update MisalignmentCorrector to handle corrections in the new data structure
+  - [ ] Clean up and finalize the migration
+    - [ ] Write integration tests to verify the complete item-based workflow
+    - [ ] Remove all vestigial audio_segments references
+    - [ ] Update documentation to reflect the new architecture
 
-- [ ]
+- [ ] 
