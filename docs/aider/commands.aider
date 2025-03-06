@@ -2,3 +2,4 @@
 /add docs/tasks.md
 /add docs/conventions.md
 /add docs/specification.md
+/run rspec
