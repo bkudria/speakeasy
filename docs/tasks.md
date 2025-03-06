@@ -29,7 +29,7 @@
       - Add method to calculate min, max, mean, and median confidence from a group of items
       - Handle edge cases like empty groups or missing confidence values
       - Add tests for the new method
-    - [ ] Update build_row method to work with grouped items (3)
+    - [x] Update build_row method to work with grouped items (3)
       - Modify to accept a group of items instead of a segment
       - Use calculate_confidence_metrics for confidence calculations
       - Add tests for the updated method
