@@ -229,6 +229,120 @@ class CsvGenerator
       note: note_value
     }
   end
+  
+  def process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
+    return [] if parsed_items.empty?
+    
+    # Group items by speaker
+    groups = group_items_by_speaker(parsed_items, silence_threshold: silence_threshold)
+    
+    # Detect natural pauses
+    pauses = detect_natural_pauses(parsed_items)
+    
+    # Process groups into rows
+    rows = []
+    current_id = 1
+    
+    # Split groups at natural pauses if needed
+    final_groups = []
+    
+    groups.each do |group|
+      # Get all items in this group
+      group_items = group[:items]
+      
+      # Find pause indices that fall within this group
+      group_pauses = []
+      start_idx = parsed_items.index(group_items.first)
+      end_idx = parsed_items.index(group_items.last)
+      
+      next unless start_idx && end_idx
+      
+      pauses.each do |pause|
+        if pause[:index] >= start_idx && pause[:index] <= end_idx && 
+           (pause[:type] == :sentence_end || pause[:type] == :time_gap)
+          group_pauses << pause
+        end
+      end
+      
+      # If no pauses, add the whole group
+      if group_pauses.empty?
+        final_groups << group
+      else
+        # Split the group at each pause
+        current_items = []
+        current_start_time = group[:start_time]
+        current_transcript = ""
+        
+        group_items.each_with_index do |item, idx|
+          item_idx = parsed_items.index(item)
+          pause_at_this_item = group_pauses.find { |p| p[:index] == item_idx }
+          
+          # Add item to current group
+          current_items << item
+          
+          # Update transcript
+          if current_transcript.empty?
+            current_transcript = item[:content]
+          else
+            # Add space before word, but not before punctuation
+            if item[:type] == "punctuation"
+              current_transcript += item[:content]
+            else
+              current_transcript += " " + item[:content]
+            end
+          end
+          
+          # If we hit a pause or this is the last item, create a new group
+          if pause_at_this_item || idx == group_items.size - 1
+            final_groups << {
+              speaker_label: group[:speaker_label],
+              items: current_items.dup,
+              start_time: current_start_time,
+              end_time: item[:end_time] || group[:end_time],
+              transcript: current_transcript
+            }
+            
+            # Reset for next group
+            if pause_at_this_item
+              current_items = []
+              current_start_time = (item[:end_time] || group[:end_time])
+              current_transcript = ""
+            end
+          end
+        end
+      end
+    end
+    
+    # Build rows from final groups
+    final_groups.each do |group|
+      # Map speaker label to identity
+      speaker = if group[:speaker_label] && speaker_identities[group[:speaker_label]]
+                  speaker_identities[group[:speaker_label]]
+                else
+                  "Unknown"
+                end
+      
+      # Create row data
+      row_data = {
+        id: current_id,
+        speaker: speaker,
+        transcript: group[:transcript],
+        items: group[:items],
+        speaker_count: 1  # Assuming one speaker per group
+      }
+      
+      # Build the row
+      row = build_row(row_data)
+      
+      # Add to rows array
+      rows << row
+      
+      # Increment ID for next row
+      current_id += 1
+    end
+    
+    rows
+  end
 
   private
 
