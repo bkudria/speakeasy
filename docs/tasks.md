@@ -3,7 +3,7 @@
     - Files: lib/transcript_parser.rb, spec/transcript_parser_spec.rb
   - [ ] Implement CsvGenerator to work with individual items
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
+    - [x] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
       - Implement `group_items_by_speaker` method to organize parsed items
       - Add logic to detect silence gaps between words
     - [ ] Implement logic to detect natural pauses and segment boundaries (5)
