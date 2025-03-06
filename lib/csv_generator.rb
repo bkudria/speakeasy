@@ -181,6 +181,24 @@ class CsvGenerator
     pauses
   end
 
+  def calculate_confidence_metrics(items)
+    # Extract valid confidence values
+    confidence_values = items.map { |item| item[:confidence] }.compact.map(&:to_f)
+    
+    # Return nil for all metrics if there are no valid values
+    if confidence_values.empty?
+      return { min: nil, max: nil, mean: nil, median: nil }
+    end
+    
+    # Calculate metrics
+    {
+      min: confidence_values.min,
+      max: confidence_values.max,
+      mean: confidence_values.sum / confidence_values.size,
+      median: median(confidence_values)
+    }
+  end
+
   def build_row(segment)
     # Early return for error/empty segments
     if segment[:has_error] || segment[:items].nil? || segment[:items].empty?
