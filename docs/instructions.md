@@ -72,7 +72,7 @@ proceeding.
 # Completing a task
 When instructed to "go" or complete the next task, work through the following steps carefully, thinking thoroughly about each one:
 
- 0. Ask to see any files needed
+ 0. Ask to see any files needed, and explain why
  1. Identify the next uncompleted task or sub-task in the task list.
  2. Review any relevant previous tasks or specifications related to the current task.
  3. Analyze the task requirements and current code.
@@ -113,7 +113,7 @@ When instructed to "go" or complete the next task, work through the following st
 
 # Refinement
 If asked to "refine" the task list:
-0. Ask to see any files needed
+0. Ask to see any files needed, and explain why
 1. Read all tasks to understand the plan.
 2. Re-order tasks if necessary for efficiency.
 3. Review each task:
