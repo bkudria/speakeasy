@@ -23,91 +23,101 @@
   - [x] Create method to group items by speaker and silence gaps
   - [x] Implement logic to detect natural pauses and segment boundaries
 
-  - [ ] Implement and test CsvGenerator to work with individual items
+  - [ ] Enhance CsvGenerator to work with individual items
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [ ] Implement confidence calculation methods for item groups (3)
-      - Create methods to calculate min, max, mean, and median confidence
+    - [ ] Implement calculate_confidence_metrics method for item groups (3)
+      - Add method to calculate min, max, mean, and median confidence from a group of items
       - Handle edge cases like empty groups or missing confidence values
+      - Add tests for the new method
     - [ ] Update build_row method to work with grouped items (3)
-      - Modify to accept grouped items instead of segments
-      - Ensure all row fields are properly populated
-    - [ ] Add special handling for punctuation and non-speech items (2)
-      - Implement logic to handle punctuation items differently
-      - Add tests for punctuation handling
+      - Modify to accept a group of items instead of a segment
+      - Use calculate_confidence_metrics for confidence calculations
+      - Add tests for the updated method
+    - [ ] Add process_parsed_items method to generate rows from parsed items (5)
+      - Create method to process parsed_items from TranscriptParser
+      - Use group_items_by_speaker and detect_natural_pauses in the implementation
+      - Add tests for the new method
     
   - [ ] Update TranscriptProcessor workflow
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
-    - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator (3)
-      - Update to use parsed_items instead of audio_segments
-      - Integrate with the new CsvGenerator methods
-    - [ ] Update integration with speaker identification (3)
-      - Files: lib/speaker_identification.rb, spec/speaker_identification_spec.rb
-      - Ensure speaker identification works with item-based approach
+    - [ ] Modify generate_csv_transcript to use the new item-based approach (5)
+      - Update to use parser.parsed_items instead of audio_segments
+      - Use CsvGenerator's new process_parsed_items method
+      - Add tests for the updated method
+    - [ ] Update speaker mapping for item-based approach (3)
+      - Ensure speaker identities are correctly applied to grouped items
       - Update tests to verify correct speaker mapping
-    - [ ] Ensure proper error handling for the new approach (2)
+    - [ ] Implement error handling for item processing (2)
       - Add specific error handling for item processing failures
-      - Implement graceful degradation for partial failures
+      - Add tests for error scenarios
 
-  - [ ] Implement misalignment detection and correction
-    - [ ] Create MisalignmentDetector
-      - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
-      - [ ] Implement core detection functionality (5)
-        - Create detect_issues method to identify misalignments
-        - Add methods for each detection type
-      - [ ] Implement sentence boundary analysis (3)
-        - Detect incorrect segment labeling through sentence structure
-        - Add tests for boundary detection
-      - [ ] Implement word-level confidence verification (3)
-        - Check confidence patterns to identify potential misalignments
-        - Test with various confidence scenarios
-      - [ ] Implement pause/silence analysis (3)
-        - Use silence data for correct segmentation
-        - Test with different pause patterns
-      - [ ] Add time-based adjacency checks (2)
-        - Implement checks for short time offsets
-        - Test with various timing scenarios
-      - [ ] Implement cross-speaker transition verification (3)
-        - Analyze speaker transitions for anomalies
-        - Test with multiple speaker scenarios
-      - [ ] Add confidence trend analysis (3)
-        - Detect abrupt confidence drops as misalignment indicators
-        - Test with varying confidence patterns
+  - [ ] Implement misalignment detection
+    - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
+    - [ ] Create basic test structure for MisalignmentDetector (2)
+      - Set up test file with basic test cases
+      - Define expected behavior for detect_issues method
+    - [ ] Implement detect_issues method (5)
+      - Create method to identify misalignments in rows
+      - Return a structured list of detected issues
+      - Add tests for the method
+    - [ ] Implement check_sentence_boundaries method (3)
+      - Detect incorrect segment labeling through sentence structure
+      - Add tests for the method
+    - [ ] Implement check_word_confidence method (3)
+      - Check confidence patterns to identify potential misalignments
+      - Add tests for the method
+    - [ ] Implement check_pause_silences method (3)
+      - Use silence data for correct segmentation
+      - Add tests for the method
+    - [ ] Implement check_time_adjacency method (2)
+      - Check for short time offsets between segments
+      - Add tests for the method
+    - [ ] Implement check_cross_speaker_transitions method (3)
+      - Analyze speaker transitions for anomalies
+      - Add tests for the method
+    - [ ] Implement check_aggregated_confidence_drops method (3)
+      - Detect abrupt confidence drops as misalignment indicators
+      - Add tests for the method
 
-    - [ ] Create MisalignmentCorrector
-      - Files: lib/misalignment_corrector.rb, spec/misalignment_corrector_spec.rb
-      - [ ] Implement core correction functionality (5)
-        - Create correct! method to fix identified issues
-        - Add methods for each correction type
-      - [ ] Implement short misalignment movement (3)
-        - Add logic to move misaligned text to correct segments
-        - Test with various misalignment scenarios
-      - [ ] Add uncertain segment marking (2)
-        - Mark segments for review when correction is uncertain
-        - Test marking functionality
-      - [ ] Implement timing-based word reassignment (3)
-        - Reassign words to speakers based on timing data
-        - Test with complex timing scenarios
-      - [ ] Add uncertain speaker handling (3)
-        - Implement logic for handling ambiguous speaker assignments
-        - Test with multi-speaker scenarios
+  - [ ] Implement misalignment correction
+    - Files: lib/misalignment_corrector.rb, spec/misalignment_corrector_spec.rb
+    - [ ] Create basic test structure for MisalignmentCorrector (2)
+      - Set up test file with basic test cases
+      - Define expected behavior for correct! method
+    - [ ] Implement correct! method (5)
+      - Create method to fix identified issues in rows
+      - Apply corrections based on detected issues
+      - Add tests for the method
+    - [ ] Implement move_short_misalignments method (3)
+      - Add logic to move misaligned text to correct segments
+      - Add tests for the method
+    - [ ] Implement mark_review_if_unsure method (2)
+      - Mark segments for review when correction is uncertain
+      - Add tests for the method
+    - [ ] Implement reassign_words_by_timing method (3)
+      - Reassign words to speakers based on timing data
+      - Add tests for the method
+    - [ ] Implement handle_uncertain_speaker method (3)
+      - Handle ambiguous speaker assignments
+      - Add tests for the method
 
-  - [ ] Testing and finalization
-    - [ ] Create integration tests for the complete item-based workflow (5)
+  - [ ] Integration and finalization
+    - [ ] Integrate misalignment detection and correction into TranscriptProcessor (5)
+      - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
+      - Add calls to MisalignmentDetector and MisalignmentCorrector
+      - Add tests for the integration
+    - [ ] Create end-to-end tests for misalignment correction (5)
       - Files: spec/transcript_processor_spec.rb
-      - Add end-to-end tests covering the full processing pipeline
-      - Test with various input formats and edge cases
-    - [ ] Validate final CSV rows under the new item-based workflow (3)
-      - Files: spec/csv_generator_spec.rb
-      - Confirm row-level confidence calculations match the aggregated items
-      - Validate speaker and transcript text correctness after item grouping
+      - Test with realistic misalignment scenarios from examples
+      - Verify correct handling of various misalignment types
     - [ ] Remove deprecated audio_segments code (2)
       - Files: lib/transcript_parser.rb, lib/transcript_processor.rb
       - Safely remove old code after confirming new approach works
-      - Update references to removed functionality
+      - Update tests to reflect the changes
     - [ ] Update documentation to reflect the new architecture (3)
       - Files: docs/specification.md
-      - Update specification with new processing details
-      - Add code comments explaining the item-based approach
+      - Document misalignment detection and correction capabilities
+      - Update processing steps to reflect the new item-based approach
     - [ ] Perform performance testing and optimization (3)
-      - Benchmark performance against the old approach
-      - Optimize any bottlenecks in the new implementation
+      - Benchmark performance of the new approach
+      - Optimize any bottlenecks identified
