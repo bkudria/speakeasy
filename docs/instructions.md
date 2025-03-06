@@ -1,12 +1,12 @@
 Please study this information carefully before proceeding with any user requests. These are extremely important instructions. You MUST follow them, unless the user explicitly tells you otherwise. If you have any doubts or questions, immediately inform the user instead of proceeding.
 
-Key Documents:
+# Key Documents:
 - docs/instructions.md: this file. Instructions for how to work with this repository.
 - docs/specification.md: Contains the project specification. It must be kept up-to-date and describe this project's functionality without implementation details.
 - docs/conventions.md: any conventions, configurations, idiosyncrasies, or other notable things about this project or repository.
 - docs/tasks.md: Contains the task list in a specific markdown format. Tasks must be completed in order, one at a time.
 
-Important Rules:
+# Important Rules:
 1. If you need to ask to add a file to the session, always provide an explanation of your motivation.
 2. Do not proceed with any task until explicitly instructed to do so by the user.
 3. Complete only one task OR one sub-task at a time.
@@ -20,10 +20,11 @@ Important Rules:
    the user. Each task must be verified through TDD before moving on.
 7. Do not include implementation details in specification.md.
 
-Task List Management:
+# Task List Management:
 - Tasks are listed with "-" bullets in the tasklist.
- - Use "[ ]" for incomplete tasks, "[-]" for partially completed tasks (failing test written but implementation not complete), and "[x]" for completed tasks.
- - Indent sub-tasks with two additional spaces.
+  - Use "[ ]" for incomplete tasks, "[-]" for partially completed tasks (failing test written but implementation not
+    complete), and "[x]" for completed tasks.
+  - Indent sub-tasks with two additional spaces.
 - Tasks and sub-tasks must be actionable and verifiable.
 - Subtasks or children tasks are tasks that must be completed to help accomplish the parent task.
 - Some leaf tasks have a point value listed after the checkbox in parentheses -- they represent relative levels of effort
@@ -37,34 +38,35 @@ Task List Management:
 - There is no need for a sub-task to repeat the files already noted in it's parent task.
 - Always share with the user any clarifications needed if you have any doubts about a task.
 
-File Visibility Guidelines:
+# File Visibility Guidelines:
 1. Always proactively ask to see all files noted for a task before beginning work.
 2. If you need to see additional files not explicitly mentioned, explain their relevance to the task before requesting them.
 3. Never propose changes to files whose contents you have not seen.
 
+# Completing a task
 When instructed to "go" or complete the next task, work through the following steps carefully, thinking thoroughly about each one:
 
- 1. Identify the next uncompleted task or sub-task in the task list.
- 2. Review any relevant previous tasks or specifications related to the current task.
- 3. Analyze the task requirements and current code.
- 4. Consider the impact on existing code and potential side effects of the proposed changes.
- 5. Determine what changes will be needed, at a tactical level -- which components, methods, function etc will need to be adapated. Be fine-grained. Write out the changes as a numbered list - the list number with be the change ID.
- 6. Scope the necessary changes if needed:
+1. Identify the next uncompleted task or sub-task in the task list.
+2. Review any relevant previous tasks or specifications related to the current task.
+3. Analyze the task requirements and current code.
+4. Consider the impact on existing code and potential side effects of the proposed changes.
+5. Determine what changes will be needed, at a tactical level -- which components, methods, function etc will need to be adapted. Be fine-grained.
+6. Scope the necessary changes if needed:
    1. Estimate the size -- the level of effort  -- of each change, according to this Fibonacci scale:
-      1 point: A straight-forward edit of 1 or 2 lines adjacent lines
-      2 points: A bigger change, requiring some nuance, decision-making, or judgment calls
-      3 points: An even larger change, requiring 1-point edits to more than one component (method, class, or file)
-      5 points: A change requiring 2-point edits to one or more components, or edits to more than two components
-      8 points: A change requiring edits to 3 or more components, or multiple 3-point edits
-      13 points: A change requiring edits to 4 or more components, or multiple edits summing to 5 points or more
-      21 points: A change requiring edits to 5 or more components, or multiple edits summing to 8 points or more
-      … and so on
+      - 1 point: A straight-forward edit of 1 or 2 lines adjacent lines
+      - 2 points: A bigger change, requiring some nuance, decision-making, or judgment calls
+      - 3 points: An even larger change, requiring 1-point edits to more than one component (method, class, or file)
+      - 5 points: A change requiring 2-point edits to one or more components, or edits to more than two components
+      - 8 points: A change requiring edits to 3 or more components, or multiple 3-point edits
+      - 13 points: A change requiring edits to 4 or more components, or multiple edits summing to 5 points or more
+      - 21 points: A change requiring edits to 5 or more components, or multiple edits summing to 8 points or more
+      - … and so on
    2. If a task seems to fall between two Fibonacci numbers, always round up to the next number.
  7. If the sum of points for necessary changes exceeds 10, instead of instructing the editor engineer to make the changes, instruct the editor engineer to instead add tasks and subtasks to the tasklist instead. 
-   1. Make sure to include point estimates as a single number in parentheses after the checkbox and a space.
-   2. Make sure to add a note indicating which files need to be added to the session in order the make the change.
-   3. NEVER instruct the editor engineer to make changes whose sum point total exceeds 10 points.
- 8. Make sure to use standard library tools and language idioms and best practices:
+    1. Make sure to include point estimates as a single number in parentheses after the checkbox and a space.
+    2. Make sure to add a note indicating which files need to be added to the session in order the make the change.
+    3. NEVER instruct the editor engineer to make changes whose sum point total exceeds 10 points.
+8. Make sure to use standard library tools and language idioms and best practices:
    1. First, consider if standard library methods or idioms can solve the problem elegantly.
    2. Prefer built-in language features and standard library methods over custom implementations.
    3. Only create custom implementations when standard solutions are insufficient.
@@ -79,6 +81,7 @@ When instructed to "go" or complete the next task, work through the following st
 
 [Provide updates for the task list, marking the completed task or sub-task, unless you are writing tests intended to fail.]
 
+# Refinement
 If asked to "refine" the task list:
 1. Read all tasks to understand the plan.
 2. Re-order tasks if necessary for efficiency.

@@ -1,5 +1,25 @@
 require "json"
 
+# JSON Schema:
+# ```json
+# {
+#   "results": {
+#     "audio_segments": [{ "end_time": "string", "id": "integer", "items": ["integer"],
+#                          "speaker_label": "string", "start_time": "string", "transcript": "string" }],
+#     "items": [{ "alternatives": [{ "confidence": "string", "content": "string" }],
+#                 "end_time": "string", "id": "integer", "speaker_label": "string",
+#                 "start_time": "string", "type": "string" }],
+#     "speaker_labels": {
+#       "segments": [{ "end_time": "string",
+#                      "items": [{ "end_time": "string", "speaker_label": "string", "start_time": "string" }],
+#                      "speaker_label": "string", "start_time": "string" }],
+#       "speakers": "integer"
+#     },
+#     "transcripts": [{ "transcript": "string" }]
+#   }
+# }
+# ```
+
 class TranscriptParser
   def initialize(transcript_path)
     @transcript_path = transcript_path
