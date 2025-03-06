@@ -6,7 +6,7 @@
     - [x] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
       - Implement `group_items_by_speaker` method to organize parsed items
       - Add logic to detect silence gaps between words
-    - [-] Implement logic to detect natural pauses and segment boundaries (5)
+    - [x] Implement logic to detect natural pauses and segment boundaries (5)
       - Add methods to identify sentence endings and natural breaks
       - Create configurable thresholds for pause detection
     - [ ] Add functionality to handle speaker transitions within grouped items (3)

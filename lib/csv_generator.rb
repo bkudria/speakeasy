@@ -152,6 +152,35 @@ class CsvGenerator
     }
   end
 
+  def detect_natural_pauses(items, time_gap_threshold: 1.5)
+    pauses = []
+    
+    items.each_with_index do |item, index|
+      # Skip the first item for time gap detection (nothing before it)
+      if index > 0 && item[:type] != "punctuation"
+        prev_item = items[index - 1]
+        
+        # Check for time gaps between words
+        if prev_item[:end_time] && item[:start_time] && 
+           (item[:start_time] - prev_item[:end_time] > time_gap_threshold)
+          pauses << { index: index - 1, type: :time_gap }
+        end
+      end
+      
+      # Check for punctuation that indicates sentence endings or natural breaks
+      if item[:type] == "punctuation"
+        case item[:content]
+        when ".", "!", "?"
+          pauses << { index: index, type: :sentence_end }
+        when ",", ";", ":"
+          pauses << { index: index, type: :natural_break }
+        end
+      end
+    end
+    
+    pauses
+  end
+
   def build_row(segment)
     # Early return for error/empty segments
     if segment[:has_error] || segment[:items].nil? || segment[:items].empty?
