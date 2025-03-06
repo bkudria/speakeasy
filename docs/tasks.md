@@ -1,7 +1,7 @@
-- [ ] Migrate transcript construction to use individual items instead of audio_segments (55)
+- [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker (8)
     - Files: lib/transcript_parser.rb, spec/transcript_parser_spec.rb
-  - [ ] Implement CsvGenerator to work with individual items (21)
+  - [ ] Implement CsvGenerator to work with individual items
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
       - Implement `group_items_by_speaker` method to organize parsed items
@@ -21,7 +21,7 @@
     - [ ] Add special handling for punctuation and non-speech items (2)
       - Implement logic to handle punctuation items differently
       - Add support for non-speech items like [laughter], [music], etc.
-  - [ ] Update TranscriptProcessor workflow (8)
+  - [ ] Update TranscriptProcessor workflow
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
     - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator (3)
       - Update to use parsed_items instead of audio_segments
@@ -33,7 +33,7 @@
     - [ ] Ensure proper error handling for the new approach (2)
       - Add specific error handling for item processing failures
       - Implement graceful degradation for partial failures
-  - [ ] Enhance misalignment detection and correction (13)
+  - [ ] Enhance misalignment detection and correction
     - [ ] Implement core MisalignmentDetector functionality (5)
       - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
       - Implement `detect_issues` method to identify misalignments
@@ -46,7 +46,7 @@
       - Files: spec/misalignment_detector_spec.rb, spec/misalignment_corrector_spec.rb
       - Add tests for each detection and correction method
       - Include edge cases and integration tests
-  - [ ] Testing and finalization (13)
+  - [ ] Testing and finalization
     - [ ] Create integration tests for the complete item-based workflow (5)
       - Add end-to-end tests covering the full processing pipeline
       - Test with various input formats and edge cases
