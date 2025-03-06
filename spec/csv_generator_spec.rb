@@ -61,6 +61,71 @@ RSpec.describe CsvGenerator do
     end
   end
   
+  describe "#detect_natural_pauses" do
+    let(:csv_generator) { described_class.new }
+    
+    it "identifies sentence endings and natural breaks" do
+      items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ".", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_0", start_time: 1.5, end_time: 2.0, content: "This", confidence: 0.85, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 2.1, end_time: 2.5, content: "is", confidence: 0.8, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 2.6, end_time: 3.0, content: "a", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 3.1, end_time: 3.5, content: "test", confidence: 0.95, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ".", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_0", start_time: 4.0, end_time: 4.5, content: "How", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 4.6, end_time: 5.0, content: "are", confidence: 0.85, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 5.1, end_time: 5.5, content: "you", confidence: 0.8, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: "?", confidence: nil, type: "punctuation" }
+      ]
+      
+      pauses = csv_generator.detect_natural_pauses(items)
+      
+      expect(pauses.size).to eq(3)
+      expect(pauses[0][:index]).to eq(1)
+      expect(pauses[0][:type]).to eq(:sentence_end)
+      expect(pauses[1][:index]).to eq(6)
+      expect(pauses[1][:type]).to eq(:sentence_end)
+      expect(pauses[2][:index]).to eq(10)
+      expect(pauses[2][:type]).to eq(:sentence_end)
+    end
+    
+    it "identifies natural breaks with commas" do
+      items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ",", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_0", start_time: 1.5, end_time: 2.0, content: "world", confidence: 0.85, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ".", confidence: nil, type: "punctuation" }
+      ]
+      
+      pauses = csv_generator.detect_natural_pauses(items)
+      
+      expect(pauses.size).to eq(2)
+      expect(pauses[0][:index]).to eq(1)
+      expect(pauses[0][:type]).to eq(:natural_break)
+      expect(pauses[1][:index]).to eq(3)
+      expect(pauses[1][:type]).to eq(:sentence_end)
+    end
+    
+    it "respects configurable thresholds" do
+      items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Word", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 2.5, end_time: 3.0, content: "after", confidence: 0.85, type: "pronunciation" },
+        { speaker_label: "spk_0", start_time: 3.1, end_time: 3.5, content: "pause", confidence: 0.8, type: "pronunciation" }
+      ]
+      
+      # Default threshold
+      pauses = csv_generator.detect_natural_pauses(items)
+      expect(pauses.size).to eq(1)
+      expect(pauses[0][:index]).to eq(0)
+      expect(pauses[0][:type]).to eq(:time_gap)
+      
+      # Custom threshold
+      pauses = csv_generator.detect_natural_pauses(items, time_gap_threshold: 2.0)
+      expect(pauses.size).to eq(0)
+    end
+  end
+
   describe "#build_row" do
     let(:csv_generator) { described_class.new }
 
