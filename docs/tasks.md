@@ -23,7 +23,7 @@
   - [x] Create method to group items by speaker and silence gaps
   - [x] Implement logic to detect natural pauses and segment boundaries
 
-  - [ ] Enhance CsvGenerator to work with individual items
+  - [x] Enhance CsvGenerator to work with individual items
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [x] Implement calculate_confidence_metrics method for item groups (3)
       - Add method to calculate min, max, mean, and median confidence from a group of items
@@ -33,7 +33,7 @@
       - Modify to accept a group of items instead of a segment
       - Use calculate_confidence_metrics for confidence calculations
       - Add tests for the updated method
-    - [ ] Add process_parsed_items method to generate rows from parsed items (5)
+    - [x] Add process_parsed_items method to generate rows from parsed items (5)
       - Create method to process parsed_items from TranscriptParser
       - Use group_items_by_speaker and detect_natural_pauses in the implementation
       - Add tests for the new method
