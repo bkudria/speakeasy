@@ -1,26 +1,56 @@
-- [ ] Migrate transcript construction to use individual items instead of audio_segments
-  - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker (8)
-    - Files: lib/transcript_parser.rb, spec/transcript_parser_spec.rb
-  - [ ] Implement CsvGenerator to work with individual items
-    - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [x] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
-      - Implement `group_items_by_speaker` method to organize parsed items
-      - Add logic to detect silence gaps between words
-    - [x] Implement logic to detect natural pauses and segment boundaries (5)
-      - Add methods to identify sentence endings and natural breaks
-      - Create configurable thresholds for pause detection
-    - [ ] Add functionality to handle speaker transitions within grouped items (3)
-      - Implement detection of speaker changes within item groups
-      - Add logic to split groups when speakers change
+- [ ] Detect and correct mis-labeled transcript items
+    - Misalignment examples:
+      - Sore Throat:
+        - Misaligned:
+            Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better. Thank
+            Gloria: you. I appreciate it.
+        - Corrected:
+            Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better.
+            Gloria: Thank you. I appreciate it.
+      - Real Words:
+        - Misaligned:
+            Bob: It's a good talent to be able to say that. It's not actually
+            Gloria: you. I appreciate it.
+        - Corrected:
+            Bob: Of course, yeah, it sounds like, you have uh a bit of a sore throat, so I hope you feel better.
+            Jim: a real word. I learned that
+      - Not a misalignment: even if Jim doesn't have a complete sentence, Bob starts a new sentence, indicating that
+        Bob interrupted Jim. This transcript is correct:
+          Jim: Hey Bob, question. Is it your intention or your recommendation that we fill up all 22 slots next Wednesday? That would be a
+          Bob: I mean, I think that is the ideal scenario.
+
+  - [x] Update TranscriptParser to provide clear, structured list of items (tokens) ready for grouping by speaker
+  - [x] Create method to group items by speaker and silence gaps
+  - [x] Implement logic to detect natural pauses and segment boundaries
+
+  - [ ] Implement and test CsvGenerator to work with individual items
     - [ ] Implement confidence calculation methods for item groups (3)
       - Create methods to calculate min, max, mean, and median confidence
       - Handle edge cases like empty groups or missing confidence values
     - [ ] Update build_row method to work with grouped items (3)
       - Modify to accept grouped items instead of segments
       - Ensure all row fields are properly populated
+    - [ ] Add special handling for punctuation and non-speech items
+    
+  - [ ] Update TranscriptProcessor workflow
+    - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator
+    - [ ] Update integration with speaker identification
+    - [ ] Ensure proper error handling for the new approach
+  - [ ] Validate final CSV rows under the new item-based workflow
+    - [ ] Confirm row-level confidence calculations match the aggregated items
+    - [ ] Validate speaker and transcript text correctness after item grouping
+    - [ ] Ensure existing integration specs pass with this approach
+  - [ ] Remove deprecated audio_segments code after confirming new approach works
+
+- [ ] Create MisalignmentDetector to detect mis-labeled segments
+  - [ ] Detect incorrect segment labeling through sentence boundary analysis
+  - [ ] Implement word-level confidence and overlap verification
+  - [ ] Implement pause/silence data analysis for correct segmentation
+  - [ ] Add time-based adjacency checks for short offsets
+  - [ ] Implement cross-speaker transition verification
+  - [ ] Add aggregated confidence trending to detect abrupt drops
     - [ ] Add special handling for punctuation and non-speech items (2)
       - Implement logic to handle punctuation items differently
-      - Add support for non-speech items like [laughter], [music], etc.
   - [ ] Update TranscriptProcessor workflow
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
     - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator (3)
