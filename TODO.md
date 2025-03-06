@@ -1,24 +1,43 @@
 - [ ] Migrate transcript construction to use individual items instead of audio_segments
   - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
+    - Files: lib/transcript_parser.rb, spec/transcript_parser_spec.rb
   - [ ] Implement CsvGenerator to work with individual items
+    - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Implement logic to detect natural pauses and segment boundaries
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Add functionality to handle speaker transitions within grouped items
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Implement confidence calculation methods for item groups
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Update build_row method to work with grouped items
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
     - [ ] Add special handling for punctuation and non-speech items
+      - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
   - [ ] Update TranscriptProcessor workflow
+    - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
     - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator
+      - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
     - [ ] Update integration with speaker identification
+      - Files: lib/transcript_processor.rb, lib/speaker_identification.rb, spec/transcript_processor_spec.rb, spec/speaker_identification_spec.rb
     - [ ] Ensure proper error handling for the new approach
+      - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
   - [ ] Enhance misalignment detection and correction
     - [ ] Update MisalignmentDetector to work with item-based transcript rows
+      - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
     - [ ] Modify MisalignmentCorrector to handle corrections in the new data structure
+      - Files: lib/misalignment_corrector.rb, spec/misalignment_corrector_spec.rb
     - [ ] Add tests for the updated detection and correction logic
+      - Files: spec/misalignment_detector_spec.rb, spec/misalignment_corrector_spec.rb
   - [ ] Testing and finalization
     - [ ] Create integration tests for the complete item-based workflow
+      - Files: New integration test file(s)
     - [ ] Remove deprecated audio_segments code
+      - Files: Various lib and spec files
     - [ ] Update documentation to reflect the new architecture
+      - Files: Code comments, README.md, other documentation
     - [ ] Perform performance testing and optimization
+      - Files: Various lib files, possibly new performance test files
 
 - [ ] 
