@@ -138,58 +138,15 @@ class TranscriptProcessor
       end
     end
 
-    # Process transcript into rows
-    rows = []
-    current_row = nil
+    # Process transcript into rows using the new item-based approach
     csv_writer = CsvWriter.new(@output_dir)
     csv_gen = CsvGenerator.new
 
-    segments = @parser.audio_segments
+    # Get parsed items from the parser
+    parsed_items = @parser.parsed_items
 
-    segments.each_with_index do |segment, index|
-      result = csv_gen.process_segment(segment, index, current_row, speaker_identities, @parser)
-
-      if result[:start_new_row]
-        # Add the current row to our list if it exists
-        rows << current_row if current_row
-
-        # Start a new row
-        current_row = {
-          id: rows.size + 1,
-          speaker: result[:speaker_name],
-          transcript: result[:transcript_text],
-          confidence_min: result[:min_conf],
-          confidence_max: result[:max_conf],
-          confidence_mean: result[:mean_conf],
-          confidence_median: result[:median_conf],
-          note: result[:note],
-          start_time: result[:start_time],
-          end_time: result[:end_time]
-        }
-      else
-        # Append to the current row
-        current_row[:transcript] += " " + result[:transcript_text]
-        current_row[:end_time] = result[:end_time]
-        current_row[:confidence_min] = [current_row[:confidence_min], result[:min_conf]].min
-        current_row[:confidence_max] = [current_row[:confidence_max], result[:max_conf]].max
-
-        # Recalculate mean and median with all values
-        # This is a simplified approach - in a real implementation we'd need to track all values
-        all_values = [result[:mean_conf], current_row[:confidence_mean]]
-        current_row[:confidence_mean] = all_values.sum / all_values.size
-        current_row[:confidence_median] = all_values.sort[all_values.size / 2]
-
-        # Update note if needed
-        if result[:note] == "error" || current_row[:note] == "error"
-          current_row[:note] = "error"
-        elsif result[:speaker_name] != current_row[:speaker] && current_row[:speaker] != ""
-          current_row[:note] = "multiple speakers"
-        end
-      end
-    end
-
-    # Add the last row if it exists
-    rows << current_row if current_row
+    # Process the parsed items using the new method
+    rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
 
     # Detect and correct misalignments
     misalignment_issues = MisalignmentDetector.new(rows).detect_issues
