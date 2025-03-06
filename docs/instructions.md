@@ -49,6 +49,19 @@ proceeding.
 2. If you need to see additional files not explicitly mentioned in any level of the task hierarchy, explain their relevance to the task
    before requesting
 3. Never propose changes to files whose contents you have not seen.
+4. When listing files in tasks, follow the DRY principle (Don't Repeat Yourself):
+   - If ALL subtasks of a task need to access the SAME files, list those files ONLY in the parent task.
+   - NEVER list the same files in both a parent task and its subtasks.
+   - ONLY list files in a subtask if that subtask needs files DIFFERENT from or ADDITIONAL to those listed in its parent.
+   - Example:
+     ```
+     - [ ] Parent task
+       - Files: file1.rb, file2.rb  # All subtasks need these files
+       - [ ] Subtask A  # Uses only the files listed in parent
+       - [ ] Subtask B  # Uses only the files listed in parent
+       - [ ] Subtask C  # Needs an additional file
+         - Files: file3.rb  # Only list the additional file here
+     ```
 
 # Specification Updates:
 1. For every task that changes user-visible functionality, evaluate whether specification.md needs to be updated.
