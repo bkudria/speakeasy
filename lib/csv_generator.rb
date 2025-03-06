@@ -156,14 +156,14 @@ class CsvGenerator
     pauses = []
     
     items.each_with_index do |item, index|
-      # Skip the first item for time gap detection (nothing before it)
-      if index > 0 && item[:type] != "punctuation"
-        prev_item = items[index - 1]
+      # Check for time gaps between words
+      if index < items.size - 1 && item[:type] != "punctuation"
+        next_item = items[index + 1]
         
-        # Check for time gaps between words
-        if prev_item[:end_time] && item[:start_time] && 
-           (item[:start_time] - prev_item[:end_time] > time_gap_threshold)
-          pauses << { index: index - 1, type: :time_gap }
+        # Check for time gaps between current item and next item
+        if item[:end_time] && next_item[:start_time] && 
+           (next_item[:start_time] - item[:end_time] > time_gap_threshold)
+          pauses << { index: index, type: :time_gap }
         end
       end
       
