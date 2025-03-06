@@ -25,7 +25,7 @@
 
   - [ ] Enhance CsvGenerator to work with individual items
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [ ] Implement calculate_confidence_metrics method for item groups (3)
+    - [x] Implement calculate_confidence_metrics method for item groups (3)
       - Add method to calculate min, max, mean, and median confidence from a group of items
       - Handle edge cases like empty groups or missing confidence values
       - Add tests for the new method
