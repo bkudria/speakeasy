@@ -197,6 +197,33 @@ RSpec.describe CsvGenerator do
       expect(row[:confidence_median]).to be_within(0.001).of(0.85)
       expect(row[:note]).to eq("unknown")  # Adjust as needed
     end
+    
+    it "uses calculate_confidence_metrics for confidence calculations" do
+      csv_generator = described_class.new
+      
+      # Create a mock for calculate_confidence_metrics
+      expect(csv_generator).to receive(:calculate_confidence_metrics).with([{confidence: 0.9}, {confidence: 0.8}]).and_return({
+        min: 0.8,
+        max: 0.9,
+        mean: 0.85,
+        median: 0.85
+      })
+      
+      group = {
+        id: 5,
+        speaker: "Speaker_Test",
+        transcript: "Test transcript",
+        items: [{confidence: 0.9}, {confidence: 0.8}],
+        speaker_count: 1
+      }
+      
+      row = csv_generator.build_row(group)
+      
+      expect(row[:confidence_min]).to eq(0.8)
+      expect(row[:confidence_max]).to eq(0.9)
+      expect(row[:confidence_mean]).to eq(0.85)
+      expect(row[:confidence_median]).to eq(0.85)
+    end
 
     it 'marks the row with "error" in the note field if the segment has_error is true' do
       segment = {

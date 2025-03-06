@@ -214,17 +214,18 @@ class CsvGenerator
       }
     end
 
-    # Example logic for computing confidence metrics, etc.
-    confidence_values = segment[:items].map { |i| i[:confidence].to_f }
+    # Use calculate_confidence_metrics for confidence calculations
+    confidence_metrics = calculate_confidence_metrics(segment[:items])
     note_value = determine_note(segment)
+    
     {
       id: segment[:id],
       speaker: segment[:speaker],
       transcript: segment[:transcript],
-      confidence_min: confidence_values.min,
-      confidence_max: confidence_values.max,
-      confidence_mean: (confidence_values.sum / confidence_values.size).round(3),
-      confidence_median: median(confidence_values),
+      confidence_min: confidence_metrics[:min],
+      confidence_max: confidence_metrics[:max],
+      confidence_mean: confidence_metrics[:mean],
+      confidence_median: confidence_metrics[:median],
       note: note_value
     }
   end
