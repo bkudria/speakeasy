@@ -1,6 +1,6 @@
 Please study this information carefully before proceeding with any user requests. These are extremely important instructions. You MUST
 follow them, unless the user explicitly tells you otherwise. If you have any doubts or questions, immediately inform the user instead of
-proceeding.
+proceeding. You must perform either refinement, or advance a task -- never both.
 
 # Key Documents:
 - docs/instructions.md: this file. Instructions for how to work with this repository.
