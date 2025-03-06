@@ -3,6 +3,65 @@ class CsvGenerator
     # Add needed parameters (e.g.: parser, options) in later steps
     @error_count = 0
   end
+  
+  def group_items_by_speaker(items, silence_threshold: 1.0)
+    return [] if items.empty?
+    
+    groups = []
+    current_group = nil
+    
+    items.each do |item|
+      # Skip items with no content
+      next unless item[:content]
+      
+      # Start a new group if:
+      # 1. This is the first item
+      # 2. The speaker changed
+      # 3. There's a significant silence gap
+      start_new_group = current_group.nil? ||
+                        (item[:speaker_label] && current_group[:speaker_label] && 
+                         item[:speaker_label] != current_group[:speaker_label]) ||
+                        (item[:start_time] && current_group[:end_time] && 
+                         item[:start_time] - current_group[:end_time] > silence_threshold)
+      
+      # For punctuation, don't start a new group
+      start_new_group = false if item[:type] == "punctuation"
+      
+      if start_new_group && item[:type] != "punctuation"
+        # Create a new group
+        current_group = {
+          speaker_label: item[:speaker_label],
+          items: [],
+          start_time: item[:start_time],
+          end_time: item[:end_time],
+          transcript: ""
+        }
+        groups << current_group
+      end
+      
+      # Add the item to the current group
+      if current_group
+        current_group[:items] << item
+        
+        # Update end_time if this item has one
+        current_group[:end_time] = item[:end_time] if item[:end_time]
+        
+        # Update transcript
+        if current_group[:transcript].empty?
+          current_group[:transcript] = item[:content]
+        else
+          # Add space before word, but not before punctuation
+          if item[:type] == "punctuation"
+            current_group[:transcript] += item[:content]
+          else
+            current_group[:transcript] += " " + item[:content]
+          end
+        end
+      end
+    end
+    
+    groups
+  end
 
   def process_segment(segment, index, current_row, speaker_identities, parser)
     # Print progress
