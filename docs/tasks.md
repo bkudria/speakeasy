@@ -1,29 +1,29 @@
-- [ ] Migrate transcript construction to use individual items instead of audio_segments
-  - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker
+- [ ] Migrate transcript construction to use individual items instead of audio_segments (55)
+  - [x] Update TranscriptParser to provide a clear, structured list of items (tokens) ready for grouping by speaker (8)
     - Files: lib/transcript_parser.rb, spec/transcript_parser_spec.rb
-  - [ ] Implement CsvGenerator to work with individual items
+  - [ ] Implement CsvGenerator to work with individual items (21)
     - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps
-    - [ ] Implement logic to detect natural pauses and segment boundaries
-    - [ ] Add functionality to handle speaker transitions within grouped items
-    - [ ] Implement confidence calculation methods for item groups
-    - [ ] Update build_row method to work with grouped items
-    - [ ] Add special handling for punctuation and non-speech items
-  - [ ] Update TranscriptProcessor workflow
+    - [ ] Create a new method in CsvGenerator to group items by speaker and silence gaps (5)
+    - [ ] Implement logic to detect natural pauses and segment boundaries (5)
+    - [ ] Add functionality to handle speaker transitions within grouped items (3)
+    - [ ] Implement confidence calculation methods for item groups (3)
+    - [ ] Update build_row method to work with grouped items (3)
+    - [ ] Add special handling for punctuation and non-speech items (2)
+  - [ ] Update TranscriptProcessor workflow (8)
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
-    - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator
-    - [ ] Update integration with speaker identification
+    - [ ] Modify generate_csv_transcript to use the new item-based CsvGenerator (3)
+    - [ ] Update integration with speaker identification (3)
       - Files: lib/transcript_processor.rb, lib/speaker_identification.rb, spec/transcript_processor_spec.rb, spec/speaker_identification_spec.rb
-    - [ ] Ensure proper error handling for the new approach
-  - [ ] Enhance misalignment detection and correction
+    - [ ] Ensure proper error handling for the new approach (2)
+  - [ ] Enhance misalignment detection and correction (13)
+    - [ ] Update MisalignmentDetector to work with item-based transcript rows (5)
       - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
-    - [ ] Update MisalignmentDetector to work with item-based transcript rows
-    - [ ] Modify MisalignmentCorrector to handle corrections in the new data structure
+    - [ ] Modify MisalignmentCorrector to handle corrections in the new data structure (5)
       - Files: lib/misalignment_corrector.rb, spec/misalignment_corrector_spec.rb
-    - [ ] Add tests for the updated detection and correction logic
+    - [ ] Add tests for the updated detection and correction logic (3)
       - Files: spec/misalignment_detector_spec.rb, spec/misalignment_corrector_spec.rb
-  - [ ] Testing and finalization
-    - [ ] Create integration tests for the complete item-based workflow
-    - [ ] Remove deprecated audio_segments code
-    - [ ] Update documentation to reflect the new architecture
-    - [ ] Perform performance testing and optimization
+  - [ ] Testing and finalization (13)
+    - [ ] Create integration tests for the complete item-based workflow (5)
+    - [ ] Remove deprecated audio_segments code (2)
+    - [ ] Update documentation to reflect the new architecture (3)
+    - [ ] Perform performance testing and optimization (3)
