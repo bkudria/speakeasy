@@ -162,7 +162,7 @@ class CsvGenerator
         
         # Check for time gaps between current item and next item
         if item[:end_time] && next_item[:start_time] && 
-           (next_item[:start_time] - item[:end_time] > time_gap_threshold)
+           (next_item[:start_time] - item[:end_time] >= time_gap_threshold)
           pauses << { index: index, type: :time_gap }
         end
       end
