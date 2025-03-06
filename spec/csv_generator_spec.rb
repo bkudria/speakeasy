@@ -255,4 +255,79 @@ RSpec.describe CsvGenerator do
       expect(row[:confidence_median]).to be_nil
     end
   end
+  
+  describe "#process_parsed_items" do
+    let(:csv_generator) { described_class.new }
+    
+    it "processes parsed items into rows" do
+      parsed_items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ",", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_0", start_time: 1.1, end_time: 1.5, content: "world", confidence: 0.85, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ".", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_1", start_time: 2.0, end_time: 2.5, content: "How", confidence: 0.8, type: "pronunciation" },
+        { speaker_label: "spk_1", start_time: 2.6, end_time: 3.0, content: "are", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: "spk_1", start_time: 3.1, end_time: 3.5, content: "you", confidence: 0.95, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: "?", confidence: nil, type: "punctuation" }
+      ]
+      
+      speaker_identities = {
+        "spk_0" => "Bob",
+        "spk_1" => "Alice"
+      }
+      
+      rows = csv_generator.process_parsed_items(parsed_items, speaker_identities)
+      
+      expect(rows.size).to eq(2)
+      
+      # First row (Bob)
+      expect(rows[0][:id]).to eq(1)
+      expect(rows[0][:speaker]).to eq("Bob")
+      expect(rows[0][:transcript]).to eq("Hello, world.")
+      expect(rows[0][:confidence_min]).to be_within(0.001).of(0.85)
+      expect(rows[0][:confidence_max]).to be_within(0.001).of(0.9)
+      
+      # Second row (Alice)
+      expect(rows[1][:id]).to eq(2)
+      expect(rows[1][:speaker]).to eq("Alice")
+      expect(rows[1][:transcript]).to eq("How are you?")
+      expect(rows[1][:confidence_min]).to be_within(0.001).of(0.8)
+      expect(rows[1][:confidence_max]).to be_within(0.001).of(0.95)
+    end
+    
+    it "handles empty input" do
+      rows = csv_generator.process_parsed_items([], {})
+      expect(rows).to eq([])
+    end
+    
+    it "handles unknown speakers" do
+      parsed_items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" }
+      ]
+      
+      # No speaker identity for spk_0
+      speaker_identities = {}
+      
+      rows = csv_generator.process_parsed_items(parsed_items, speaker_identities)
+      
+      expect(rows.size).to eq(1)
+      expect(rows[0][:speaker]).to eq("Unknown")
+    end
+    
+    it "respects natural pauses to create separate rows" do
+      parsed_items = [
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "First", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: nil, start_time: nil, end_time: nil, content: ".", confidence: nil, type: "punctuation" },
+        { speaker_label: "spk_0", start_time: 3.0, end_time: 3.5, content: "Second", confidence: 0.85, type: "pronunciation" }
+      ]
+      
+      speaker_identities = { "spk_0" => "Speaker" }
+      
+      rows = csv_generator.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.5)
+      
+      expect(rows.size).to eq(2)
+      expect(rows[0][:transcript]).to eq("First.")
+      expect(rows[1][:transcript]).to eq("Second")
+    end
+  end
 end
