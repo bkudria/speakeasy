@@ -175,6 +175,48 @@ RSpec.describe TranscriptProcessor do
       processor.process
     end
 
+    it "uses item-based approach with process_parsed_items" do
+      # Setup
+      mock_input = StringIO.new("go\n")
+      processor = TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input)
+      
+      # Mock dependencies
+      parser = instance_double("TranscriptParser")
+      csv_generator = instance_double("CsvGenerator")
+      csv_writer = instance_double("CsvWriter")
+      
+      allow(TranscriptParser).to receive(:new).and_return(parser)
+      allow(CsvGenerator).to receive(:new).and_return(csv_generator)
+      allow(CsvWriter).to receive(:new).and_return(csv_writer)
+      
+      # Mock parsed_items and speaker_identities
+      parsed_items = [{ speaker_label: "spk_0", content: "Hello" }]
+      speaker_identities = { "spk_0" => "John" }
+      processed_rows = [{ id: 1, speaker: "John", transcript: "Hello" }]
+      
+      # Expectations for the new approach
+      allow(parser).to receive(:parsed_items).and_return(parsed_items)
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_John.m4a"])
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).and_return(["spk_0_John.m4a"])
+      
+      # This is the key expectation for the new approach
+      expect(csv_generator).to receive(:process_parsed_items)
+        .with(parsed_items, speaker_identities, anything)
+        .and_return(processed_rows)
+      
+      # We should not use the old approach
+      expect(parser).not_to receive(:audio_segments)
+      expect(csv_generator).not_to receive(:process_segment)
+      
+      # Expectations for the rest of the method
+      allow(MisalignmentDetector).to receive(:new).and_return(double(detect_issues: []))
+      allow(MisalignmentCorrector).to receive(:new).and_return(double(correct!: nil))
+      expect(csv_writer).to receive(:write_transcript).with(processed_rows, anything)
+      
+      # Run the method
+      processor.send(:generate_csv_transcript)
+    end
+
     it "creates a CSV file" do
       Dir.mktmpdir do |tmpdir|
         # Copy our valid fixtures into a temp directory
