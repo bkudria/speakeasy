@@ -63,6 +63,9 @@
     - [ ] Implement check_sentence_boundaries method (3)
       - Detect incorrect segment labeling through sentence structure
       - Add tests for the method
+    - [ ] Implement check_speaker_labels method (3)
+      - Analyze speaker label patterns for inconsistencies
+      - Add tests for the method
     - [ ] Implement check_word_confidence method (3)
       - Check confidence patterns to identify potential misalignments
       - Add tests for the method
