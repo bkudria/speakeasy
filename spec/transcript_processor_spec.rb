@@ -153,7 +153,8 @@ RSpec.describe TranscriptProcessor do
       allow(Dir).to receive(:glob).and_call_original
 
       # First call to check named speaker files → should return []
-      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).once.and_return([])
+      # Second call after user types "go" → should return ["spk_0_John.m4a"]
+      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).twice.and_return([], ["spk_0_John.m4a"])
 
       # Then check for unnamed speaker files → returns ["spk_0.m4a"]
       expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).twice.and_return(["spk_0.m4a"])
