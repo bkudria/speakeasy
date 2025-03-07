@@ -44,7 +44,7 @@
       - Update to use parser.parsed_items instead of audio_segments
       - Use CsvGenerator's new process_parsed_items method
       - Add tests for the updated method
-    - [-] Update speaker mapping for item-based approach (3)
+    - [x] Update speaker mapping for item-based approach (3)
       - Ensure speaker identities are correctly applied to grouped items
       - Update tests to verify correct speaker mapping
     - [ ] Implement error handling for item processing (2)
