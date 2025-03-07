@@ -130,7 +130,7 @@ class TranscriptProcessor
 
     # Find speaker identifications from renamed files
     speaker_identities = {}
-    Dir.glob(File.join(Dir.pwd, "spk_*.m4a")).each do |file|
+    Dir.glob(File.join(@output_dir, "spk_*_*.m4a")).each do |file|
       if file =~ /spk_(\d+)_(.+)\.m4a/
         speaker_label = "spk_#{$1}"
         speaker_name = $2
