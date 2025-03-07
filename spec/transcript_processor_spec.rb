@@ -165,6 +165,43 @@ RSpec.describe TranscriptProcessor do
         expect(processor.instance_variable_get(:@rows)).to eq([])
       end
       
+      it "handles nil parsed items gracefully" do
+        allow(parser).to receive(:parsed_items).and_return(nil)
+        
+        # The implementation should convert nil to empty array
+        expect(csv_generator).to receive(:process_parsed_items)
+          .with([], anything, silence_threshold: 1.0)
+          .and_return([])
+        
+        expect { processor.process }.not_to raise_error
+      end
+      
+      it "handles errors during CSV generation" do
+        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
+        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
+        
+        # The implementation should catch the error and log it
+        expect(processor).to receive(:puts).with(/Error processing transcript items: CSV generation error/)
+        expect { processor.process }.not_to raise_error
+      end
+      
+      it "increments error count when processing fails" do
+        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
+        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
+        
+        # The implementation should increment an error counter
+        expect { processor.process }.to change { processor.instance_variable_get(:@error_count) }.from(0).to(1)
+      end
+      
+      it "sets empty rows array when processing fails" do
+        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
+        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
+        
+        # The implementation should ensure @rows is initialized even on error
+        processor.process
+        expect(processor.instance_variable_get(:@rows)).to eq([])
+      end
+      
       it "handles malformed speaker identity data" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         
