@@ -157,26 +157,27 @@ class TranscriptProcessor
 
     @rows = rows
   end
-end
 
-def open_directory_command
-  host_os = RbConfig::CONFIG["host_os"]
+  def open_directory_command
+    host_os = RbConfig::CONFIG["host_os"]
 
-  case host_os
-  when /darwin|mac\s?os/i
-    "open"
-  when /mswin|mingw|cygwin/i
-    "start"
-  when /linux|solaris|bsd/i
-    "xdg-open"
+    case host_os
+    when /darwin|mac\s?os/i
+      "open"
+    when /mswin|mingw|cygwin/i
+      "start"
+    when /linux|solaris|bsd/i
+      "xdg-open"
+    end
+  end
+
+  def open_output_directory
+    command = open_directory_command
+    if command
+      Kernel.system("#{command} #{@output_dir}")
+    else
+      puts "Unable to open directory automatically for this platform."
+    end
   end
 end
 
-def open_output_directory
-  command = open_directory_command
-  if command
-    Kernel.system("#{command} #{@output_dir}")
-  else
-    puts "Unable to open directory automatically for this platform."
-  end
-end
