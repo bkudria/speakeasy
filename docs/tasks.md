@@ -1,3 +1,9 @@
+- [ ] Improve the codebase quality:
+  - [ ] Refactor lib/csv_generator.rb
+  - [ ] Refactor lib/transcript_processor.rb
+  - [ ] Refactor lib/speaker_extraction.rb
+  - [ ] Refactor lib/csv_writer.rb
+
 - [ ] Detect and correct mis-labeled transcript items
   - Misalignment examples:
     - Sore Throat:
@@ -18,38 +24,6 @@
       Bob interrupted Jim. This transcript is correct:
         Jim: Hey Bob, question. Is it your intention or your recommendation that we fill up all 22 slots next Wednesday? That would be a
         Bob: I mean, I think that is the ideal scenario.
-
-  - [x] Update TranscriptParser to provide clear, structured list of items (tokens) ready for grouping by speaker
-  - [x] Create method to group items by speaker and silence gaps
-  - [x] Implement logic to detect natural pauses and segment boundaries
-
-  - [x] Enhance CsvGenerator to work with individual items
-    - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-    - [x] Implement calculate_confidence_metrics method for item groups (3)
-      - Add method to calculate min, max, mean, and median confidence from a group of items
-      - Handle edge cases like empty groups or missing confidence values
-      - Add tests for the new method
-    - [x] Update build_row method to work with grouped items (3)
-      - Modify to accept a group of items instead of a segment
-      - Use calculate_confidence_metrics for confidence calculations
-      - Add tests for the updated method
-    - [x] Add process_parsed_items method to generate rows from parsed items (5)
-      - Create method to process parsed_items from TranscriptParser
-      - Use group_items_by_speaker and detect_natural_pauses in the implementation
-      - Add tests for the new method
-    
-  - [x] Update TranscriptProcessor workflow
-    - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
-    - [x] Modify generate_csv_transcript to use the new item-based approach (5)
-      - Update to use parser.parsed_items instead of audio_segments
-      - Use CsvGenerator's new process_parsed_items method
-      - Add tests for the updated method
-    - [x] Update speaker mapping for item-based approach (3)
-      - Ensure speaker identities are correctly applied to grouped items
-      - Update tests to verify correct speaker mapping
-    - [x] Implement error handling for item processing (2)
-      - Add failing tests for error scenarios, and add comments for how to make them pass
-      - Add specific error handling for item processing failures
 
   - [ ] Implement misalignment detection
     - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
