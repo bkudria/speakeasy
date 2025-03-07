@@ -226,7 +226,7 @@ class CsvGenerator
       confidence_max: confidence_metrics[:max],
       confidence_mean: confidence_metrics[:mean],
       confidence_median: confidence_metrics[:median],
-      note: note_value
+      note: note_value.to_s.empty? ? "unknown" : note_value
     }
   end
   
