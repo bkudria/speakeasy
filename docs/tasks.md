@@ -40,7 +40,7 @@
     
   - [ ] Update TranscriptProcessor workflow
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
-    - [ ] Modify generate_csv_transcript to use the new item-based approach (5)
+    - [-] Modify generate_csv_transcript to use the new item-based approach (5)
       - Update to use parser.parsed_items instead of audio_segments
       - Use CsvGenerator's new process_parsed_items method
       - Add tests for the updated method
