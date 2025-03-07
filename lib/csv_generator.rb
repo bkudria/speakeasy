@@ -351,7 +351,7 @@ class CsvGenerator
     # Replace this placeholder with your actual logic
     return "error" if segment[:has_error]
     return "multiple speakers" if segment[:speaker_count] > 1
-    "unknown"
+    ""
   end
 
   def median(values)
