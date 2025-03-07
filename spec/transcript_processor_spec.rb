@@ -112,6 +112,24 @@ RSpec.describe TranscriptProcessor do
       allow(csv_generator).to receive(:process_parsed_items).with(any_args).and_return([{id: 1}])
     end
 
+    it "maps speaker identities correctly in the CSV" do
+      allow(parser).to receive(:parsed_items).and_return([
+        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
+        { speaker_label: "spk_1", start_time: 1.1, end_time: 2.0, content: "world", confidence: 0.85, type: "pronunciation" }
+      ])
+
+      allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_Alice.m4a", "spk_1_Bob.m4a"])
+
+      expected_rows = [
+        { id: 1, speaker: "Alice", transcript: "Hello", confidence_min: 0.9, confidence_max: 0.9, confidence_mean: 0.9, confidence_median: 0.9, note: "" },
+        { id: 2, speaker: "Bob", transcript: "world", confidence_min: 0.85, confidence_max: 0.85, confidence_mean: 0.85, confidence_median: 0.85, note: "" }
+      ]
+
+      expect(csv_writer).to receive(:write_transcript).with(expected_rows, anything)
+
+      processor.process
+    end
+
     it "completes successfully with valid inputs" do
       allow(parser).to receive(:parsed_items).and_return([])
       expect { processor.process }.not_to raise_error
