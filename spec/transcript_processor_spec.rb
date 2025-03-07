@@ -82,17 +82,17 @@ RSpec.describe TranscriptProcessor do
       allow(CsvWriter).to receive(:new).and_return(csv_writer)
       allow(CsvGenerator).to receive(:new).and_return(csv_generator)
       allow(LowConfidenceDetector).to receive(:new).and_return(low_confidence_detector)
-      
+
       # Mock the Dir.glob calls to return the expected files
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return([])
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).and_return([])
       allow(Dir).to receive(:glob).with(File.join(processor.instance_variable_get(:@output_dir), "spk_*.m4a")).and_return([])
-      
+
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
       allow(csv_generator).to receive(:process_parsed_items).and_return([])
-      
+
       # Update this line to return a specific value that can be used by the rest of the tests
       # Add expectations for MisalignmentDetector and MisalignmentCorrector
       misalignment_detector = double("MisalignmentDetector")
@@ -101,189 +101,189 @@ RSpec.describe TranscriptProcessor do
       allow(MisalignmentCorrector).to receive(:new).and_return(misalignment_corrector)
       allow(misalignment_detector).to receive(:detect_issues).and_return([])
       allow(misalignment_corrector).to receive(:correct!)
-      
+
       allow(csv_writer).to receive(:write_transcript)
       allow(low_confidence_detector).to receive(:identify_segments_to_review)
       allow(processor).to receive(:puts)
       allow(processor).to receive(:open_output_directory)
-      
+
       # Set default mock for process_parsed_items
     end
-    
+
     context "when handling errors during item processing" do
       let(:processor) { TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input) }
-      
+
       before do
         # Initialize the error count for testing
         processor.instance_variable_set(:@error_count, 0)
       end
-      
+
       it "handles empty parsed items gracefully" do
         allow(parser).to receive(:parsed_items).and_return([])
-        
+
         expect(csv_generator).to receive(:process_parsed_items)
           .with([], anything, silence_threshold: 1.0)
           .and_return([])
-        
+
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles nil parsed items gracefully" do
         allow(parser).to receive(:parsed_items).and_return(nil)
-        
+
         # The implementation should convert nil to empty array
         expect(csv_generator).to receive(:process_parsed_items)
           .with([], anything, silence_threshold: 1.0)
           .and_return([])
-        
+
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles errors during CSV generation" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should catch the error and log it
         expect(processor).to receive(:puts).with(/Error processing transcript items: CSV generation error/)
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "increments error count when processing fails" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should increment an error counter
         expect { processor.process }.to change { processor.instance_variable_get(:@error_count) }.from(0).to(1)
       end
-      
+
       it "sets empty rows array when processing fails" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should ensure @rows is initialized even on error
         processor.process
         expect(processor.instance_variable_get(:@rows)).to eq([])
       end
-      
+
       it "handles nil parsed items gracefully" do
         allow(parser).to receive(:parsed_items).and_return(nil)
-        
+
         # The implementation should convert nil to empty array
         expect(csv_generator).to receive(:process_parsed_items)
           .with([], anything, silence_threshold: 1.0)
           .and_return([])
-        
+
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles errors during CSV generation" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should catch the error and log it
         expect(processor).to receive(:puts).with(/Error processing transcript items: CSV generation error/)
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "increments error count when processing fails" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should increment an error counter
         expect { processor.process }.to change { processor.instance_variable_get(:@error_count) }.from(0).to(1)
       end
-      
+
       it "sets empty rows array when processing fails" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should ensure @rows is initialized even on error
         processor.process
         expect(processor.instance_variable_get(:@rows)).to eq([])
       end
-      
+
       it "handles malformed speaker identity data" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
-        
+
         # Simulate a malformed speaker file pattern
         allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_invalid*.m4a"])
-        
+
         # The implementation should handle invalid speaker identity patterns
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles errors during misalignment detection" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_return([{id: 1, speaker: "John", transcript: "Hello"}])
-        
+
         # Simulate an error during misalignment detection
         allow(MisalignmentDetector).to receive(:new).and_raise(StandardError.new("Misalignment detection error"))
-        
+
         # The implementation should catch the error and log it
         expect(processor).to receive(:puts).with(/Error detecting misalignments: Misalignment detection error/)
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles errors during misalignment correction" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_return([{id: 1, speaker: "John", transcript: "Hello"}])
-        
+
         misalignment_detector = double("MisalignmentDetector")
         allow(MisalignmentDetector).to receive(:new).and_return(misalignment_detector)
         allow(misalignment_detector).to receive(:detect_issues).and_return([])
-        
+
         # Simulate an error during misalignment correction
         allow(MisalignmentCorrector).to receive(:new).and_raise(StandardError.new("Misalignment correction error"))
-        
+
         # The implementation should catch the error and log it
         expect(processor).to receive(:puts).with(/Error correcting misalignments: Misalignment correction error/)
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "handles errors during CSV writing" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_return([{id: 1, speaker: "John", transcript: "Hello"}])
-        
+
         # Simulate an error during CSV writing
         allow(csv_writer).to receive(:write_transcript).and_raise(StandardError.new("CSV writing error"))
-        
+
         # The implementation should catch the error and log it
         expect(processor).to receive(:puts).with(/Error writing CSV transcript: CSV writing error/)
         expect { processor.process }.not_to raise_error
       end
-      
+
       it "provides debug information when DEBUG environment variable is set" do
         allow(ENV).to receive(:[]).with("DEBUG").and_return("true")
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
         allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-        
+
         # The implementation should print backtrace when DEBUG is set
         expect(processor).to receive(:puts).with(/Error processing transcript items: CSV generation error/)
         expect(processor).to receive(:puts).with(instance_of(String)) # For the backtrace
-        
+
         processor.process
       end
     end
 
     it "maps speaker identities correctly in the CSV" do
       parsed_items = [
-        { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
-        { speaker_label: "spk_1", start_time: 1.1, end_time: 2.0, content: "world", confidence: 0.85, type: "pronunciation" }
+        {speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation"},
+        {speaker_label: "spk_1", start_time: 1.1, end_time: 2.0, content: "world", confidence: 0.85, type: "pronunciation"}
       ]
-      
+
       allow(parser).to receive(:parsed_items).and_return(parsed_items)
 
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_Alice.m4a", "spk_1_Bob.m4a"])
 
       expected_rows = [
-        { id: 1, speaker: "Alice", transcript: "Hello", confidence_min: 0.9, confidence_max: 0.9, confidence_mean: 0.9, confidence_median: 0.9, note: "" },
-        { id: 2, speaker: "Bob", transcript: "world", confidence_min: 0.85, confidence_max: 0.85, confidence_mean: 0.85, confidence_median: 0.85, note: "" }
+        {id: 1, speaker: "Alice", transcript: "Hello", confidence_min: 0.9, confidence_max: 0.9, confidence_mean: 0.9, confidence_median: 0.9, note: ""},
+        {id: 2, speaker: "Bob", transcript: "world", confidence_min: 0.85, confidence_max: 0.85, confidence_mean: 0.85, confidence_median: 0.85, note: ""}
       ]
 
       expect(csv_generator).to receive(:process_parsed_items)
         .with(parsed_items, {"spk_0" => "Alice", "spk_1" => "Bob"}, silence_threshold: 1.0)
         .and_return(expected_rows)
-        
+
       expect(csv_writer).to receive(:write_transcript).with(expected_rows, anything)
 
       processor.process
@@ -328,7 +328,7 @@ RSpec.describe TranscriptProcessor do
         real_csv_generator = CsvGenerator.new
         allow(CsvGenerator).to receive(:new).and_return(real_csv_generator)
       end
-      
+
       it "generates CSV transcript with proper data" do
         parsed_items = [
           {
@@ -342,7 +342,7 @@ RSpec.describe TranscriptProcessor do
         ]
 
         allow(parser).to receive(:parsed_items).and_return(parsed_items)
-        
+
         # Mock the process_parsed_items method to return the expected row
         expected_row = {
           id: 1,
@@ -356,7 +356,7 @@ RSpec.describe TranscriptProcessor do
           start_time: "0.0",
           end_time: "5.0"
         }
-        
+
         # Set up the expectation for process_parsed_items
         expect(csv_generator).to receive(:process_parsed_items)
           .with(parsed_items, {"spk_0" => "John"}, silence_threshold: 1.0)
@@ -383,40 +383,39 @@ RSpec.describe TranscriptProcessor do
 
     it "uses item-based approach with process_parsed_items" do
       # Setup
-      allow(parser).to receive(:parsed_items).and_return([{ speaker_label: "spk_0", content: "Hello" }])
+      allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
       mock_input = StringIO.new("go\n")
       processor = TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input)
-      
+
       # Mock parsed_items and speaker_identities
-      parsed_items = [{ speaker_label: "spk_0", content: "Hello" }]
-      speaker_identities = { "spk_0" => "John" }
-      processed_rows = [{ id: 1, speaker: "John", transcript: "Hello" }]
-      
+      parsed_items = [{speaker_label: "spk_0", content: "Hello"}]
+      processed_rows = [{id: 1, speaker: "John", transcript: "Hello"}]
+
       # Expectations for the new approach
       expect(parser).to receive(:parsed_items).and_return(parsed_items)
-      
+
       # Mock the Dir.glob calls to return the expected files
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_John.m4a"])
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).and_return(["spk_0_John.m4a"])
-      
+
       # Extract the speaker identities from the filenames
       allow(File).to receive(:join).and_call_original
       allow(Dir).to receive(:glob).with(File.join(processor.instance_variable_get(:@output_dir), "spk_*.m4a")).and_return(["spk_0_John.m4a"])
-      
+
       # This is the key expectation for the new approach
       expect(csv_generator).to receive(:process_parsed_items)
-        .with(parsed_items, { "spk_0" => "John" }, silence_threshold: 1.0)
+        .with(parsed_items, {"spk_0" => "John"}, silence_threshold: 1.0)
         .and_return(processed_rows)
-      
+
       # We should not use the old approach
       expect(parser).not_to receive(:audio_segments)
       expect(csv_generator).not_to receive(:process_segment)
-      
+
       # Expectations for the rest of the method
       allow(MisalignmentDetector).to receive(:new).and_return(double(detect_issues: []))
       allow(MisalignmentCorrector).to receive(:new).and_return(double(correct!: nil))
       expect(csv_writer).to receive(:write_transcript).with(processed_rows, anything)
-      
+
       # Run the method
       processor.send(:generate_csv_transcript)
     end

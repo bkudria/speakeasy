@@ -114,7 +114,7 @@ class TranscriptProcessor
     begin
       detector = LowConfidenceDetector.new
       detector.identify_segments_to_review(@rows)
-    rescue StandardError => e
+    rescue => e
       puts "Error identifying segments to review: #{e.message}"
       puts e.backtrace.join("\n") if ENV["DEBUG"]
       @error_count += 1
@@ -146,7 +146,7 @@ class TranscriptProcessor
           speaker_identities[speaker_label] = speaker_name
         end
       end
-    rescue StandardError => e
+    rescue => e
       puts "Error processing speaker identity files: #{e.message}"
       puts e.backtrace.join("\n") if ENV["DEBUG"]
       @error_count += 1
@@ -162,20 +162,20 @@ class TranscriptProcessor
     begin
       # Process the parsed items using the new method
       rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
-      
+
       # Detect and correct misalignments
       begin
         misalignment_issues = MisalignmentDetector.new(rows).detect_issues
-      rescue StandardError => e
+      rescue => e
         puts "Error detecting misalignments: #{e.message}"
         puts e.backtrace.join("\n") if ENV["DEBUG"]
         @error_count += 1
         misalignment_issues = []
       end
-      
+
       begin
         MisalignmentCorrector.new(rows, misalignment_issues).correct!
-      rescue StandardError => e
+      rescue => e
         puts "Error correcting misalignments: #{e.message}"
         puts e.backtrace.join("\n") if ENV["DEBUG"]
         @error_count += 1
@@ -184,14 +184,14 @@ class TranscriptProcessor
       # Write to CSV
       begin
         csv_writer.write_transcript(rows, @csv_base_name)
-      rescue StandardError => e
+      rescue => e
         puts "Error writing CSV transcript: #{e.message}"
         puts e.backtrace.join("\n") if ENV["DEBUG"]
         @error_count += 1
       end
 
       @rows = rows
-    rescue StandardError => e
+    rescue => e
       puts "Error processing transcript items: #{e.message}"
       puts e.backtrace.join("\n") if ENV["DEBUG"]
       @error_count += 1
@@ -221,4 +221,3 @@ class TranscriptProcessor
     end
   end
 end
-
