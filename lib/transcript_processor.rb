@@ -22,6 +22,8 @@ class TranscriptProcessor
     @csv_base_name = File.basename(transcript_path, ".*")
     @output_dir = output_dir
     @input = input
+    @error_count = 0
+    @rows = []
   end
 
   def process
@@ -109,8 +111,14 @@ class TranscriptProcessor
 
   def identify_segments_to_review
     puts "\n=== Step 3: Identifying segments to review ==="
-    detector = LowConfidenceDetector.new
-    detector.identify_segments_to_review(@rows)
+    begin
+      detector = LowConfidenceDetector.new
+      detector.identify_segments_to_review(@rows)
+    rescue StandardError => e
+      puts "Error identifying segments to review: #{e.message}"
+      puts e.backtrace.join("\n") if ENV["DEBUG"]
+      @error_count += 1
+    end
   end
 
   def extract_speaker_audio
@@ -130,12 +138,18 @@ class TranscriptProcessor
 
     # Find speaker identifications from renamed files
     speaker_identities = {}
-    Dir.glob(File.join(@output_dir, "spk_*_*.m4a")).each do |file|
-      if file =~ /spk_(\d+)_(.+)\.m4a/
-        speaker_label = "spk_#{$1}"
-        speaker_name = $2
-        speaker_identities[speaker_label] = speaker_name
+    begin
+      Dir.glob(File.join(@output_dir, "spk_*_*.m4a")).each do |file|
+        if file =~ /spk_(\d+)_(.+)\.m4a/
+          speaker_label = "spk_#{$1}"
+          speaker_name = $2
+          speaker_identities[speaker_label] = speaker_name
+        end
       end
+    rescue StandardError => e
+      puts "Error processing speaker identity files: #{e.message}"
+      puts e.backtrace.join("\n") if ENV["DEBUG"]
+      @error_count += 1
     end
 
     # Process transcript into rows using the new item-based approach
@@ -145,17 +159,44 @@ class TranscriptProcessor
     # Get parsed items from the parser
     parsed_items = @parser.parsed_items || []
 
-    # Process the parsed items using the new method
-    rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
+    begin
+      # Process the parsed items using the new method
+      rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
+      
+      # Detect and correct misalignments
+      begin
+        misalignment_issues = MisalignmentDetector.new(rows).detect_issues
+      rescue StandardError => e
+        puts "Error detecting misalignments: #{e.message}"
+        puts e.backtrace.join("\n") if ENV["DEBUG"]
+        @error_count += 1
+        misalignment_issues = []
+      end
+      
+      begin
+        MisalignmentCorrector.new(rows, misalignment_issues).correct!
+      rescue StandardError => e
+        puts "Error correcting misalignments: #{e.message}"
+        puts e.backtrace.join("\n") if ENV["DEBUG"]
+        @error_count += 1
+      end
 
-    # Detect and correct misalignments
-    misalignment_issues = MisalignmentDetector.new(rows).detect_issues
-    MisalignmentCorrector.new(rows, misalignment_issues).correct!
+      # Write to CSV
+      begin
+        csv_writer.write_transcript(rows, @csv_base_name)
+      rescue StandardError => e
+        puts "Error writing CSV transcript: #{e.message}"
+        puts e.backtrace.join("\n") if ENV["DEBUG"]
+        @error_count += 1
+      end
 
-    # Write to CSV
-    csv_writer.write_transcript(rows, @csv_base_name)
-
-    @rows = rows
+      @rows = rows
+    rescue StandardError => e
+      puts "Error processing transcript items: #{e.message}"
+      puts e.backtrace.join("\n") if ENV["DEBUG"]
+      @error_count += 1
+      @rows = []
+    end
   end
 
   def open_directory_command
