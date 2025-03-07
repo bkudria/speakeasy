@@ -38,7 +38,7 @@
       - Use group_items_by_speaker and detect_natural_pauses in the implementation
       - Add tests for the new method
     
-  - [ ] Update TranscriptProcessor workflow
+  - [x] Update TranscriptProcessor workflow
     - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
     - [x] Modify generate_csv_transcript to use the new item-based approach (5)
       - Update to use parser.parsed_items instead of audio_segments
@@ -47,9 +47,9 @@
     - [x] Update speaker mapping for item-based approach (3)
       - Ensure speaker identities are correctly applied to grouped items
       - Update tests to verify correct speaker mapping
-    - [ ] Implement error handling for item processing (2)
+    - [x] Implement error handling for item processing (2)
+      - Add failing tests for error scenarios, and add comments for how to make them pass
       - Add specific error handling for item processing failures
-      - Add tests for error scenarios
 
   - [ ] Implement misalignment detection
     - Files: lib/misalignment_detector.rb, spec/misalignment_detector_spec.rb
