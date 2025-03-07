@@ -13,20 +13,6 @@
       - [ ] Extract file path handling from transcript_processor.rb (2)
       - [ ] Extract directory opening logic from transcript_processor.rb (1)
       - [ ] Add unit tests for FileOperations (2)
-    - [ ] Create ProgressReporter utility
-      - [ ] Extract progress reporting from speaker_extraction.rb (2)
-      - [ ] Implement percentage-based progress tracking (2)
-      - [ ] Add unit tests for ProgressReporter (2)
-
-  - [ ] Standardize configuration management
-    - [ ] Create Configuration class
-      - [ ] Define standard option structure (2)
-      - [ ] Implement default values and validation (2)
-      - [ ] Add unit tests for Configuration (2)
-    - [ ] Update classes to use Configuration
-      - [ ] Update csv_generator.rb to use Configuration (2)
-      - [ ] Update transcript_processor.rb to use Configuration (2)
-      - [ ] Update other classes to use Configuration (3)
 
   - [ ] Refactor lib/csv_generator.rb
     - [ ] Extract helper methods for clarity
@@ -36,9 +22,6 @@
     - [ ] Improve error handling
       - [ ] Add specific error types for different failures (2)
       - [ ] Implement consistent error logging (2)
-    - [ ] Add comprehensive documentation
-      - [ ] Document public methods with examples (2)
-      - [ ] Add class-level documentation (1)
 
   - [ ] Refactor lib/transcript_processor.rb
     - [ ] Simplify process method
@@ -51,24 +34,6 @@
     - [ ] Remove redundant code
       - [ ] Consolidate speaker file detection logic (2)
       - [ ] Eliminate unnecessary conditional checks (1)
-
-  - [ ] Refactor lib/speaker_extraction.rb
-    - [ ] Improve ffmpeg operations
-      - [ ] Add detailed error messages for failures (2)
-      - [ ] Implement retry mechanism for transient errors (3)
-      - [ ] Add validation for command output (2)
-    - [ ] Enhance progress reporting
-      - [ ] Implement percentage-based progress (2)
-      - [ ] Add time estimation for remaining work (3)
-
-  - [ ] Refactor lib/csv_writer.rb
-    - [ ] Enhance error handling
-      - [ ] Add specific handling for file permission errors (2)
-      - [ ] Implement graceful recovery for writing failures (2)
-    - [ ] Add input validation
-      - [ ] Validate row structure before processing (2)
-      - [ ] Add checks for required fields (2)
-      - [ ] Implement data type validation (1)
 
   - [ ] Implement MisalignmentDetector functionality
     - [ ] Implement detect_issues method
