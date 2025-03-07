@@ -91,6 +91,7 @@ RSpec.describe TranscriptProcessor do
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
+      allow(csv_generator).to receive(:process_parsed_items).and_return([])
       
       # Update this line to return a specific value that can be used by the rest of the tests
       # Add expectations for MisalignmentDetector and MisalignmentCorrector
@@ -110,10 +111,12 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "maps speaker identities correctly in the CSV" do
-      allow(parser).to receive(:parsed_items).and_return([
+      parsed_items = [
         { speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Hello", confidence: 0.9, type: "pronunciation" },
         { speaker_label: "spk_1", start_time: 1.1, end_time: 2.0, content: "world", confidence: 0.85, type: "pronunciation" }
-      ])
+      ]
+      
+      allow(parser).to receive(:parsed_items).and_return(parsed_items)
 
       allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_Alice.m4a", "spk_1_Bob.m4a"])
 
@@ -122,6 +125,10 @@ RSpec.describe TranscriptProcessor do
         { id: 2, speaker: "Bob", transcript: "world", confidence_min: 0.85, confidence_max: 0.85, confidence_mean: 0.85, confidence_median: 0.85, note: "" }
       ]
 
+      expect(csv_generator).to receive(:process_parsed_items)
+        .with(parsed_items, {"spk_0" => "Alice", "spk_1" => "Bob"}, silence_threshold: 1.0)
+        .and_return(expected_rows)
+        
       expect(csv_writer).to receive(:write_transcript).with(expected_rows, anything)
 
       processor.process
@@ -167,16 +174,7 @@ RSpec.describe TranscriptProcessor do
       end
       
       it "generates CSV transcript with proper data" do
-        segment = {
-          start_time: "0.0",
-          end_time: "5.0",
-          speaker_label: "spk_0"
-        }
-
-        allow(parser).to receive(:audio_segments).and_return([segment])
-        
-        # Mock the parsed_items to return something that will produce the expected result
-        allow(parser).to receive(:parsed_items).and_return([
+        parsed_items = [
           {
             speaker_label: "spk_0",
             start_time: 0.0,
@@ -185,8 +183,10 @@ RSpec.describe TranscriptProcessor do
             confidence: 0.85,
             type: "pronunciation"
           }
-        ])
+        ]
 
+        allow(parser).to receive(:parsed_items).and_return(parsed_items)
+        
         # Mock the process_parsed_items method to return the expected row
         expected_row = {
           id: 1,
@@ -201,12 +201,15 @@ RSpec.describe TranscriptProcessor do
           end_time: "5.0"
         }
         
-        # Use the real_csv_generator instance that was set up in the before block
-        allow(CsvGenerator).to receive(:new).and_return(
-          instance_double("CsvGenerator", process_parsed_items: [expected_row])
-        )
+        # Set up the expectation for process_parsed_items
+        expect(csv_generator).to receive(:process_parsed_items)
+          .with(parsed_items, {"spk_0" => "John"}, silence_threshold: 1.0)
+          .and_return([expected_row])
 
         expect(csv_writer).to receive(:write_transcript).with([expected_row], anything)
+
+        # Set up Dir.glob to return the named speaker file
+        allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_John.m4a"])
 
         processor.process
       end
