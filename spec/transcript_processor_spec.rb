@@ -93,7 +93,6 @@ RSpec.describe TranscriptProcessor do
       allow(parser).to receive(:audio_segments).and_return([])
       
       # Update this line to return a specific value that can be used by the rest of the tests
-      
       # Add expectations for MisalignmentDetector and MisalignmentCorrector
       misalignment_detector = double("MisalignmentDetector")
       misalignment_corrector = double("MisalignmentCorrector")
