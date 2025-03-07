@@ -153,7 +153,7 @@ class TranscriptProcessor
     MisalignmentCorrector.new(rows, misalignment_issues).correct!
 
     # Write to CSV
-    csv_writer.write_transcript(rows, "transcript")
+    csv_writer.write_transcript(rows, @csv_base_name)
 
     @rows = rows
   end
