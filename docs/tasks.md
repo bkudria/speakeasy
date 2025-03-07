@@ -1,57 +1,97 @@
 - [ ] Improve the codebase quality:
 
-  - [ ] Refactor code organization
-    - [ ] Reduce code duplication
-      - [ ] Extract common logic into utility classes
-        - [ ] Create ErrorHandler utility for standardized error handling (3)
-        - [ ] Create ConfidenceCalculator utility for confidence metrics (2)
-        - [ ] Create FileOperations utility for common file operations (3)
-        - [ ] Create ProgressReporter utility for consistent progress reporting (2)
-      - [ ] Standardize parameter naming across methods (2)
-    - [ ] Improve configuration management
-      - [ ] Create a dedicated configuration class (3)
-      - [ ] Implement consistent option handling across classes (3)
+  - [ ] Create utility classes to reduce code duplication
+    - [ ] Create ConfidenceCalculator utility
+      - [ ] Extract confidence calculation methods from csv_generator.rb (2)
+      - [ ] Update references in low_confidence_detector.rb (1)
+      - [ ] Add unit tests for ConfidenceCalculator (2)
+    - [ ] Create ErrorHandler utility
+      - [ ] Define standard error handling patterns (2)
+      - [ ] Implement error tracking and reporting (3)
+      - [ ] Add unit tests for ErrorHandler (2)
+    - [ ] Create FileOperations utility
+      - [ ] Extract file path handling from transcript_processor.rb (2)
+      - [ ] Extract directory opening logic from transcript_processor.rb (1)
+      - [ ] Add unit tests for FileOperations (2)
+    - [ ] Create ProgressReporter utility
+      - [ ] Extract progress reporting from speaker_extraction.rb (2)
+      - [ ] Implement percentage-based progress tracking (2)
+      - [ ] Add unit tests for ProgressReporter (2)
+
+  - [ ] Standardize configuration management
+    - [ ] Create Configuration class
+      - [ ] Define standard option structure (2)
+      - [ ] Implement default values and validation (2)
+      - [ ] Add unit tests for Configuration (2)
+    - [ ] Update classes to use Configuration
+      - [ ] Update csv_generator.rb to use Configuration (2)
+      - [ ] Update transcript_processor.rb to use Configuration (2)
+      - [ ] Update other classes to use Configuration (3)
 
   - [ ] Refactor lib/csv_generator.rb
     - [ ] Extract helper methods for clarity
-      - [ ] Break down process_parsed_items into smaller methods (3)
-      - [ ] Extract segment processing logic from group_items_by_speaker (2)
-      - [ ] Create dedicated method for transcript text building (1)
-    - [ ] Improve error handling and reporting
-      - [ ] Add specific error types for different failure scenarios (2)
-      - [ ] Implement consistent error logging pattern (2)
-      - [ ] Add recovery mechanisms for non-critical errors (2)
-    - [ ] Add documentation for complex methods
-      - [ ] Document group_items_by_speaker method with examples (1)
-      - [ ] Document process_parsed_items method with parameter descriptions (1)
-      - [ ] Add class-level documentation explaining the generator's purpose (1)
+      - [ ] Create method for transcript text building (1)
+      - [ ] Create method for segment splitting logic (2)
+      - [ ] Create method for confidence calculation (2)
+    - [ ] Improve error handling
+      - [ ] Add specific error types for different failures (2)
+      - [ ] Implement consistent error logging (2)
+    - [ ] Add comprehensive documentation
+      - [ ] Document public methods with examples (2)
+      - [ ] Add class-level documentation (1)
 
   - [ ] Refactor lib/transcript_processor.rb
-    - [ ] Simplify process method by extracting helper methods
-      - [ ] Extract speaker file detection logic to a dedicated method (2)
-      - [ ] Create method for handling speaker identification workflow (2)
-      - [ ] Separate CSV generation logic into its own method (2)
-    - [ ] Improve error handling with more specific error messages
-      - [ ] Add specific error handling for each processing stage (2)
-      - [ ] Implement better error reporting with context information (2)
+    - [ ] Simplify process method
+      - [ ] Extract speaker file detection logic (2)
+      - [ ] Create method for speaker identification workflow (2)
+      - [ ] Separate CSV generation logic (2)
+    - [ ] Improve error handling
+      - [ ] Add specific error handling for each stage (2)
+      - [ ] Implement better error reporting (2)
     - [ ] Remove redundant code
-      - [ ] Consolidate duplicate speaker file detection logic (2)
+      - [ ] Consolidate speaker file detection logic (2)
       - [ ] Eliminate unnecessary conditional checks (1)
 
   - [ ] Refactor lib/speaker_extraction.rb
-    - [ ] Improve error handling for ffmpeg operations
-      - [ ] Add detailed error messages for ffmpeg failures (2)
-      - [ ] Implement retry mechanism for transient ffmpeg errors (3)
-      - [ ] Add validation for ffmpeg command output (2)
-    - [ ] Add progress reporting for long-running operations
-      - [ ] Implement percentage-based progress for multi-speaker extraction (2)
-      - [ ] Add time estimation for remaining extraction work (3)
+    - [ ] Improve ffmpeg operations
+      - [ ] Add detailed error messages for failures (2)
+      - [ ] Implement retry mechanism for transient errors (3)
+      - [ ] Add validation for command output (2)
+    - [ ] Enhance progress reporting
+      - [ ] Implement percentage-based progress (2)
+      - [ ] Add time estimation for remaining work (3)
 
   - [ ] Refactor lib/csv_writer.rb
-    - [ ] Enhance error handling for file operations
+    - [ ] Enhance error handling
       - [ ] Add specific handling for file permission errors (2)
-      - [ ] Implement graceful recovery for CSV writing failures (2)
-    - [ ] Add validation for input data
+      - [ ] Implement graceful recovery for writing failures (2)
+    - [ ] Add input validation
       - [ ] Validate row structure before processing (2)
-      - [ ] Add checks for required fields in each row (2)
-      - [ ] Implement data type validation for confidence values (1)
+      - [ ] Add checks for required fields (2)
+      - [ ] Implement data type validation (1)
+
+  - [ ] Implement MisalignmentDetector functionality
+    - [ ] Implement detect_issues method
+      - [ ] Add sentence boundary detection (3)
+      - [ ] Add speaker label consistency checking (3)
+      - [ ] Add confidence drop detection (2)
+    - [ ] Implement helper methods
+      - [ ] Implement check_sentence_boundaries (2)
+      - [ ] Implement check_speaker_labels (2)
+      - [ ] Implement check_word_confidence (2)
+      - [ ] Implement check_pause_silences (2)
+      - [ ] Implement check_time_adjacency (2)
+      - [ ] Implement check_cross_speaker_transitions (3)
+      - [ ] Implement check_aggregated_confidence_drops (3)
+    - [ ] Add unit tests for MisalignmentDetector (3)
+
+  - [ ] Implement MisalignmentCorrector functionality
+    - [ ] Implement correct! method
+      - [ ] Add logic to apply corrections to rows (3)
+      - [ ] Add validation of correction results (2)
+    - [ ] Implement helper methods
+      - [ ] Implement move_short_misalignments (3)
+      - [ ] Implement mark_review_if_unsure (2)
+      - [ ] Implement reassign_words_by_timing (3)
+      - [ ] Implement handle_uncertain_speaker (3)
+    - [ ] Add unit tests for MisalignmentCorrector (3)
