@@ -87,6 +87,7 @@ RSpec.describe TranscriptProcessor do
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
+      allow(parser).to receive(:parsed_items).and_return([])
       allow(csv_writer).to receive(:write_transcript)
       allow(low_confidence_detector).to receive(:identify_segments_to_review)
       allow(processor).to receive(:puts)
