@@ -108,7 +108,6 @@ RSpec.describe TranscriptProcessor do
       allow(processor).to receive(:open_output_directory)
       
       # Set default mock for process_parsed_items
-      allow(csv_generator).to receive(:process_parsed_items).with(any_args).and_return([{id: 1}])
     end
 
     it "maps speaker identities correctly in the CSV" do
