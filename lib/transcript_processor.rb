@@ -143,7 +143,7 @@ class TranscriptProcessor
     csv_gen = CsvGenerator.new
 
     # Get parsed items from the parser
-    parsed_items = @parser.parsed_items
+    parsed_items = @parser.parsed_items || []
 
     # Process the parsed items using the new method
     rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
