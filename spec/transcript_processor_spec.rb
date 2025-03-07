@@ -68,6 +68,7 @@ RSpec.describe TranscriptProcessor do
     let(:mock_input) { StringIO.new("go\n") }
     let(:processor) { TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input) }
     let(:parser) { instance_double("TranscriptParser") }
+    before { allow(parser).to receive(:parsed_items).and_return([]) }
     let(:speaker_extraction) { instance_double("SpeakerExtraction") }
     let(:speaker_identification) { instance_double("SpeakerIdentification") }
     let(:csv_writer) { instance_double("CsvWriter") }
@@ -90,7 +91,6 @@ RSpec.describe TranscriptProcessor do
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
-      allow(parser).to receive(:parsed_items).and_return([])
       
       # Update this line to return a specific value that can be used by the rest of the tests
       allow(csv_generator).to receive(:process_parsed_items).with(any_args).and_return([{id: 1}])
@@ -113,6 +113,7 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "completes successfully with valid inputs" do
+      allow(parser).to receive(:parsed_items).and_return([])
       expect { processor.process }.not_to raise_error
     end
 
@@ -208,17 +209,9 @@ RSpec.describe TranscriptProcessor do
 
     it "uses item-based approach with process_parsed_items" do
       # Setup
+      allow(parser).to receive(:parsed_items).and_return([{ speaker_label: "spk_0", content: "Hello" }])
       mock_input = StringIO.new("go\n")
       processor = TranscriptProcessor.new(valid_json_path, valid_audio_path, input: mock_input)
-      
-      # Mock dependencies
-      parser = instance_double("TranscriptParser")
-      csv_generator = instance_double("CsvGenerator")
-      csv_writer = instance_double("CsvWriter")
-      
-      allow(TranscriptParser).to receive(:new).and_return(parser)
-      allow(CsvGenerator).to receive(:new).and_return(csv_generator)
-      allow(CsvWriter).to receive(:new).and_return(csv_writer)
       
       # Mock parsed_items and speaker_identities
       parsed_items = [{ speaker_label: "spk_0", content: "Hello" }]
