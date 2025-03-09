@@ -39,28 +39,147 @@
       - [ ] Consolidate speaker file detection logic (2)
       - [ ] Eliminate unnecessary conditional checks (1)
 
-  - [ ] Implement MisalignmentDetector functionality (files: lib/misalignment_detector.rb)
-    - [ ] Implement detect_issues method
-      - [ ] Add sentence boundary detection (3)
-      - [ ] Add speaker label consistency checking (3)
-      - [ ] Add confidence drop detection (3)
-    - [ ] Implement helper methods
-      - [ ] Implement check_sentence_boundaries (3)
-      - [ ] Implement check_speaker_labels (2)
-      - [ ] Implement check_word_confidence (2)
-      - [ ] Implement check_pause_silences (2)
-      - [ ] Implement check_time_adjacency (2)
-      - [ ] Implement check_cross_speaker_transitions (3)
-      - [ ] Implement check_aggregated_confidence_drops (3)
-    - [ ] Add unit tests for MisalignmentDetector (5)
+- [ ] Implement MisalignmentDetector functionality (files: lib/misalignment_detector.rb)
+  - [ ] Implement detect_issues method
+    - [ ] Add sentence boundary detection (3)
+    - [ ] Add speaker label consistency checking (3)
+    - [ ] Add confidence drop detection (3)
+  - [ ] Implement helper methods
+    - [ ] Implement check_sentence_boundaries (3)
+    - [ ] Implement check_speaker_labels (2)
+    - [ ] Implement check_word_confidence (2)
+    - [ ] Implement check_pause_silences (2)
+    - [ ] Implement check_time_adjacency (2)
+    - [ ] Implement check_cross_speaker_transitions (3)
+    - [ ] Implement check_aggregated_confidence_drops (3)
+  - [ ] Add unit tests for MisalignmentDetector (5)
 
-  - [ ] Implement MisalignmentCorrector functionality (files: lib/misalignment_corrector.rb)
-    - [ ] Implement correct! method
-      - [ ] Add logic to apply corrections to rows (3)
-      - [ ] Add validation of correction results (2)
-    - [ ] Implement helper methods
-      - [ ] Implement move_short_misalignments (3)
-      - [ ] Implement mark_review_if_unsure (2)
-      - [ ] Implement reassign_words_by_timing (3)
-      - [ ] Implement handle_uncertain_speaker (3)
-    - [ ] Add unit tests for MisalignmentCorrector (5)
+- [ ] Implement MisalignmentCorrector functionality (files: lib/misalignment_corrector.rb)
+  - [ ] Implement correct! method
+    - [ ] Add logic to apply corrections to rows (3)
+    - [ ] Add validation of correction results (2)
+  - [ ] Implement helper methods
+    - [ ] Implement move_short_misalignments (3)
+    - [ ] Implement mark_review_if_unsure (2)
+    - [ ] Implement reassign_words_by_timing (3)
+    - [ ] Implement handle_uncertain_speaker (3)
+  - [ ] Add unit tests for MisalignmentCorrector (5)
+
+- [ ] Enhance testing strategy
+  - [ ] Test edge cases
+    - [ ] Add tests for empty items (2)
+    - [ ] Add tests for missing confidence values (2)
+    - [ ] Add tests for unusual punctuation patterns (3)
+  - [ ] Mock external dependencies
+    - [ ] Use mocks for file system operations in TranscriptProcessor tests (3)
+    - [ ] Create consistent mocking strategy (2)
+  - [ ] Add integration tests
+    - [ ] Create end-to-end tests with sample JSON/audio inputs (4)
+    - [ ] Verify all processing steps work together correctly (3)
+  - [ ] Create test data
+    - [ ] Generate small set of realistic test data with known misalignments (3)
+    - [ ] Document expected correction behavior for test cases (2)
+
+- [ ] Improve error handling
+  - [ ] Implement graceful degradation
+    - [ ] Allow processing to continue when parts of transcript have issues (3)
+    - [ ] Implement fallback strategies for common errors (3)
+  - [ ] Enhance error messages
+    - [ ] Provide more detailed, user-friendly error messages (2)
+    - [ ] Include potential solutions in error messages (2)
+  - [ ] Add recovery strategies
+    - [ ] Implement recovery for misalignment detection failures (3)
+    - [ ] Add fallback to speaker-only grouping when necessary (2)
+
+- [ ] Enhance documentation
+  - [ ] Add code comments
+    - [ ] Document complex algorithms, especially for misalignment detection (3)
+    - [ ] Add explanatory comments for critical decision points (2)
+  - [ ] Update specification
+    - [ ] Reflect new misalignment detection and correction capabilities (2)
+    - [ ] Document configuration options and thresholds (2)
+  - [ ] Create usage examples
+    - [ ] Add examples for different transcript types (2)
+    - [ ] Document handling of various misalignment scenarios (3)
+  - [ ] Write user documentation
+    - [ ] Create README.md with installation and usage instructions (3)
+    - [ ] Provide example usage with sample data (2)
+    - [ ] Include screenshots and output examples (2)
+  - [ ] Create project website
+    - [ ] Set up GitHub Pages or similar (3)
+    - [ ] Include guide, screenshots, and usage demos (3)
+
+- [ ] Improve code organization
+  - [ ] Extract common logic
+    - [ ] Create shared utility methods (3)
+    - [ ] Eliminate code duplication across classes (3)
+  - [ ] Standardize naming conventions
+    - [ ] Ensure consistent parameter naming across methods (2)
+    - [ ] Standardize method naming patterns (2)
+  - [ ] Implement configuration management
+    - [ ] Create dedicated configuration class (3)
+    - [ ] Add structured approach to managing settings (2)
+
+- [ ] Enhance performance
+  - [ ] Implement lazy loading for large transcripts (3)
+  - [ ] Add batch processing capabilities (4)
+  - [ ] Enhance progress reporting during long operations (2)
+  - [ ] Add concurrency for segment processing (4)
+  - [ ] Profile performance
+    - [ ] Identify bottlenecks in segment extraction and CSV generation (3)
+    - [ ] Measure run times with ruby-prof (2)
+    - [ ] Report areas needing optimization (2)
+  - [ ] Generate code coverage reports
+    - [ ] Integrate SimpleCov (2)
+    - [ ] Ensure minimum coverage thresholds (2)
+
+- [ ] Improve user experience
+  - [ ] Add interactive review mode
+    - [ ] Allow manual correction of uncertain misalignments (4)
+    - [ ] Provide interface for reviewing problematic segments (3)
+  - [ ] Create visual representation
+    - [ ] Generate HTML output with highlighted misalignments (4)
+    - [ ] Add visual confidence indicators (3)
+  - [ ] Enhance CLI functionality
+    - [ ] Add options for confidence threshold and paths (2)
+    - [ ] Add configuration options for threshold values (2)
+    - [ ] Add flags to enable/disable specific checks (2)
+    - [ ] Provide comprehensive help text (2)
+  - [ ] Improve dependency checks
+    - [ ] Verify FFmpeg and other external dependencies (2)
+    - [ ] Guide users when dependencies are missing (2)
+  - [ ] Implement logging system
+    - [ ] Add configurable logging for debug/info/warning/error messages (3)
+    - [ ] Allow logs to be toggled or directed to a file (2)
+    - [ ] Route all program output through the logger (2)
+    - [ ] Update spec_helper.rb to show logs only on failure (2)
+
+- [ ] Enhance extensibility
+  - [ ] Design plugin architecture
+    - [ ] Create framework for misalignment detection strategies (4)
+    - [ ] Allow new strategies without modifying core code (3)
+  - [ ] Design clean API
+    - [ ] Define clear interfaces for core functionality (3)
+    - [ ] Facilitate integration with other systems (3)
+  - [ ] Add configuration options
+    - [ ] Allow customization of system behavior (3)
+    - [ ] Support user-specific needs (2)
+
+- [ ] Implement next steps features
+  - [ ] Create MisalignmentCorrector with specs for fixing detected issues
+    - [ ] Implement moving short misaligned words to correct speaker (3)
+    - [ ] Mark ambiguous cases with "review" in the Note column (2)
+    - [ ] Provide manual review step for suspected mis-labeling (3)
+  - [ ] Implement optional punctuation-based boundary detection
+    - [ ] Create logic to detect sentence boundaries from punctuation (3)
+    - [ ] Use punctuation to form row segments (3)
+  - [ ] Add special notes and markers
+    - [ ] Implement "multiple speakers" note functionality (2)
+    - [ ] Add "review" note for low-confidence segments (2)
+    - [ ] Support multiple values in "note" column (2)
+  - [ ] Add validation and enhance CLI
+    - [ ] Implement JSON Schema Validation (3)
+    - [ ] Add CLI options for workflow customization (3)
+  - [ ] Automate OS detection tests
+    - [ ] Test "open directory" functionality across OSes (3)
+    - [ ] Consider CI with different OS runners (3)
