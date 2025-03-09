@@ -1,70 +1,6 @@
-- [ ] Improve the codebase quality:
+# Speakeasy Tasks
 
-  - [ ] Create utility classes to reduce code duplication
-    - [ ] Create ConfidenceCalculator utility (files: lib/csv_generator.rb, lib/low_confidence_detector.rb)
-      - [ ] Extract calculate_confidence_metrics method from csv_generator.rb (2)
-      - [ ] Extract confidence calculation from process_segment method (3)
-      - [ ] Update references in low_confidence_detector.rb (1)
-      - [ ] Add unit tests for ConfidenceCalculator (3)
-    
-    - [ ] Create ErrorHandler utility (files: lib/transcript_processor.rb, lib/csv_generator.rb)
-      - [ ] Define standard error handling patterns (2)
-      - [ ] Extract error handling from transcript_processor.rb (3)
-      - [ ] Extract error handling from csv_generator.rb (2)
-      - [ ] Implement error tracking and reporting (3)
-      - [ ] Add unit tests for ErrorHandler (3)
-    
-    - [ ] Create FileOperations utility (files: lib/transcript_processor.rb)
-      - [ ] Extract file path handling methods (2)
-      - [ ] Extract directory opening logic (2)
-      - [ ] Add unit tests for FileOperations (3)
-
-  - [ ] Refactor lib/csv_generator.rb
-    - [ ] Extract helper methods for clarity
-      - [ ] Create method for transcript text building (2)
-      - [ ] Create method for segment splitting logic (3)
-    - [ ] Improve error handling
-      - [ ] Add specific error types for different failures (2)
-      - [ ] Implement consistent error logging (2)
-
-  - [ ] Refactor lib/transcript_processor.rb
-    - [ ] Simplify process method
-      - [ ] Extract speaker file detection logic (3)
-      - [ ] Create method for speaker identification workflow (3)
-      - [ ] Separate CSV generation logic (2)
-    - [ ] Improve error handling
-      - [ ] Add specific error handling for each stage (3)
-      - [ ] Implement better error reporting (2)
-    - [ ] Remove redundant code
-      - [ ] Consolidate speaker file detection logic (2)
-      - [ ] Eliminate unnecessary conditional checks (1)
-
-- [ ] Implement MisalignmentDetector functionality (files: lib/misalignment_detector.rb)
-  - [ ] Implement detect_issues method
-    - [ ] Add sentence boundary detection (3)
-    - [ ] Add speaker label consistency checking (3)
-    - [ ] Add confidence drop detection (3)
-  - [ ] Implement helper methods
-    - [ ] Implement check_sentence_boundaries (3)
-    - [ ] Implement check_speaker_labels (2)
-    - [ ] Implement check_word_confidence (2)
-    - [ ] Implement check_pause_silences (2)
-    - [ ] Implement check_time_adjacency (2)
-    - [ ] Implement check_cross_speaker_transitions (3)
-    - [ ] Implement check_aggregated_confidence_drops (3)
-  - [ ] Add unit tests for MisalignmentDetector (5)
-
-- [ ] Implement MisalignmentCorrector functionality (files: lib/misalignment_corrector.rb)
-  - [ ] Implement correct! method
-    - [ ] Add logic to apply corrections to rows (3)
-    - [ ] Add validation of correction results (2)
-  - [ ] Implement helper methods
-    - [ ] Implement move_short_misalignments (3)
-    - [ ] Implement mark_review_if_unsure (2)
-    - [ ] Implement reassign_words_by_timing (3)
-    - [ ] Implement handle_uncertain_speaker (3)
-  - [ ] Add unit tests for MisalignmentCorrector (5)
-
+## 1. Testing Infrastructure Improvements
 - [ ] Enhance testing strategy
   - [ ] Test edge cases
     - [ ] Add tests for empty items (2)
@@ -79,18 +15,86 @@
   - [ ] Create test data
     - [ ] Generate small set of realistic test data with known misalignments (3)
     - [ ] Document expected correction behavior for test cases (2)
+  - [ ] Generate code coverage reports
+    - [ ] Integrate SimpleCov (2)
+    - [ ] Ensure minimum coverage thresholds (2)
+  - [ ] Automate OS detection tests
+    - [ ] Test "open directory" functionality across OSes (3)
+    - [ ] Consider CI with different OS runners (3)
 
-- [ ] Improve error handling
-  - [ ] Implement graceful degradation
-    - [ ] Allow processing to continue when parts of transcript have issues (3)
-    - [ ] Implement fallback strategies for common errors (3)
-  - [ ] Enhance error messages
-    - [ ] Provide more detailed, user-friendly error messages (2)
-    - [ ] Include potential solutions in error messages (2)
-  - [ ] Add recovery strategies
-    - [ ] Implement recovery for misalignment detection failures (3)
-    - [ ] Add fallback to speaker-only grouping when necessary (2)
+## 2. Code Structure and Interface Improvements
+- [ ] Improve code organization
+  - [ ] Extract common logic
+    - [ ] Create shared utility methods (3)
+    - [ ] Eliminate code duplication across classes (3)
+  - [ ] Standardize naming conventions
+    - [ ] Ensure consistent parameter naming across methods (2)
+    - [ ] Standardize method naming patterns (2)
+  - [ ] Implement configuration management
+    - [ ] Create dedicated configuration class (3)
+    - [ ] Add structured approach to managing settings (2)
+- [ ] Create utility classes to reduce code duplication
+  - [ ] Create ConfidenceCalculator utility (files: lib/csv_generator.rb, lib/low_confidence_detector.rb)
+    - [ ] Extract calculate_confidence_metrics method from csv_generator.rb (2)
+    - [ ] Extract confidence calculation from process_segment method (3)
+    - [ ] Update references in low_confidence_detector.rb (1)
+    - [ ] Add unit tests for ConfidenceCalculator (3)
+  - [ ] Create FileOperations utility (files: lib/transcript_processor.rb)
+    - [ ] Extract file path handling methods (2)
+    - [ ] Extract directory opening logic (2)
+    - [ ] Add unit tests for FileOperations (3)
+  - [ ] Create ErrorHandler utility (files: lib/transcript_processor.rb, lib/csv_generator.rb)
+    - [ ] Define standard error handling patterns (2)
+    - [ ] Extract error handling from transcript_processor.rb (3)
+    - [ ] Extract error handling from csv_generator.rb (2)
+    - [ ] Implement error tracking and reporting (3)
+    - [ ] Add unit tests for ErrorHandler (3)
+- [ ] Implement validation and enhance CLI
+  - [ ] Implement JSON Schema Validation (3)
+  - [ ] Add CLI options for workflow customization (3)
 
+## 3. Refactoring Complex Components
+- [ ] Refactor lib/csv_generator.rb
+  - [ ] Extract helper methods for clarity
+    - [ ] Create method for transcript text building (2)
+    - [ ] Create method for segment splitting logic (3)
+  - [ ] Improve error handling
+    - [ ] Add specific error types for different failures (2)
+    - [ ] Implement consistent error logging (2)
+- [ ] Refactor lib/transcript_processor.rb
+  - [ ] Simplify process method
+    - [ ] Extract speaker file detection logic (3)
+    - [ ] Create method for speaker identification workflow (3)
+    - [ ] Separate CSV generation logic (2)
+  - [ ] Improve error handling
+    - [ ] Add specific error handling for each stage (3)
+    - [ ] Implement better error reporting (2)
+  - [ ] Remove redundant code
+    - [ ] Consolidate speaker file detection logic (2)
+    - [ ] Eliminate unnecessary conditional checks (1)
+
+## 4. Architectural Improvements
+- [ ] Enhance extensibility
+  - [ ] Design plugin architecture
+    - [ ] Create framework for misalignment detection strategies (4)
+    - [ ] Allow new strategies without modifying core code (3)
+  - [ ] Design clean API
+    - [ ] Define clear interfaces for core functionality (3)
+    - [ ] Facilitate integration with other systems (3)
+  - [ ] Add configuration options
+    - [ ] Allow customization of system behavior (3)
+    - [ ] Support user-specific needs (2)
+- [ ] Enhance performance
+  - [ ] Implement lazy loading for large transcripts (3)
+  - [ ] Add batch processing capabilities (4)
+  - [ ] Enhance progress reporting during long operations (2)
+  - [ ] Add concurrency for segment processing (4)
+  - [ ] Profile performance
+    - [ ] Identify bottlenecks in segment extraction and CSV generation (3)
+    - [ ] Measure run times with ruby-prof (2)
+    - [ ] Report areas needing optimization (2)
+
+## 5. Documentation and Conventions
 - [ ] Enhance documentation
   - [ ] Add code comments
     - [ ] Document complex algorithms, especially for misalignment detection (3)
@@ -109,30 +113,27 @@
     - [ ] Set up GitHub Pages or similar (3)
     - [ ] Include guide, screenshots, and usage demos (3)
 
-- [ ] Improve code organization
-  - [ ] Extract common logic
-    - [ ] Create shared utility methods (3)
-    - [ ] Eliminate code duplication across classes (3)
-  - [ ] Standardize naming conventions
-    - [ ] Ensure consistent parameter naming across methods (2)
-    - [ ] Standardize method naming patterns (2)
-  - [ ] Implement configuration management
-    - [ ] Create dedicated configuration class (3)
-    - [ ] Add structured approach to managing settings (2)
+## 6. Error Handling Improvements
+- [ ] Improve error handling
+  - [ ] Implement graceful degradation
+    - [ ] Allow processing to continue when parts of transcript have issues (3)
+    - [ ] Implement fallback strategies for common errors (3)
+  - [ ] Enhance error messages
+    - [ ] Provide more detailed, user-friendly error messages (2)
+    - [ ] Include potential solutions in error messages (2)
+  - [ ] Add recovery strategies
+    - [ ] Implement recovery for misalignment detection failures (3)
+    - [ ] Add fallback to speaker-only grouping when necessary (2)
+- [ ] Implement logging system
+  - [ ] Add configurable logging for debug/info/warning/error messages (3)
+  - [ ] Allow logs to be toggled or directed to a file (2)
+  - [ ] Route all program output through the logger (2)
+  - [ ] Update spec_helper.rb to show logs only on failure (2)
+- [ ] Improve dependency checks
+  - [ ] Verify FFmpeg and other external dependencies (2)
+  - [ ] Guide users when dependencies are missing (2)
 
-- [ ] Enhance performance
-  - [ ] Implement lazy loading for large transcripts (3)
-  - [ ] Add batch processing capabilities (4)
-  - [ ] Enhance progress reporting during long operations (2)
-  - [ ] Add concurrency for segment processing (4)
-  - [ ] Profile performance
-    - [ ] Identify bottlenecks in segment extraction and CSV generation (3)
-    - [ ] Measure run times with ruby-prof (2)
-    - [ ] Report areas needing optimization (2)
-  - [ ] Generate code coverage reports
-    - [ ] Integrate SimpleCov (2)
-    - [ ] Ensure minimum coverage thresholds (2)
-
+## 7. User Experience Improvements
 - [ ] Improve user experience
   - [ ] Add interactive review mode
     - [ ] Allow manual correction of uncertain misalignments (4)
@@ -145,26 +146,32 @@
     - [ ] Add configuration options for threshold values (2)
     - [ ] Add flags to enable/disable specific checks (2)
     - [ ] Provide comprehensive help text (2)
-  - [ ] Improve dependency checks
-    - [ ] Verify FFmpeg and other external dependencies (2)
-    - [ ] Guide users when dependencies are missing (2)
-  - [ ] Implement logging system
-    - [ ] Add configurable logging for debug/info/warning/error messages (3)
-    - [ ] Allow logs to be toggled or directed to a file (2)
-    - [ ] Route all program output through the logger (2)
-    - [ ] Update spec_helper.rb to show logs only on failure (2)
 
-- [ ] Enhance extensibility
-  - [ ] Design plugin architecture
-    - [ ] Create framework for misalignment detection strategies (4)
-    - [ ] Allow new strategies without modifying core code (3)
-  - [ ] Design clean API
-    - [ ] Define clear interfaces for core functionality (3)
-    - [ ] Facilitate integration with other systems (3)
-  - [ ] Add configuration options
-    - [ ] Allow customization of system behavior (3)
-    - [ ] Support user-specific needs (2)
-
+## 8. Misalignment Detection and Correction
+- [ ] Implement MisalignmentDetector functionality (files: lib/misalignment_detector.rb)
+  - [ ] Implement detect_issues method
+    - [ ] Add sentence boundary detection (3)
+    - [ ] Add speaker label consistency checking (3)
+    - [ ] Add confidence drop detection (3)
+  - [ ] Implement helper methods
+    - [ ] Implement check_sentence_boundaries (3)
+    - [ ] Implement check_speaker_labels (2)
+    - [ ] Implement check_word_confidence (2)
+    - [ ] Implement check_pause_silences (2)
+    - [ ] Implement check_time_adjacency (2)
+    - [ ] Implement check_cross_speaker_transitions (3)
+    - [ ] Implement check_aggregated_confidence_drops (3)
+  - [ ] Add unit tests for MisalignmentDetector (5)
+- [ ] Implement MisalignmentCorrector functionality (files: lib/misalignment_corrector.rb)
+  - [ ] Implement correct! method
+    - [ ] Add logic to apply corrections to rows (3)
+    - [ ] Add validation of correction results (2)
+  - [ ] Implement helper methods
+    - [ ] Implement move_short_misalignments (3)
+    - [ ] Implement mark_review_if_unsure (2)
+    - [ ] Implement reassign_words_by_timing (3)
+    - [ ] Implement handle_uncertain_speaker (3)
+  - [ ] Add unit tests for MisalignmentCorrector (5)
 - [ ] Implement next steps features
   - [ ] Create MisalignmentCorrector with specs for fixing detected issues
     - [ ] Implement moving short misaligned words to correct speaker (3)
@@ -177,9 +184,3 @@
     - [ ] Implement "multiple speakers" note functionality (2)
     - [ ] Add "review" note for low-confidence segments (2)
     - [ ] Support multiple values in "note" column (2)
-  - [ ] Add validation and enhance CLI
-    - [ ] Implement JSON Schema Validation (3)
-    - [ ] Add CLI options for workflow customization (3)
-  - [ ] Automate OS detection tests
-    - [ ] Test "open directory" functionality across OSes (3)
-    - [ ] Consider CI with different OS runners (3)
