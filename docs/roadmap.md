@@ -1,3 +1,25 @@
+## 2. Refactoring Complex Components
+- [ ] Refactor lib/csv_generator.rb
+  - Files: lib/csv_generator.rb
+  - [ ] Extract helper methods for clarity
+    - [ ] Create method for transcript text building (2)
+    - [ ] Create method for segment splitting logic (3)
+  - [ ] Improve error handling
+    - [ ] Add specific error types for different failures (2)
+    - [ ] Implement consistent error logging (2)
+- [ ] Refactor lib/transcript_processor.rb
+  - Files: lib/transcript_processor.rb
+  - [ ] Simplify process method
+    - [ ] Extract speaker file detection logic (3)
+    - [ ] Create method for speaker identification workflow (3)
+    - [ ] Separate CSV generation logic (2)
+  - [ ] Improve error handling
+    - [ ] Add specific error handling for each stage (3)
+    - [ ] Implement better error reporting (2)
+  - [ ] Remove redundant code
+    - [ ] Consolidate speaker file detection logic (2)
+    - [ ] Eliminate unnecessary conditional checks (1)
+
 ## 3. Testing Infrastructure Improvements
 - [ ] Enhance testing strategy
   - Files: spec/spec_helper.rb, spec/*_spec.rb
