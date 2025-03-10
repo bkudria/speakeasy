@@ -13,7 +13,7 @@ Determine if the request is for task refinement, task advancement, or something 
 1. Request any unseen file content mentioned in the tasks.
 2. Once all file content needed is available, refine the task list according to the instructions.
 3. Add or update file listings as non-checkbox bullet points under relevant tasks following the format in docs/instructions/02_documents_and_rules.md:
-   - Format: `  • Files: file1.rb, file2.rb` (with 2-space indentation)
+   - Format: `  - Files: file1.rb, file2.rb` (with 2-space indentation)
    - Place file listings as high in the hierarchy as possible
 4. Instruct the editor engineer to update the tasks.md file with the refined task list.
 5. Await a new request.
@@ -34,7 +34,7 @@ Determine if the request is for task refinement, task advancement, or something 
 1. When a new task is discovered during development or testing:
    - Document the task immediately in the task list following the format in the "Discovered Task Management" section in docs/instructions/02_documents_and_rules.md.
    - Include all required information: description, point estimate (if a leaf task), and related files.
-   - List required files as non-checkbox bullet points using the format: `  • Files: file1.rb, file2.rb` (with 2-space indentation)
+   - List required files as non-checkbox bullet points using the format: `  - Files: file1.rb, file2.rb` (with 2-space indentation)
 
 2. Determine appropriate placement in the task hierarchy:
    - If the discovered task is directly related to the current task, add it as a sub-task.

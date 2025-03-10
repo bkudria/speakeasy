@@ -38,14 +38,14 @@
 4. Non-leaf tasks should not have explicit point estimates.
 5. File listings for tasks:
    - List required files as non-checkbox bullet points directly under the relevant task
-   - Format: `  • Files: file1.rb, file2.rb` (use the bullet symbol • and indent with 2 spaces)
+   - Format: `  - Files: file1.rb, file2.rb` (use the bullet symbol • and indent with 2 spaces)
    - Place file listings as high in the hierarchy as possible (parent tasks rather than individual leaf tasks)
    - Update file listings during task refinement or when adding new tasks
    
    Example:
    ```
    - [ ] Create ConfidenceCalculator utility
-     • Files: lib/csv_generator.rb, lib/low_confidence_detector.rb
+     - Files: lib/csv_generator.rb, lib/low_confidence_detector.rb
      - [ ] Extract calculate_confidence_metrics method (2)
      - [ ] Extract confidence calculation from process_segment (3)
    ```
