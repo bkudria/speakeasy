@@ -11,6 +11,11 @@ For all requests, follow these steps:
 ## 1. TDD Workflow
 The project follows strict Test-Driven Development (TDD) principles:
 
+**Scope of TDD Application**:
+- Tests need only be written to test program functionality implemented in lib/.
+- Refactors, test suite improvements, and other changes unrelated to the core functionality do not need to be implemented in strict accordance with TDD.
+- However, changes to core application functionality must always follow the TDD workflow described below.
+
 1. **Identify Task**: Select the next uncompleted task `[ ]` from the task list.
 2. **Verify Task Status**: Confirm the current task status in tasks.md accurately reflects the project state before proceeding. See [Task Status Management](02_documents_and_rules.md#8-task-status-management) for verification procedures.
 3. **Understand Requirements**: Fully understand what the task needs to accomplish.

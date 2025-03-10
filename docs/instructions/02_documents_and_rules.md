@@ -71,10 +71,11 @@
 6. Determine necessary changes at a tactical level.
 7. Scope changes using the provided Fibonacci scale.
 8. Break down tasks exceeding 5 points into smaller subtasks.
-9. Use standard library tools and language idioms when possible.
-10. Ensure changes adhere to all rules, especially regarding tests and specifications.
-11. Only mark a task as complete [x] after receiving explicit confirmation that tests have passed
-12. Only mark a task as in progress [-] after receiving confirmation that the test fails appropriately
+9. After selecting a task and making a plan for it, re-evaluate its point-score effort number. If the re-evaluated score exceeds 5 points, break down the task into smaller subtasks.
+10. Use standard library tools and language idioms when possible.
+11. Ensure changes adhere to all rules, especially regarding tests and specifications.
+12. Only mark a task as complete [x] after receiving explicit confirmation that tests have passed
+13. Only mark a task as in progress [-] after receiving confirmation that the test fails appropriately
 
 ## 7. Discovered Task Management:
 1. When discovering new tasks during implementation:
@@ -142,3 +143,9 @@
      - Task discoveries or refinements
      - Context switches or work sessions
    - When completing a non-leaf task, verify all child tasks are properly marked as completed.
+
+5. Parent task completion rule:
+   - A parent task should be marked as complete [x] if and only if all of its children tasks are complete.
+   - When marking the last child task of a parent as complete, always verify and update the parent task's status.
+   - Never mark a parent task as complete if any of its children are still in progress [-] or incomplete [ ].
+   - When all children tasks are complete, the parent task must be updated to reflect this state.

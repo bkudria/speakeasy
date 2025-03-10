@@ -29,6 +29,8 @@
 - Hierarchical organization with 2-space indentation for sub-tasks
 - Point estimates (Fibonacci: 1,2,3,5,8,13,21) for leaf tasks only
 - Include file references at highest applicable level
+- Parent tasks should be marked complete [x] if and only if all child tasks are complete
+- Re-evaluate point estimates after planning tasks; break down if they exceed 5 points
 
 ### Example Task Structure
 ```
@@ -40,6 +42,8 @@
 ```
 
 ## TDD Workflow
+
+**Note**: Tests are only required for program functionality in lib/. Refactors, test suite improvements, and other non-core changes don't need strict TDD.
 
 1. **Start**: Identify next uncompleted task `[ ]` and verify its status in tasks.md reflects the current project state
 2. **Write Test**: Create failing test but don't update task status yet

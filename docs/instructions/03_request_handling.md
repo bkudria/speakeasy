@@ -36,7 +36,8 @@ Determine if the request is for task refinement, task advancement, or something 
 7. Wait for user confirmation that tests have passed, then:
    - Explicitly instruct the editor engineer to update the task status to [x] in tasks.md
    - Verify the task has been properly marked as completed before considering the task finished
-   - If this completes a parent task, verify that the parent task is also updated appropriately
+   - If this completes a parent task (i.e., all child tasks are now complete), explicitly instruct the editor engineer to update the parent task status to [x] in tasks.md
+   - Verify the parent task has been properly marked as completed before proceeding
 8. Update any file listing bullets if implementation adds or changes files related to the task
    - Ensure consistent status tracking across all related documentation
    - Periodically review tasks.md to verify all statuses accurately reflect the current project state
