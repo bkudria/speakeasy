@@ -4,10 +4,10 @@
 
 - [ ] Refactor duplicate code identified by flay
   - Files: lib/misalignment_detector.rb, lib/transcript_processor.rb, lib/csv_generator.rb
-  - [ ] Refactor similar code in :call blocks in MisalignmentDetector (8)
+  - [x] Refactor similar code in :call blocks in MisalignmentDetector (8)
     - Files: lib/misalignment_detector.rb
-    - [ ] Extract duplicated check and issue creation pattern from lines 170, 181, 217, and 299 (5)
-    - [ ] Create helper method for issue creation with common parameters (3)
+    - [x] Extract duplicated check and issue creation pattern from lines 170, 181, 217, and 299 (5)
+    - [x] Create helper method for issue creation with common parameters (3)
   
   - [ ] Refactor error handling code in TranscriptProcessor (8)
     - Files: lib/transcript_processor.rb

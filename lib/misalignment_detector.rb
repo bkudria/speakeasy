@@ -167,22 +167,16 @@ class MisalignmentDetector
          row[:start_time] && prev_row[:end_time] &&
          (row[:start_time] - prev_row[:end_time]) > @significant_pause_threshold
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :potential_missed_segmentation,
-          description: "Long pause (#{(row[:start_time] - prev_row[:end_time]).round(2)}s) between segments with same speaker"
-        }
+        add_issue(issues, row[:id], :potential_missed_segmentation, 
+          "Long pause (#{(row[:start_time] - prev_row[:end_time]).round(2)}s) between segments with same speaker")
       end
       
       # Check for very short segments that might be noise
       if (row[:end_time] - row[:start_time]) < 0.3 && 
          row[:confidence_mean] && row[:confidence_mean] < 0.7
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :potential_noise_segment,
-          description: "Very short segment (#{(row[:end_time] - row[:start_time]).round(2)}s) with low confidence"
-        }
+        add_issue(issues, row[:id], :potential_noise_segment,
+          "Very short segment (#{(row[:end_time] - row[:start_time]).round(2)}s) with low confidence")
       end
     end
     
@@ -214,11 +208,8 @@ class MisalignmentDetector
          row[:speaker] != prev_row[:speaker] &&
          (row[:start_time] - prev_row[:end_time]) > 2.0
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :large_time_gap,
-          description: "Large gap (#{(row[:start_time] - prev_row[:end_time]).round(2)}s) between different speakers"
-        }
+        add_issue(issues, row[:id], :large_time_gap,
+          "Large gap (#{(row[:start_time] - prev_row[:end_time]).round(2)}s) between different speakers")
       end
     end
     
@@ -296,11 +287,8 @@ class MisalignmentDetector
       if row[:speaker] == prev_row[:speaker] && 
          (prev_row[:confidence_mean] - row[:confidence_mean]) > @confidence_drop_threshold
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :significant_confidence_drop,
-          description: "Confidence dropped by #{(prev_row[:confidence_mean] - row[:confidence_mean]).round(2)} from previous segment with same speaker"
-        }
+        add_issue(issues, row[:id], :significant_confidence_drop,
+          "Confidence dropped by #{(prev_row[:confidence_mean] - row[:confidence_mean]).round(2)} from previous segment with same speaker")
       end
       
       # Check for anomalous confidence patterns in context
@@ -324,5 +312,14 @@ class MisalignmentDetector
     end
     
     issues
+  end
+
+  # Helper method to add an issue to the issues array
+  def add_issue(issues, row_id, issue_type, description)
+    issues << {
+      row_id: row_id,
+      issue_type: issue_type,
+      description: description
+    }
   end
 end
