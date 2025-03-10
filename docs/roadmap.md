@@ -27,7 +27,6 @@
     - [ ] Add unit tests for ErrorHandler (3)
 - [ ] Implement validation and enhance CLI
   - [ ] Implement JSON Schema Validation (3)
-  - [ ] Add CLI options for workflow customization (3)
 
 ## 3. Refactoring Complex Components
 - [ ] Refactor lib/csv_generator.rb
