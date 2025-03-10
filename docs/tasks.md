@@ -9,10 +9,10 @@
     - [x] Extract duplicated check and issue creation pattern from lines 170, 181, 217, and 299 (5)
     - [x] Create helper method for issue creation with common parameters (3)
   
-  - [ ] Refactor error handling code in TranscriptProcessor (8)
+  - [x] Refactor error handling code in TranscriptProcessor (8)
     - Files: lib/transcript_processor.rb
-    - [ ] Extract common error handling pattern from :resbody blocks at lines 137, 169, 201, and 210 (5)
-    - [ ] Create reusable error handling method with appropriate parameters (3)
+    - [x] Extract common error handling pattern from :resbody blocks at lines 137, 169, 201, and 210 (5)
+    - [x] Create reusable error handling method with appropriate parameters (3)
   
   - [ ] Refactor similar code blocks in TranscriptProcessor (5)
     - Files: lib/transcript_processor.rb

@@ -131,13 +131,9 @@ class TranscriptProcessor
 
   def identify_segments_to_review
     puts "\n=== Step 3: Identifying segments to review ==="
-    begin
+    handle_error("identifying segments to review") do
       detector = LowConfidenceDetector.new
       detector.identify_segments_to_review(@rows)
-    rescue => e
-      puts "Error identifying segments to review: #{e.message}"
-      puts e.backtrace.join("\n") if ENV["DEBUG"]
-      @error_count += 1
     end
   end
 
@@ -158,7 +154,7 @@ class TranscriptProcessor
 
     # Find speaker identifications from renamed files
     speaker_identities = {}
-    begin
+    handle_error("processing speaker identity files") do
       Dir.glob(File.join(@output_dir, "spk_*_*.m4a")).each do |file|
         if file =~ /spk_(\d+)_(.+)\.m4a/
           speaker_label = "spk_#{$1}"
@@ -166,10 +162,6 @@ class TranscriptProcessor
           speaker_identities[speaker_label] = speaker_name
         end
       end
-    rescue => e
-      puts "Error processing speaker identity files: #{e.message}"
-      puts e.backtrace.join("\n") if ENV["DEBUG"]
-      @error_count += 1
     end
 
     # Process transcript into rows using the new item-based approach
@@ -179,47 +171,29 @@ class TranscriptProcessor
     # Get parsed items from the parser
     parsed_items = @parser.parsed_items || []
 
-    begin
-      # Process the parsed items using the new method
-      rows = csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
-
-      # Detect and correct misalignments
-      begin
-        misalignment_issues = MisalignmentDetector.new(rows).detect_issues
-        # Store if misalignments were detected in the instance variable
-        @misalignments_detected = !misalignment_issues.empty?
-      rescue => e
-        puts "Error detecting misalignments: #{e.message}"
-        puts e.backtrace.join("\n") if ENV["DEBUG"]
-        @error_count += 1
-        misalignment_issues = []
-        @misalignments_detected = false
-      end
-
-      begin
-        MisalignmentCorrector.new(rows, misalignment_issues).correct!
-      rescue => e
-        puts "Error correcting misalignments: #{e.message}"
-        puts e.backtrace.join("\n") if ENV["DEBUG"]
-        @error_count += 1
-      end
-
-      # Write to CSV
-      begin
-        csv_writer.write_transcript(rows, @csv_base_name)
-      rescue => e
-        puts "Error writing CSV transcript: #{e.message}"
-        puts e.backtrace.join("\n") if ENV["DEBUG"]
-        @error_count += 1
-      end
-
-      @rows = rows
-    rescue => e
-      puts "Error processing transcript items: #{e.message}"
-      puts e.backtrace.join("\n") if ENV["DEBUG"]
-      @error_count += 1
-      @rows = []
+    # Process the parsed items using the new method
+    rows = handle_error("processing transcript items", []) do
+      csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
     end
+
+    # Detect and correct misalignments
+    misalignment_issues = handle_error("detecting misalignments", []) do
+      issues = MisalignmentDetector.new(rows).detect_issues
+      # Store if misalignments were detected in the instance variable
+      @misalignments_detected = !issues.empty?
+      issues
+    end
+
+    handle_error("correcting misalignments") do
+      MisalignmentCorrector.new(rows, misalignment_issues).correct!
+    end
+
+    # Write to CSV
+    handle_error("writing CSV transcript") do
+      csv_writer.write_transcript(rows, @csv_base_name)
+    end
+
+    @rows = rows
   end
 
   def open_directory_command
@@ -241,6 +215,22 @@ class TranscriptProcessor
       Kernel.system("#{command} #{@output_dir}")
     else
       puts "Unable to open directory automatically for this platform."
+    end
+  end
+
+  # Reusable error handling method
+  # @param operation_description [String] Description of the operation being performed
+  # @param default_value [Object] Optional default value to return on error
+  # @yield The block of code to execute
+  # @return [Object] Result of the block if successful, default_value if error
+  def handle_error(operation_description, default_value = nil)
+    begin
+      yield
+    rescue => e
+      puts "Error #{operation_description}: #{e.message}"
+      puts e.backtrace.join("\n") if ENV["DEBUG"]
+      @error_count += 1
+      default_value
     end
   end
 end
