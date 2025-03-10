@@ -1,35 +1,5 @@
 # Speakeasy Tasks
-
-## 0. Instruction Improvements
-- [x] Update docs/instructions to ensure a task is marked as in-progress as soon as it becomes the current focus. A task that is being
-      researched or planned should be marked as in-progress. A task that is being refined or broken down should not be changed to
-      in-progress, but if it was already marked as such, it can remain that way.
-
-## 1. Testing Infrastructure Improvements
-- [ ] Enhance testing strategy
-  - Files: spec/spec_helper.rb, spec/*_spec.rb
-  - [ ] Test edge cases
-    - [x] Add tests for empty items (2)
-    - [x] Add tests for missing confidence values (2)
-    - [x] Add tests for unusual punctuation patterns (3)
-  - [x] Mock external dependencies
-    - Files: spec/support/file_system_helpers.rb, spec/transcript_processor_spec.rb
-    - [x] Use mocks for file system operations in TranscriptProcessor tests (3)
-    - [x] Create consistent mocking strategy (2)
-  - [ ] Add integration tests
-    - Files: spec/fixtures/asrOutput.json, bin/speakeasy
-    - [ ] Create end-to-end tests with sample JSON/audio inputs (4)
-    - [ ] Verify all processing steps work together correctly (3)
-  - [ ] Create test data
-    - Files: spec/fixtures/
-    - [ ] Generate small set of realistic test data with known misalignments (3)
-    - [ ] Document expected correction behavior for test cases (2)
-  - [ ] Generate code coverage reports
-    - Files: spec/spec_helper.rb, Gemfile
-    - [x] Integrate SimpleCov (2)
-    - [ ] Ensure minimum coverage thresholds (2)
-
-## 2. Code Structure and Interface Improvements
+## 1. Code Structure and Interface Improvements
 - [ ] Improve code organization
   - Files: lib/*.rb
   - [ ] Extract common logic
@@ -65,7 +35,7 @@
   - Files: lib/transcript_parser.rb, bin/speakeasy
   - [ ] Implement JSON Schema Validation (3)
 
-## 3. Refactoring Complex Components
+## 2. Refactoring Complex Components
 - [ ] Refactor lib/csv_generator.rb
   - Files: lib/csv_generator.rb
   - [ ] Extract helper methods for clarity
