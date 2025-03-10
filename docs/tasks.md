@@ -21,7 +21,7 @@
   - [ ] Refactor confidence check code in MisalignmentDetector (5)
     - Files: lib/misalignment_detector.rb
     - [x] Extract duplicated confidence threshold checking logic from lines 136 and 147 (3)
-    - [ ] Create helper method for confidence-related issue detection (2)
+    - [x] Create helper method for confidence-related issue detection (2)
   
   - [ ] Refactor duplicate conditional logic in CsvGenerator (3)
     - Files: lib/csv_generator.rb

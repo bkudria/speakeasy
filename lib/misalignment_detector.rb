@@ -130,25 +130,19 @@ class MisalignmentDetector
       next unless row[:confidence_min] && row[:confidence_max] && row[:confidence_mean]
       
       # Check for segments with very low minimum confidence but high maximum
-      if row[:confidence_min] < @min_confidence_threshold && 
-         (row[:confidence_max] - row[:confidence_min]) > 0.4
-        
-        add_issue(
-          issues,
-          row[:id],
-          :suspicious_confidence_pattern,
-          "Large variance in word confidence (min: #{row[:confidence_min].round(2)}, max: #{row[:confidence_max].round(2)})"
-        )
-      end
+      check_confidence_issue(
+        issues, 
+        row, 
+        row[:confidence_min] < @min_confidence_threshold && (row[:confidence_max] - row[:confidence_min]) > 0.4,
+        "Large variance in word confidence (min: #{row[:confidence_min].round(2)}, max: #{row[:confidence_max].round(2)})"
+      )
       
       # Check for segments where mean is far from median (skewed distribution)
-      if row[:confidence_median] && 
-         (row[:confidence_mean] - row[:confidence_median]).abs > 0.15
-        
-        add_issue(
-          issues,
-          row[:id],
-          :suspicious_confidence_pattern,
+      if row[:confidence_median]
+        check_confidence_issue(
+          issues, 
+          row, 
+          (row[:confidence_mean] - row[:confidence_median]).abs > 0.15,
           "Skewed confidence distribution (mean: #{row[:confidence_mean].round(2)}, median: #{row[:confidence_median].round(2)})"
         )
       end
@@ -323,5 +317,17 @@ class MisalignmentDetector
       issue_type: issue_type,
       description: description
     }
+  end
+
+  # Helper method to check confidence-related issues and add them if condition is met
+  def check_confidence_issue(issues, row, condition, description)
+    if condition
+      add_issue(
+        issues,
+        row[:id],
+        :suspicious_confidence_pattern,
+        description
+      )
+    end
   end
 end
