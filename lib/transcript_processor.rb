@@ -43,15 +43,7 @@ class TranscriptProcessor
     # speaker files ("spk_#.m4a"), prompt the user to rename them, and then retry.
     named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
     if named_speaker_files.any?
-      puts "\nNamed speaker files detected. Skipping speaker audio extraction step."
-      result[:speakers_extracted] = true
-      wait_for_speaker_identification(skip: true)
-      generate_csv_transcript
-      result[:csv_generated] = true
-      identify_segments_to_review
-      result[:misalignments_detected] = @misalignments_detected || false
-      puts "Processing complete!"
-      return result
+      return process_named_speaker_files(result, "Named speaker files detected. Skipping speaker audio extraction step.")
     end
 
     # Check for existing unnamed speaker files
@@ -67,15 +59,7 @@ class TranscriptProcessor
       # After renaming, restart the process to check for named speaker files
       named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
       if named_speaker_files.any?
-        puts "\nNamed speaker files detected after renaming. Skipping speaker audio extraction step."
-        result[:speakers_extracted] = true
-        wait_for_speaker_identification(skip: true)
-        generate_csv_transcript
-        result[:csv_generated] = true
-        identify_segments_to_review
-        result[:misalignments_detected] = @misalignments_detected || false
-        puts "Processing complete!"
-        return result
+        return process_named_speaker_files(result, "Named speaker files detected after renaming. Skipping speaker audio extraction step.")
       else
         puts "No named speaker files found after renaming. Exiting."
         exit 1
@@ -232,5 +216,21 @@ class TranscriptProcessor
       @error_count += 1
       default_value
     end
+  end
+  
+  # Process named speaker files with common logic
+  # @param result [Hash] The result hash to update
+  # @param message [String] Custom message to display about speaker files detection
+  # @return [Hash] Updated result hash
+  def process_named_speaker_files(result, message)
+    puts "\n#{message}"
+    result[:speakers_extracted] = true
+    wait_for_speaker_identification(skip: true)
+    generate_csv_transcript
+    result[:csv_generated] = true
+    identify_segments_to_review
+    result[:misalignments_detected] = @misalignments_detected || false
+    puts "Processing complete!"
+    result
   end
 end

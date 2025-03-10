@@ -16,7 +16,7 @@
   
   - [ ] Refactor similar code blocks in TranscriptProcessor (5)
     - Files: lib/transcript_processor.rb
-    - [ ] Extract duplicate speaker file handling logic from blocks at lines 46 and 70 (5)
+    - [x] Extract duplicate speaker file handling logic from blocks at lines 46 and 70 (5)
   
   - [ ] Refactor confidence check code in MisalignmentDetector (5)
     - Files: lib/misalignment_detector.rb
