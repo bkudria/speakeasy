@@ -1,11 +1,11 @@
 # Quick Reference Cheatsheet
 
 ## Table of Contents
-2. [Key Project Documents](#key-project-documents)
-3. [Task Management](#task-management)
-4. [TDD Workflow](#tdd-workflow)
-5. [File Handling Guidelines](#file-handling-guidelines)
-6. [Output Formatting](#output-formatting)
+1. [Key Project Documents](#key-project-documents)
+2. [Task Management](#task-management)
+3. [TDD Workflow](#tdd-workflow)
+4. [File Handling Guidelines](#file-handling-guidelines)
+5. [Output Formatting](#output-formatting)
 
 ## Key Project Documents
 
@@ -80,7 +80,7 @@
 ---
 
 For detailed information, refer to the specific instruction files:
-- [Roles and Introduction](01_roles_and_introduction.md)
+- [Responsibilities and Introduction](01_responsibilities_and_introduction.md)
 - [Key Documents and Rules](02_documents_and_rules.md)
 - [Request Handling](03_request_handling.md)
 - [Workflow](04_workflow.md)
