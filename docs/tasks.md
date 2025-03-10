@@ -21,7 +21,7 @@
     - [ ] Document expected correction behavior for test cases (2)
   - [ ] Generate code coverage reports
     - Files: spec/spec_helper.rb, Gemfile
-    - [ ] Integrate SimpleCov (2)
+    - [x] Integrate SimpleCov (2)
     - [ ] Ensure minimum coverage thresholds (2)
 
 ## 2. Code Structure and Interface Improvements
@@ -38,12 +38,12 @@
     - [ ] Create dedicated configuration class (3)
     - [ ] Add structured approach to managing settings (2)
 - [ ] Create utility classes to reduce code duplication
-  - [ ] Create ConfidenceCalculator utility
+  - [x] Create ConfidenceCalculator utility
     - Files: lib/csv_generator.rb, lib/low_confidence_detector.rb, lib/confidence_calculator.rb
-    - [ ] Extract calculate_confidence_metrics method from csv_generator.rb (2)
+    - [x] Extract calculate_confidence_metrics method from csv_generator.rb (2)
     - [ ] Extract confidence calculation from process_segment method (3)
-    - [ ] Update references in low_confidence_detector.rb (1)
-    - [ ] Add unit tests for ConfidenceCalculator (3)
+    - [x] Update references in low_confidence_detector.rb (1)
+    - [x] Add unit tests for ConfidenceCalculator (3)
   - [ ] Create FileOperations utility
     - Files: lib/transcript_processor.rb, lib/file_operations.rb
     - [ ] Extract file path handling methods (2)

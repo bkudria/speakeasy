@@ -1,3 +1,5 @@
+require_relative 'confidence_calculator'
+
 class CsvGenerator
   def initialize
     # Add needed parameters (e.g.: parser, options) in later steps
@@ -200,21 +202,8 @@ class CsvGenerator
   end
 
   def calculate_confidence_metrics(items)
-    # Extract valid confidence values
-    confidence_values = items.map { |item| item[:confidence] }.compact.map(&:to_f)
-
-    # Return nil for all metrics if there are no valid values
-    if confidence_values.empty?
-      return {min: nil, max: nil, mean: nil, median: nil}
-    end
-
-    # Calculate metrics
-    {
-      min: confidence_values.min,
-      max: confidence_values.max,
-      mean: confidence_values.sum / confidence_values.size,
-      median: median(confidence_values)
-    }
+    # Delegate to ConfidenceCalculator
+    ConfidenceCalculator.calculate_metrics(items)
   end
 
   def build_row(segment)
@@ -372,9 +361,5 @@ class CsvGenerator
     ""
   end
 
-  def median(values)
-    sorted = values.sort
-    mid = sorted.size / 2
-    sorted.size.odd? ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2.0
-  end
+  # Removed duplicate median method - now using ConfidenceCalculator
 end
