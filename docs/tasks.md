@@ -3,9 +3,9 @@
 ## 1. Testing Infrastructure Improvements
 - [ ] Enhance testing strategy
   - [ ] Test edge cases
-    - [ ] Add tests for empty items (2)
-    - [ ] Add tests for missing confidence values (2)
-    - [ ] Add tests for unusual punctuation patterns (3)
+    - [x] Add tests for empty items (2)
+    - [x] Add tests for missing confidence values (2)
+    - [x] Add tests for unusual punctuation patterns (3)
   - [ ] Mock external dependencies
     - [ ] Use mocks for file system operations in TranscriptProcessor tests (3)
     - [ ] Create consistent mocking strategy (2)

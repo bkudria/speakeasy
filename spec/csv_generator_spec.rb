@@ -59,6 +59,29 @@ RSpec.describe CsvGenerator do
       expect(groups.size).to eq(1)
       expect(groups[0][:transcript]).to eq("Hello, world")
     end
+
+    it "handles unusual punctuation patterns correctly" do
+      items = [
+        {speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Wow", confidence: 0.9, type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "!!", confidence: nil, type: "punctuation"},
+        {speaker_label: "spk_0", start_time: 1.1, end_time: 1.5, content: "That", confidence: 0.85, type: "pronunciation"},
+        {speaker_label: "spk_0", start_time: 1.6, end_time: 2.0, content: "is", confidence: 0.88, type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "—", confidence: nil, type: "punctuation"},
+        {speaker_label: "spk_0", start_time: 2.1, end_time: 2.5, content: "as", confidence: 0.87, type: "pronunciation"},
+        {speaker_label: "spk_0", start_time: 2.6, end_time: 3.0, content: "they", confidence: 0.86, type: "pronunciation"},
+        {speaker_label: "spk_0", start_time: 3.1, end_time: 3.5, content: "say", confidence: 0.89, type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "...", confidence: nil, type: "punctuation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: '"', confidence: nil, type: "punctuation"},
+        {speaker_label: "spk_0", start_time: 3.6, end_time: 4.0, content: "amazing", confidence: 0.84, type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: '"', confidence: nil, type: "punctuation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "?!", confidence: nil, type: "punctuation"}
+      ]
+
+      groups = csv_generator.group_items_by_speaker(items)
+
+      expect(groups.size).to eq(1)
+      expect(groups[0][:transcript]).to eq("Wow!! That is— as they say...\" amazing\"?!")
+    end
   end
 
   describe "#detect_natural_pauses" do
@@ -123,6 +146,49 @@ RSpec.describe CsvGenerator do
       # Custom threshold
       pauses = csv_generator.detect_natural_pauses(items, time_gap_threshold: 2.0)
       expect(pauses.size).to eq(0)
+    end
+
+    it "classifies unusual punctuation patterns correctly in natural pause detection" do
+      items = [
+        {speaker_label: "spk_0", start_time: 0.0, end_time: 1.0, content: "Word1", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "!!", confidence: nil, type: "punctuation"},        # Multiple exclamation (sentence end)
+        {speaker_label: "spk_0", start_time: 1.1, end_time: 1.5, content: "Word2", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "??", confidence: nil, type: "punctuation"},        # Multiple question (sentence end)
+        {speaker_label: "spk_0", start_time: 1.6, end_time: 2.0, content: "Word3", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "?!", confidence: nil, type: "punctuation"},        # Combined punct (sentence end)
+        {speaker_label: "spk_0", start_time: 2.1, end_time: 2.5, content: "Word4", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "—", confidence: nil, type: "punctuation"},         # Em dash (natural break)
+        {speaker_label: "spk_0", start_time: 2.6, end_time: 3.0, content: "Word5", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: "...", confidence: nil, type: "punctuation"},       # Ellipses (sentence end)
+        {speaker_label: "spk_0", start_time: 3.1, end_time: 3.5, content: "Word6", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: '"', confidence: nil, type: "punctuation"},         # Quote (no pause)
+        {speaker_label: "spk_0", start_time: 3.6, end_time: 4.0, content: "Word7", type: "pronunciation"},
+        {speaker_label: nil, start_time: nil, end_time: nil, content: '"', confidence: nil, type: "punctuation"}          # Quote (no pause)
+      ]
+
+      pauses = csv_generator.detect_natural_pauses(items)
+
+      # Find indices of each punctuation type
+      multiple_exclaim_idx = 1   # "!!"
+      multiple_question_idx = 3  # "??"
+      combined_punct_idx = 5     # "?!"
+      em_dash_idx = 7            # "—"
+      ellipses_idx = 9           # "..."
+      quote_open_idx = 11        # """
+      quote_close_idx = 13       # """
+
+      # Check sentence endings
+      expect(pauses.any? { |p| p[:index] == multiple_exclaim_idx && p[:type] == :sentence_end }).to be true
+      expect(pauses.any? { |p| p[:index] == multiple_question_idx && p[:type] == :sentence_end }).to be true
+      expect(pauses.any? { |p| p[:index] == combined_punct_idx && p[:type] == :sentence_end }).to be true
+      expect(pauses.any? { |p| p[:index] == ellipses_idx && p[:type] == :sentence_end }).to be true
+
+      # Check natural breaks
+      expect(pauses.any? { |p| p[:index] == em_dash_idx && p[:type] == :natural_break }).to be true
+
+      # Check no pauses for quotation marks
+      expect(pauses.any? { |p| p[:index] == quote_open_idx }).to be false
+      expect(pauses.any? { |p| p[:index] == quote_close_idx }).to be false
     end
   end
 

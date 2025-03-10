@@ -169,11 +169,29 @@ class CsvGenerator
 
       # Check for punctuation that indicates sentence endings or natural breaks
       if item[:type] == "punctuation"
-        case item[:content]
-        when ".", "!", "?"
+        content = item[:content]
+
+        # Sentence endings:
+        # - Basic punctuation (., !, ?)
+        # - Multiple exclamation/question marks (!!, !!!, ??, ???)
+        # - Combined punctuation (?!, !?)
+        # - Ellipses (...)
+        if content =~ /^[.!?]$/ ||                  # Single ., !, ?
+            content =~ /^[!]{2,}$/ ||                # Multiple ! (e.g., !!, !!!)
+            content =~ /^[?]{2,}$/ ||                # Multiple ? (e.g., ??, ???)
+            content =~ /^[!?][!?]$/ ||               # Combined ?!, !?
+            content == "..."                         # Ellipses
           pauses << {index: index, type: :sentence_end}
-        when ",", ";", ":"
+
+        # Natural breaks:
+        # - Basic punctuation (,, ;, :)
+        # - Em dash (—)
+        elsif content =~ /^[,;:]$/ ||               # Single ,, ;, :
+            content == "—"                        # Em dash
           pauses << {index: index, type: :natural_break}
+
+          # Quotation marks - no pauses
+          # Intentionally not adding any pauses for quotation marks
         end
       end
     end
