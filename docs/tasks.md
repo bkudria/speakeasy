@@ -68,3 +68,4 @@
   - [ ] Remove redundant code
     - [ ] Consolidate speaker file detection logic (2)
     - [ ] Eliminate unnecessary conditional checks (1)
+
