@@ -17,18 +17,26 @@ The project follows strict Test-Driven Development (TDD) principles:
 4. **Execute Test**: Run the test to confirm it fails for the expected reason.
 5. **Update Status**: After confirming the test fails appropriately, mark the task as in-progress `[-]`.
 6. **Implement Code**: Write the minimum code needed to make the test pass.
-7. **Verify Implementation**: Run the test to confirm it now passes. Also run the full test suite to ensure no regressions.
-8. **Complete Task**: After confirming all tests pass, mark the task as completed `[x]`.
-9. **Refactor if Needed**: Improve the code without changing functionality, ensuring tests still pass.
-10. **Move to Next Task**: Select the next uncompleted task and repeat the process.
+7. **Capture Discovered Tasks**: If you identify new tasks during implementation:
+   - Document them immediately following the guidelines in the [Discovered Task Management](02_documents_and_rules.md#7-discovered-task-management) section.
+   - Include file listings as non-checkbox bullet points using the format: `  • Files: file1.rb, file2.rb` (with 2-space indentation).
+   - Place file listings as high in the hierarchy as possible (at parent task level rather than individual leaf tasks).
+   - Determine whether to continue with the current task or address the discovered task based on the interruption criteria.
+   - Add the discovered task to tasks.md with appropriate relationship documentation.
+8. **Verify Implementation**: Run the test to confirm it now passes. Also run the full test suite to ensure no regressions.
+9. **Complete Task**: After confirming all tests pass, mark the task as completed `[x]` and update any file listings if implementation required changes to different files than initially identified.
+10. **Refactor if Needed**: Improve the code without changing functionality, ensuring tests still pass.
+11. **Move to Next Task**: Select the next uncompleted task and repeat the process.
 
-This workflow ensures that all functionality is verified by tests and that implementation satisfies the requirements defined by those tests.
+This workflow ensures that all functionality is verified by tests, that implementation satisfies the requirements defined by those tests, and that newly discovered tasks are properly captured and managed throughout the development process.
 
 ## 2. Task Analysis
 Begin your analysis inside <task_analysis> tags. In this section:
 1. Quote and analyze relevant parts of the user instructions and task description.
 2. List out all rules and guidelines, ensuring each is considered.
 3. Identify and list ALL files that might be needed for the task or refinement, explaining the relevance of each.
+   - Review any existing file listings in the task (formatted as bullet points `• Files: file1.rb, file2.rb`)
+   - Consider whether the file listings need updating based on your analysis
 4. Request to see the full content of these files before proceeding with any further analysis or action.
 5. Once file contents are provided, break down the task into smaller, numbered steps.
 6. Explicitly consider each rule and guideline, noting compliance.
