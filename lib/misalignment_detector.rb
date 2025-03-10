@@ -133,22 +133,24 @@ class MisalignmentDetector
       if row[:confidence_min] < @min_confidence_threshold && 
          (row[:confidence_max] - row[:confidence_min]) > 0.4
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :suspicious_confidence_pattern,
-          description: "Large variance in word confidence (min: #{row[:confidence_min].round(2)}, max: #{row[:confidence_max].round(2)})"
-        }
+        add_issue(
+          issues,
+          row[:id],
+          :suspicious_confidence_pattern,
+          "Large variance in word confidence (min: #{row[:confidence_min].round(2)}, max: #{row[:confidence_max].round(2)})"
+        )
       end
       
       # Check for segments where mean is far from median (skewed distribution)
       if row[:confidence_median] && 
          (row[:confidence_mean] - row[:confidence_median]).abs > 0.15
         
-        issues << {
-          row_id: row[:id],
-          issue_type: :suspicious_confidence_pattern,
-          description: "Skewed confidence distribution (mean: #{row[:confidence_mean].round(2)}, median: #{row[:confidence_median].round(2)})"
-        }
+        add_issue(
+          issues,
+          row[:id],
+          :suspicious_confidence_pattern,
+          "Skewed confidence distribution (mean: #{row[:confidence_mean].round(2)}, median: #{row[:confidence_median].round(2)})"
+        )
       end
     end
     
