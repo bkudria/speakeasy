@@ -12,21 +12,32 @@ For all requests, follow these steps:
 The project follows strict Test-Driven Development (TDD) principles:
 
 1. **Identify Task**: Select the next uncompleted task `[ ]` from the task list.
-2. **Understand Requirements**: Fully understand what the task needs to accomplish.
-3. **Write Test First**: Create a test that verifies the behavior you want to implement. The test should fail initially.
-4. **Execute Test**: Run the test to confirm it fails for the expected reason.
-5. **Update Status**: After confirming the test fails appropriately, mark the task as in-progress `[-]`.
-6. **Implement Code**: Write the minimum code needed to make the test pass.
-7. **Capture Discovered Tasks**: If you identify new tasks during implementation:
+2. **Verify Task Status**: Confirm the current task status in tasks.md accurately reflects the project state before proceeding. See [Task Status Management](02_documents_and_rules.md#8-task-status-management) for verification procedures.
+3. **Understand Requirements**: Fully understand what the task needs to accomplish.
+4. **Write Test First**: Create a test that verifies the behavior you want to implement. The test should fail initially.
+5. **Execute Test**: Run the test to confirm it fails for the expected reason.
+6. **Update Status**: After confirming the test fails appropriately, mark the task as in-progress `[-]` in tasks.md. This status update is mandatory before proceeding.
+7. **Implement Code**: Write the minimum code needed to make the test pass.
+8. **Capture Discovered Tasks**: If you identify new tasks during implementation:
    - Document them immediately following the guidelines in the [Discovered Task Management](02_documents_and_rules.md#7-discovered-task-management) section.
    - Include file listings as non-checkbox bullet points using the format: `  - Files: file1.rb, file2.rb` (with 2-space indentation).
    - Place file listings as high in the hierarchy as possible (at parent task level rather than individual leaf tasks).
    - Determine whether to continue with the current task or address the discovered task based on the interruption criteria.
    - Add the discovered task to tasks.md with appropriate relationship documentation.
-8. **Verify Implementation**: Run the test to confirm it now passes. Also run the full test suite to ensure no regressions.
-9. **Complete Task**: After confirming all tests pass, mark the task as completed `[x]` and update any file listings if implementation required changes to different files than initially identified.
-10. **Refactor if Needed**: Improve the code without changing functionality, ensuring tests still pass.
-11. **Move to Next Task**: Select the next uncompleted task and repeat the process.
+   - Update task status according to [Task Status Management](02_documents_and_rules.md#8-task-status-management) guidelines for handling interruptions.
+9. **Verify Implementation**: Run the test to confirm it now passes. Also run the full test suite to ensure no regressions.
+10. **Complete Task**: After confirming all tests pass, mark the task as completed `[x]` in tasks.md and update any file listings if implementation required changes to different files than initially identified. This status update is mandatory before proceeding to the next task.
+11. **Verify Status Update**: Confirm that tasks.md has been properly updated to reflect the completed task before proceeding. This verification step is critical for maintaining project state accuracy.
+12. **Refactor if Needed**: Improve the code without changing functionality, ensuring tests still pass.
+13. **Move to Next Task**: Select the next uncompleted task and repeat the process.
+
+During any interruption, context switch, or work session boundary:
+- Always ensure tasks.md accurately reflects the current project state.
+- Document partial progress as comments under relevant tasks if necessary.
+- Follow guidelines in [Task Status Management](02_documents_and_rules.md#8-task-status-management) for handling status during interruptions.
+- When resuming work, verify task status accuracy before continuing.
+
+The task status in tasks.md must reflect the actual state of the project at all times. Consistent and accurate status updates are essential for project visibility and proper workflow progression.
 
 This workflow ensures that all functionality is verified by tests, that implementation satisfies the requirements defined by those tests, and that newly discovered tasks are properly captured and managed throughout the development process.
 

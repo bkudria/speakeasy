@@ -8,6 +8,7 @@
 5. [Specification Updates](#5-specification-updates)
 6. [Task Completion Process](#6-task-completion-process)
 7. [Discovered Task Management](#7-discovered-task-management)
+8. [Task Status Management](#8-task-status-management)
 
 ## 1. Important Documents:
 1. docs/instructions/*.md: Instructions for working with this repository.
@@ -69,7 +70,7 @@
 5. Consider impact and side effects of changes.
 6. Determine necessary changes at a tactical level.
 7. Scope changes using the provided Fibonacci scale.
-8. Break down tasks exceeding 10 points into smaller subtasks.
+8. Break down tasks exceeding 5 points into smaller subtasks.
 9. Use standard library tools and language idioms when possible.
 10. Ensure changes adhere to all rules, especially regarding tests and specifications.
 11. Only mark a task as complete [x] after receiving explicit confirmation that tests have passed
@@ -111,3 +112,33 @@
    - Feature enhancements: Improvements to existing features
    - New features: Entirely new functionality
    - Documentation: Updates to documentation or comments
+
+## 8. Task Status Management:
+1. Importance of consistent status updates:
+   - Accurate status tracking is essential for project visibility and coordination.
+   - Task status in tasks.md must reflect the actual state of the project at all times.
+   - Consistent status updates prevent miscommunication and ensure proper workflow progression.
+   - Status changes should be made at specific points in the TDD workflow, not arbitrarily.
+
+2. Responsibility assignments:
+   - The editor engineer is responsible for physically updating the tasks.md file.
+   - The AI assistant must explicitly instruct the engineer to update task status at appropriate times.
+   - The AI assistant must verify status updates have been made before continuing to the next step.
+   - Both parties should confirm status accuracy during context switching or after interruptions.
+
+3. Handling status during interruptions or context switches:
+   - Before switching context, document the current task state in tasks.md with accurate status.
+   - Record any partial progress as comments under the task if necessary.
+   - When resuming work, verify the task status accurately reflects the current state.
+   - If a task is blocked by external factors, add a comment indicating the blocker: `(Blocked by: description)`.
+   - For tasks requiring pause due to discovered blockers, maintain [-] status with explanation.
+
+4. Verification procedures:
+   - Before starting any task, verify its current status in tasks.md.
+   - After writing a failing test, verify the task has been updated to [-].
+   - After confirming tests pass, verify the task has been updated to [x].
+   - Periodically review tasks.md to ensure all statuses are accurate, especially after:
+     - Test runs or implementation changes
+     - Task discoveries or refinements
+     - Context switches or work sessions
+   - When completing a non-leaf task, verify all child tasks are properly marked as completed.

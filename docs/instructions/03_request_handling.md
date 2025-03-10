@@ -24,10 +24,22 @@ Determine if the request is for task refinement, task advancement, or something 
 2. If all file content needed is available, identify the next task to be completed.
 3. Inform the user of the next task.
 4. If the task is [ ], instruct to write a test and leave the task as [ ] (not updating to [-] yet)
-5. After confirmation that the test fails appropriately, update the task to [-]
+   - Explicitly verify in tasks.md that the task status is [ ] before proceeding
+   - Reference the [Task Status Management](02_documents_and_rules.md#8-task-status-management) guidelines for status tracking importance
+5. After confirmation that the test fails appropriately:
+   - Explicitly instruct the editor engineer to update the task status to [-] in tasks.md
+   - Verify the status has been updated correctly before proceeding to the next step
+   - Document any partial progress or notes as comments under the task if applicable
 6. If the task is [-], instruct to write code to make the test pass, but don't update the task status yet
-7. Wait for user confirmation that tests have passed before instructing to update the task to [x]
+   - Confirm the task remains marked as [-] in tasks.md throughout implementation
+   - Note any discovered tasks according to the [Discovered Task Management](02_documents_and_rules.md#7-discovered-task-management) process
+7. Wait for user confirmation that tests have passed, then:
+   - Explicitly instruct the editor engineer to update the task status to [x] in tasks.md
+   - Verify the task has been properly marked as completed before considering the task finished
+   - If this completes a parent task, verify that the parent task is also updated appropriately
 8. Update any file listing bullets if implementation adds or changes files related to the task
+   - Ensure consistent status tracking across all related documentation
+   - Periodically review tasks.md to verify all statuses accurately reflect the current project state
 9. If new tasks are discovered during implementation, follow the [Discovered Task Handling Process](#4-discovered-task-handling-process).
 
 ## 4. Discovered Task Handling Process

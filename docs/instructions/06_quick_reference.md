@@ -41,12 +41,20 @@
 
 ## TDD Workflow
 
-1. **Start**: Identify next uncompleted task `[ ]`
+1. **Start**: Identify next uncompleted task `[ ]` and verify its status in tasks.md reflects the current project state
 2. **Write Test**: Create failing test but don't update task status yet
-3. **Verify Failure**: Confirm test fails appropriately, then mark task as in-progress `[-]`
-4. **Implement**: Write minimum code to make test pass but don't update task status
-5. **Verify Success**: Confirm test passes and all tests still pass
-6. **Complete**: Mark task as completed `[x]` only after test passes
+3. **Verify Failure**: Confirm test fails appropriately, then immediately mark task as in-progress `[-]` in tasks.md
+4. **Status Verification**: Verify that tasks.md has been updated to show the task as in-progress before proceeding
+5. **Implement**: Write minimum code to make test pass but don't update task status
+6. **Verify Success**: Confirm test passes and all tests still pass
+7. **Complete**: Mark task as completed `[x]` in tasks.md only after test passes
+8. **Status Verification**: Verify that tasks.md has been updated to show the task as completed before moving to the next task
+
+**Important**: 
+- Task status in tasks.md must reflect the actual project state at all times
+- After any interruption or context switch, verify task status accuracy before continuing
+- For detailed guidelines, refer to [Task Status Management](02_documents_and_rules.md#8-task-status-management)
+- The editor engineer must update tasks.md at each status change point, and the AI assistant must verify these updates
 
 ## File Handling Guidelines
 
