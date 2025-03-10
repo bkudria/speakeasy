@@ -7,7 +7,7 @@
     - [x] Add tests for missing confidence values (2)
     - [x] Add tests for unusual punctuation patterns (3)
   - [ ] Mock external dependencies
-    - [ ] Use mocks for file system operations in TranscriptProcessor tests (3)
+    - [x] Use mocks for file system operations in TranscriptProcessor tests (3)
     - [ ] Create consistent mocking strategy (2)
   - [ ] Add integration tests
     - [ ] Create end-to-end tests with sample JSON/audio inputs (4)
@@ -18,6 +18,3 @@
   - [ ] Generate code coverage reports
     - [ ] Integrate SimpleCov (2)
     - [ ] Ensure minimum coverage thresholds (2)
-  - [ ] Automate OS detection tests
-    - [ ] Test "open directory" functionality across OSes (3)
-    - [ ] Consider CI with different OS runners (3)

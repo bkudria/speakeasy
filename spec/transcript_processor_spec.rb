@@ -413,7 +413,7 @@ RSpec.describe TranscriptProcessor do
       test_audio_path = File.join(tmpdir, "audio.m4a")
       csv_output_path = File.join(tmpdir, "asrOutput.csv")
 
-      # Mock file existence
+      # Mock file existence checks
       mock_file_exists(test_json_path, true)
       mock_file_exists(test_audio_path, true)
 
@@ -429,13 +429,29 @@ RSpec.describe TranscriptProcessor do
       # Mock directory operations
       mock_dir_glob(File.join(tmpdir, "spk_*_*.m4a"), [])
       mock_dir_glob(File.join(tmpdir, "spk_*.m4a"), [])
+      
+      # Mock system commands
+      mock_system_command(/^(open|start|xdg-open)\s/, true)
+      
+      # Mock ffmpeg availability check
+      mock_open3_command("ffmpeg -version", "ffmpeg version", "", double(success?: true))
+      
+      # For any glob patterns, return empty array
+      allow(Dir).to receive(:glob).with(anything).and_return([])
 
-      # Mock CSV file creation check
-      mock_dir_glob(File.join(tmpdir, "*.csv"), [csv_output_path])
+      # Mock file existence for generate_unique_filename in CsvWriter
+      allow(File).to receive(:exist?).with(File.join(tmpdir, "asrOutput.csv")).and_return(false)
+      
+      # Mock CSV.open instead of using real CsvWriter
+      csv_double = double("CSV")
+      allow(CSV).to receive(:open).with(any_args).and_yield(csv_double)
+      allow(csv_double).to receive(:<<)
 
-      # Override the global stub to use the real CsvWriter
-      allow(CsvWriter).to receive(:new).and_call_original
-
+      # Use a mock CsvWriter instead of the real one
+      csv_writer_double = instance_double(CsvWriter)
+      allow(CsvWriter).to receive(:new).with(tmpdir).and_return(csv_writer_double)
+      allow(csv_writer_double).to receive(:write_transcript).and_return(csv_output_path)
+      
       # Run the processor
       processor = TranscriptProcessor.new(
         test_json_path,
@@ -443,9 +459,12 @@ RSpec.describe TranscriptProcessor do
         input: StringIO.new("go\n"),
         output_dir: tmpdir
       )
+      
+      # Process with all file system operations mocked
       processor.process
 
-      # Verification happens via mocked Dir.glob
+      # Verify that CsvWriter's write_transcript was called, which indicates the CSV file was created
+      expect(csv_writer_double).to have_received(:write_transcript)
     end
   end
 
