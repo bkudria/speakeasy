@@ -75,25 +75,27 @@ class CsvGenerator
     speaker_name = speaker_identities[speaker_label] || ""
     transcript_text = segment["transcript"]
 
-    # Get confidence values for this segment
-    confidence_values = []
+    # Transform items to format expected by ConfidenceCalculator
+    confidence_items = []
     segment["items"].each do |item_id|
       item = parser.items.find { |i| i["id"].to_s == item_id.to_s }
       if item&.dig("alternatives", 0, "confidence")
-        confidence_values << item.dig("alternatives", 0, "confidence").to_f
+        confidence_items << { confidence: item.dig("alternatives", 0, "confidence") }
       end
     end
 
-    # Calculate confidence statistics
-    if confidence_values.empty?
+    # Calculate confidence metrics using ConfidenceCalculator
+    metrics = calculate_confidence_metrics(confidence_items)
+    
+    if metrics[:min].nil?
       min_conf = max_conf = mean_conf = median_conf = 0.0
       note = "error"
       @error_count += 1
     else
-      min_conf = confidence_values.min
-      max_conf = confidence_values.max
-      mean_conf = confidence_values.sum / confidence_values.size
-      median_conf = confidence_values.sort[confidence_values.size / 2]
+      min_conf = metrics[:min]
+      max_conf = metrics[:max]
+      mean_conf = metrics[:mean]
+      median_conf = metrics[:median]
       note = ""
       @error_count = 0
     end

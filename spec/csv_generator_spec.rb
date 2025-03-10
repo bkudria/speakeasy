@@ -396,4 +396,53 @@ RSpec.describe CsvGenerator do
       expect(rows[1][:transcript]).to eq("Second")
     end
   end
+
+  describe "#process_segment" do
+    let(:csv_generator) { described_class.new }
+    let(:parser) { instance_double("TranscriptParser") }
+    let(:segment) { {"speaker_label" => "spk_0", "transcript" => "Hello world", "items" => ["item1", "item2"], "start_time" => "10.0", "end_time" => "15.0"} }
+    let(:speaker_identities) { {"spk_0" => "John Doe"} }
+    let(:current_row) { {speaker: "John Doe", end_time: 9.0} }
+    
+    before do
+      # Mock the parser behavior
+      allow(parser).to receive(:audio_segments).and_return([segment, segment])
+      
+      # Mock items with confidence values
+      item1 = {"id" => "item1", "alternatives" => [{"confidence" => "0.9"}]}
+      item2 = {"id" => "item2", "alternatives" => [{"confidence" => "0.8"}]}
+      allow(parser).to receive(:items).and_return([item1, item2])
+      
+      # Allow print to avoid output during tests
+      allow(csv_generator).to receive(:print)
+    end
+    
+    it "uses calculate_confidence_metrics to process segment data" do
+      # Spy on calculate_confidence_metrics to verify it's called with correctly formatted data
+      expect(csv_generator).to receive(:calculate_confidence_metrics).and_call_original
+      
+      result = csv_generator.process_segment(segment, 0, current_row, speaker_identities, parser)
+      
+      # Verify confidence values are set correctly
+      expect(result[:min_conf]).to be_within(0.001).of(0.8)
+      expect(result[:max_conf]).to be_within(0.001).of(0.9)
+      expect(result[:mean_conf]).to be_within(0.001).of(0.85)
+      expect(result[:median_conf]).to be_within(0.001).of(0.85)
+      expect(result[:note]).to eq("")
+    end
+    
+    it "handles segments with no confidence values" do
+      # Mock items with no valid confidence values
+      allow(parser).to receive(:items).and_return([])
+      
+      result = csv_generator.process_segment(segment, 0, current_row, speaker_identities, parser)
+      
+      # Verify default values are set
+      expect(result[:min_conf]).to eq(0.0)
+      expect(result[:max_conf]).to eq(0.0)
+      expect(result[:mean_conf]).to eq(0.0)
+      expect(result[:median_conf]).to eq(0.0)
+      expect(result[:note]).to eq("error")
+    end
+  end
 end

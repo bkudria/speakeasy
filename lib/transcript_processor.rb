@@ -24,10 +24,18 @@ class TranscriptProcessor
     @input = input
     @error_count = 0
     @rows = []
+    @misalignments_detected = false
   end
 
   def process
     puts "Starting Amazon Transcribe processing script"
+    
+    # Initialize result hash to track processing status
+    result = {
+      csv_generated: false,
+      speakers_extracted: false,
+      misalignments_detected: false
+    }
 
     # Check for existing named speaker files
     # If we detect any files matching "spk_*_*.m4a", we assume the user has already
@@ -36,11 +44,14 @@ class TranscriptProcessor
     named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
     if named_speaker_files.any?
       puts "\nNamed speaker files detected. Skipping speaker audio extraction step."
+      result[:speakers_extracted] = true
       wait_for_speaker_identification(skip: true)
       generate_csv_transcript
+      result[:csv_generated] = true
       identify_segments_to_review
+      result[:misalignments_detected] = @misalignments_detected || false
       puts "Processing complete!"
-      return
+      return result
     end
 
     # Check for existing unnamed speaker files
@@ -57,11 +68,14 @@ class TranscriptProcessor
       named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
       if named_speaker_files.any?
         puts "\nNamed speaker files detected after renaming. Skipping speaker audio extraction step."
+        result[:speakers_extracted] = true
         wait_for_speaker_identification(skip: true)
         generate_csv_transcript
+        result[:csv_generated] = true
         identify_segments_to_review
+        result[:misalignments_detected] = @misalignments_detected || false
         puts "Processing complete!"
-        return
+        return result
       else
         puts "No named speaker files found after renaming. Exiting."
         exit 1
@@ -70,17 +84,23 @@ class TranscriptProcessor
 
     # Step 1: Extract speaker audio
     extract_speaker_audio
+    result[:speakers_extracted] = true
 
     # Wait for user to identify speakers
     wait_for_speaker_identification
 
     # Step 2: Generate CSV transcript
     generate_csv_transcript
+    result[:csv_generated] = true
 
     # Step 3: Identify segments to review
     identify_segments_to_review
+    
+    # Update result with misalignments detection status
+    result[:misalignments_detected] = @misalignments_detected || false
 
     puts "Processing complete!"
+    result
   end
 
   private
@@ -166,11 +186,14 @@ class TranscriptProcessor
       # Detect and correct misalignments
       begin
         misalignment_issues = MisalignmentDetector.new(rows).detect_issues
+        # Store if misalignments were detected in the instance variable
+        @misalignments_detected = !misalignment_issues.empty?
       rescue => e
         puts "Error detecting misalignments: #{e.message}"
         puts e.backtrace.join("\n") if ENV["DEBUG"]
         @error_count += 1
         misalignment_issues = []
+        @misalignments_detected = false
       end
 
       begin
