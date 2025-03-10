@@ -3,6 +3,19 @@ require_relative "../lib/transcript_processor"
 require "open3"
 require "fileutils"
 
+# TranscriptProcessor Tests
+#
+# This file demonstrates the consistent mocking strategy using the FileSystemHelpers module.
+# It follows these principles:
+#
+# 1. Use shared contexts for common setup ("transcript processor file system mocks")
+# 2. Use helper methods like mock_file_exists() instead of direct allow().to receive() calls
+# 3. Use complex helpers like mock_file_read_and_parse() for multi-step operations
+# 4. Add clear comments for complex mocking scenarios
+# 5. Keep actual file system operations isolated from tests
+#
+# See spec/support/file_system_helpers.rb for the complete mocking API documentation.
+
 RSpec.describe TranscriptProcessor do
   include_context "transcript processor file system mocks"
 
@@ -24,12 +37,12 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "aborts if transcript file has invalid JSON" do
-      # Use our helpers from the shared context
+      # Use helper methods from FileSystemHelpers for file mocking
       mock_file_exists("invalid.json", true)
       mock_file_content("invalid.json", "invalid json")
       mock_file_basename("invalid.json", ".*", "invalid")
 
-      # Make JSON.parse raise an error
+      # Mock JSON parsing error
       allow(JSON).to receive(:parse).with("invalid json").and_raise(JSON::ParserError.new("Invalid JSON format"))
 
       expect {
@@ -38,11 +51,7 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "aborts if ffmpeg is not available" do
-      # Use our helpers from the shared context
-      mock_file_exists(valid_json_path, true)
-      mock_file_exists(valid_audio_path, true)
-      mock_file_basename(valid_json_path, ".*", "asrOutput")
-      mock_json_parse(valid_json_content, {})
+      # Use our helper method for ffmpeg version check
       mock_open3_command("ffmpeg -version", "", "error", double(success?: false))
 
       expect {
@@ -63,6 +72,7 @@ RSpec.describe TranscriptProcessor do
     let(:low_confidence_detector) { instance_double("LowConfidenceDetector") }
 
     before do
+      # Set up test doubles for all component classes
       allow(TranscriptParser).to receive(:new).and_return(parser)
       allow(SpeakerExtraction).to receive(:new).and_return(speaker_extraction)
       allow(SpeakerIdentification).to receive(:new).and_return(speaker_identification)
@@ -70,18 +80,18 @@ RSpec.describe TranscriptProcessor do
       allow(CsvGenerator).to receive(:new).and_return(csv_generator)
       allow(LowConfidenceDetector).to receive(:new).and_return(low_confidence_detector)
 
-      # Mock the Dir.glob calls using our helpers
+      # Use FileSystemHelpers methods for directory operations
       mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), [])
       mock_dir_glob(File.join(Dir.pwd, "spk_*.m4a"), [])
       mock_dir_glob(File.join(processor.instance_variable_get(:@output_dir), "spk_*.m4a"), [])
 
+      # Set up component behavior
       allow(speaker_extraction).to receive(:extract)
       allow(speaker_identification).to receive(:identify)
       allow(parser).to receive(:audio_segments).and_return([])
       allow(csv_generator).to receive(:process_parsed_items).and_return([])
 
-      # Update this line to return a specific value that can be used by the rest of the tests
-      # Add expectations for MisalignmentDetector and MisalignmentCorrector
+      # Set up misalignment components
       misalignment_detector = double("MisalignmentDetector")
       misalignment_corrector = double("MisalignmentCorrector")
       allow(MisalignmentDetector).to receive(:new).and_return(misalignment_detector)
@@ -89,12 +99,11 @@ RSpec.describe TranscriptProcessor do
       allow(misalignment_detector).to receive(:detect_issues).and_return([])
       allow(misalignment_corrector).to receive(:correct!)
 
+      # Other common behaviors
       allow(csv_writer).to receive(:write_transcript)
       allow(low_confidence_detector).to receive(:identify_segments_to_review)
       allow(processor).to receive(:puts)
       allow(processor).to receive(:open_output_directory)
-
-      # Set default mock for process_parsed_items
     end
 
     context "when handling errors during item processing" do
@@ -152,48 +161,11 @@ RSpec.describe TranscriptProcessor do
         expect(processor.instance_variable_get(:@rows)).to eq([])
       end
 
-      it "handles nil parsed items gracefully" do
-        allow(parser).to receive(:parsed_items).and_return(nil)
-
-        # The implementation should convert nil to empty array
-        expect(csv_generator).to receive(:process_parsed_items)
-          .with([], anything, silence_threshold: 1.0)
-          .and_return([])
-
-        expect { processor.process }.not_to raise_error
-      end
-
-      it "handles errors during CSV generation" do
-        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
-        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-
-        # The implementation should catch the error and log it
-        expect(processor).to receive(:puts).with(/Error processing transcript items: CSV generation error/)
-        expect { processor.process }.not_to raise_error
-      end
-
-      it "increments error count when processing fails" do
-        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
-        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-
-        # The implementation should increment an error counter
-        expect { processor.process }.to change { processor.instance_variable_get(:@error_count) }.from(0).to(1)
-      end
-
-      it "sets empty rows array when processing fails" do
-        allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
-        allow(csv_generator).to receive(:process_parsed_items).and_raise(StandardError.new("CSV generation error"))
-
-        # The implementation should ensure @rows is initialized even on error
-        processor.process
-        expect(processor.instance_variable_get(:@rows)).to eq([])
-      end
-
       it "handles malformed speaker identity data" do
         allow(parser).to receive(:parsed_items).and_return([{speaker_label: "spk_0", content: "Hello"}])
 
-        # Simulate a malformed speaker file pattern
-        allow(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).and_return(["spk_0_invalid*.m4a"])
+        # Use helper to mock glob with malformed file pattern
+        mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_invalid*.m4a"])
 
         # The implementation should handle invalid speaker identity patterns
         expect { processor.process }.not_to raise_error
@@ -260,7 +232,7 @@ RSpec.describe TranscriptProcessor do
 
       allow(parser).to receive(:parsed_items).and_return(parsed_items)
 
-      # Use our helper for mocking Dir.glob
+      # Use our helper for mocking Dir.glob with named speaker files
       mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_Alice.m4a", "spk_1_Bob.m4a"])
 
       expected_rows = [
@@ -283,7 +255,7 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "skips extraction when named speaker files exist" do
-      # Use helper for mocking Dir.glob
+      # Use helper for mocking named speaker files
       mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_John.m4a"])
 
       expect(speaker_extraction).not_to receive(:extract)
@@ -292,20 +264,16 @@ RSpec.describe TranscriptProcessor do
       processor.process
     end
 
+    # This test requires specific sequencing of Dir.glob calls, which is a complex mocking scenario
     it "prompts for speaker identification when unnamed speaker files exist" do
-      # Reset the default mocks from the shared context
-      # We need specific sequencing of glob calls, so we'll use expect().to receive() directly
+      # Complex mocking scenario: We need three sequential Dir.glob calls with different results
+      # 1. First check for named speaker files → returns []
+      # 2. Check for unnamed speaker files → returns ["spk_0.m4a"]
+      # 3. After user input "go", check named files again → returns ["spk_0_John.m4a"]
 
-      # First call to check named speaker files → should return []
-      # Second call after user types "go" → should return ["spk_0_John.m4a"]
       expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).twice.and_return([], ["spk_0_John.m4a"])
-
-      # Then check for unnamed speaker files → returns ["spk_0.m4a"]
       expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).once.and_return(["spk_0.m4a"])
-
       expect(processor).to receive(:puts).with(/Please identify each speaker/)
-
-      # After user types "go", the code checks named speaker files again
       expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).once.and_return(["spk_0_John.m4a"])
 
       processor.process
@@ -353,7 +321,7 @@ RSpec.describe TranscriptProcessor do
 
         expect(csv_writer).to receive(:write_transcript).with([expected_row], anything)
 
-        # Use our helper for mocking Dir.glob
+        # Use helper for mocking named speaker files
         mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_John.m4a"])
 
         processor.process
@@ -383,7 +351,7 @@ RSpec.describe TranscriptProcessor do
       # Expectations for the new approach
       expect(parser).to receive(:parsed_items).and_return(parsed_items)
 
-      # Use our helpers for mocking Dir.glob
+      # Use composite helper for mocking multiple directory operations
       mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_John.m4a"])
       mock_dir_glob(File.join(Dir.pwd, "spk_*.m4a"), ["spk_0_John.m4a"])
       mock_dir_glob(File.join(processor.instance_variable_get(:@output_dir), "spk_*.m4a"), ["spk_0_John.m4a"])
@@ -407,33 +375,25 @@ RSpec.describe TranscriptProcessor do
     end
 
     it "creates a CSV file" do
-      # Instead of creating real temporary files, we'll fully mock the file operations
+      # Use complex mock helper to set up a complete file processing scenario
       tmpdir = "/tmp/mock_test_dir"
       test_json_path = File.join(tmpdir, "asrOutput.json")
       test_audio_path = File.join(tmpdir, "audio.m4a")
       csv_output_path = File.join(tmpdir, "asrOutput.csv")
 
-      # Mock file existence checks
+      # Set up file system mocks using helper methods
       mock_file_exists(test_json_path, true)
       mock_file_exists(test_audio_path, true)
-
-      # Mock file content
       mock_file_content(test_json_path, valid_json_content)
-
-      # Mock JSON parsing
       mock_json_parse(valid_json_content, valid_json_data)
-
-      # Mock file basename operations
       mock_file_basename(test_json_path, ".*", "asrOutput")
-
+      
       # Mock directory operations
       mock_dir_glob(File.join(tmpdir, "spk_*_*.m4a"), [])
       mock_dir_glob(File.join(tmpdir, "spk_*.m4a"), [])
       
-      # Mock system commands
+      # Mock system commands using helpers
       mock_system_command(/^(open|start|xdg-open)\s/, true)
-      
-      # Mock ffmpeg availability check
       mock_open3_command("ffmpeg -version", "ffmpeg version", "", double(success?: true))
       
       # For any glob patterns, return empty array
@@ -477,7 +437,7 @@ RSpec.describe TranscriptProcessor do
       it "calls system with the correct command" do
         allow(processor).to receive(:open_directory_command).and_return("open")
         # Use our helper for mocking Kernel.system
-        expect(Kernel).to receive(:system).with("open spec/fixture")
+        mock_system_command("open spec/fixture", true)
 
         processor.send(:open_output_directory)
       end

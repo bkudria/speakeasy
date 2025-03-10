@@ -7,10 +7,10 @@
     - [x] Add tests for empty items (2)
     - [x] Add tests for missing confidence values (2)
     - [x] Add tests for unusual punctuation patterns (3)
-  - [ ] Mock external dependencies
+  - [x] Mock external dependencies
     - Files: spec/support/file_system_helpers.rb, spec/transcript_processor_spec.rb
     - [x] Use mocks for file system operations in TranscriptProcessor tests (3)
-    - [ ] Create consistent mocking strategy (2)
+    - [x] Create consistent mocking strategy (2)
   - [ ] Add integration tests
     - Files: spec/fixtures/asrOutput.json, bin/speakeasy
     - [ ] Create end-to-end tests with sample JSON/audio inputs (4)
