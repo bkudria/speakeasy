@@ -18,10 +18,12 @@ The project follows strict Test-Driven Development (TDD) principles:
 
 1. **Identify Task**: Select the next uncompleted task `[ ]` from the task list.
 2. **Verify Task Status**: Confirm the current task status in tasks.md accurately reflects the project state before proceeding. See [Task Status Management](02_documents_and_rules.md#8-task-status-management) for verification procedures.
-3. **Understand Requirements**: Fully understand what the task needs to accomplish.
-4. **Write Test First**: Create a test that verifies the behavior you want to implement. The test should fail initially.
-5. **Execute Test**: Run the test to confirm it fails for the expected reason.
-6. **Update Status**: After confirming the test fails appropriately, mark the task as in-progress `[-]` in tasks.md. This status update is mandatory before proceeding.
+3. **Mark In-Progress**: As soon as the task becomes the current focus, mark it as in-progress `[-]` in tasks.md. This status update is mandatory before proceeding with further research or planning.
+   - Note: Tasks being actively researched or planned should be marked as in-progress
+   - Note: Tasks being refined or broken down should not be changed to in-progress (unless already marked as such)
+4. **Understand Requirements**: Fully understand what the task needs to accomplish.
+5. **Write Test First**: Create a test that verifies the behavior you want to implement. The test should fail initially.
+6. **Execute Test**: Run the test to confirm it fails for the expected reason. Verify the task remains marked as in-progress `[-]` in tasks.md.
 7. **Implement Code**: Write the minimum code needed to make the test pass.
 8. **Capture Discovered Tasks**: If you identify new tasks during implementation:
    - Document them immediately following the guidelines in the [Discovered Task Management](02_documents_and_rules.md#7-discovered-task-management) section.

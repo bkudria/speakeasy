@@ -120,6 +120,10 @@
    - Task status in tasks.md must reflect the actual state of the project at all times.
    - Consistent status updates prevent miscommunication and ensure proper workflow progression.
    - Status changes should be made at specific points in the TDD workflow, not arbitrarily.
+   - Tasks should be marked as in-progress ([-]) as soon as they become the current focus, including during research or planning stages.
+   - Tasks being actively researched or planned should be marked as in-progress.
+   - Tasks being refined or broken down should not be changed to in-progress (unless already marked as such).
+   - Regular verification of status accuracy is required throughout the workflow.
 
 2. Responsibility assignments:
    - The editor engineer is responsible for physically updating the tasks.md file.

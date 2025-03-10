@@ -1,7 +1,7 @@
 # Speakeasy Tasks
 
 ## 0. Instruction Improvements
-- [ ] Update docs/instructions to ensure a task is marked as in-progress as soon as it becomes the current focus. A task that is being
+- [x] Update docs/instructions to ensure a task is marked as in-progress as soon as it becomes the current focus. A task that is being
       researched or planned should be marked as in-progress. A task that is being refined or broken down should not be changed to
       in-progress, but if it was already marked as such, it can remain that way.
 
