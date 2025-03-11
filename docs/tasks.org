@@ -1,6 +1,6 @@
 #+TITLE: Speakeasy Tasks
 #+STARTUP: overview
-#+TODO: TODO IN-PROGRESS(p) | DONE
+#+TODO: TODO DOING(d) | DONE
 
 * Instruction Improvements for Ruby TDD Projects
 ** TODO Consolidate and streamline TDD workflow instructions
@@ -69,11 +69,11 @@
 **** DONE Extract duplicated confidence threshold checking logic from lines 136 and 147 [3]
 **** DONE Create helper method for confidence-related issue detection [2]
 
-*** IN-PROGRESS Refactor duplicate conditional logic in CsvGenerator [3]
+*** DOING Refactor duplicate conditional logic in CsvGenerator [3]
 :PROPERTIES:
 :FILES: lib/csv_generator.rb
 :END:
-**** IN-PROGRESS Extract common condition checking from :and conditions at lines 26 and 168 [3]
+**** DOING Extract common condition checking from :and conditions at lines 26 and 168 [3]
 
 * Code Quality Improvements
 ** TODO Refactor TranscriptProcessor class

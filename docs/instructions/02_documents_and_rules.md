@@ -14,7 +14,7 @@
 1. docs/instructions/*.md: Instructions for working with this repository.
 2. docs/specification.md: Project specification, describing functionality without implementation details.
 3. docs/conventions.md: Conventions, configurations, and notable aspects of the project.
-4. docs/tasks.md: Task list in a specific markdown format.
+4. docs/tasks.org: Task list in org-mode format.
 
 ## 2. Task Management Rules:
 1. Complete only one task or sub-task at a time.
@@ -22,33 +22,35 @@
 3. Do not include implementation details in specification.md.
 
 ## 3. Task List Format:
-1. Use the following formats for tracking task status:
-   - Incomplete: `- [ ] Task description`
-   - In-progress: `- [-] Task description`
-   - Completed: `- [x] Task description`
+1. Tasks are tracked in org-mode format with TODO states:
+   - Incomplete: `TODO Task description`
+   - In-progress: `DOING Task description`
+   - Completed: `DONE Task description`
    
    Examples:
-   ```
-   - [ ] Implement ConfidenceCalculator class
-   - [-] Add error handling to TranscriptProcessor
-   - [x] Create directory structure for project
+   ```org
+   * Development
+   ** TODO Implement ConfidenceCalculator class
+   ** DOING Add error handling to TranscriptProcessor
+   ** DONE Create directory structure for project
    ```
 
-2. Indent sub-tasks with two additional spaces.
-3. Include point estimates for leaf tasks only, using the Fibonacci scale (1, 2, 3, 5, 8, 13, 21…).
+2. Use org-mode hierarchy with * for main sections, ** for top-level tasks, *** for subtasks, etc.
+3. Include point estimates for leaf tasks only, using the Fibonacci scale (1, 2, 3, 5, 8, 13, 21…) in [brackets].
 4. Non-leaf tasks should not have explicit point estimates.
 5. File listings for tasks:
-   - List required files as non-checkbox bullet points directly under the relevant task
-   - Format: `  - Files: file1.rb, file2.rb` (use the bullet symbol • and indent with 2 spaces)
-   - Place file listings as high in the hierarchy as possible (parent tasks rather than individual leaf tasks)
+   - Use org-mode PROPERTIES drawers to list files relevant to a task
+   - Place file listings as high in the hierarchy as possible
    - Update file listings during task refinement or when adding new tasks
    
    Example:
-   ```
-   - [ ] Create ConfidenceCalculator utility
-     - Files: lib/csv_generator.rb, lib/low_confidence_detector.rb
-     - [ ] Extract calculate_confidence_metrics method (2)
-     - [ ] Extract confidence calculation from process_segment (3)
+   ```org
+   ** TODO Create ConfidenceCalculator utility
+   :PROPERTIES:
+   :FILES: lib/csv_generator.rb, lib/low_confidence_detector.rb
+   :END:
+   *** TODO Extract calculate_confidence_metrics method [2]
+   *** TODO Extract confidence calculation from process_segment [3]
    ```
 
 ## 4. File Visibility Guidelines:
