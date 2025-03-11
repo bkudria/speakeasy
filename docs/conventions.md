@@ -17,7 +17,6 @@
 ## Architecture
 - Modular design with single-responsibility classes
 - Use composition over inheritance
-- Dependency injection pattern (pass dependencies to constructor)
 - Centralized error handling with `handle_error` helper
 
 ## Execution

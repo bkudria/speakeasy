@@ -1,31 +1,33 @@
 # Output Examples
 
 ## Table of Contents
-1. [Reminders](#reminders)
-   - [Task Status Management](#task-status-management)
-2. [Speakeasy-Specific Output Example](#speakeasy-specific-output-example)
+1. [Reminders](#1-reminders)
+2. [Speakeasy-Specific Output Example](#2-speakeasy-specific-output-example)
 
-## Reminders
-1. Strictly adhere to all rules and guidelines provided.
-2. Ensure only leaf-node tasks have explicit point estimates.
-3. Your role is crucial in maintaining the integrity and efficiency of the development process.
-4. Only propose one step at a time: either writing a test or writing code to make a test pass, never both in the same response.
+## 1. Reminders
+
+### General Guidelines
+- Strictly adhere to all rules and guidelines provided.
+- Ensure only leaf-node tasks have explicit point estimates.
+- Your role is crucial in maintaining the integrity and efficiency of the development process.
+- Only propose one step at a time: either writing a test or writing code to make a test pass, never both in the same response.
 
 ### Task Status Management
-5. Maintain consistent task status updates as outlined in the [Task Status Management](02_documents_and_rules.md#8-task-status-management) section:
-   - Always update the tasks.org file after each step
-   - Explicitly mention when to change status: `TODO` → `DOING` after task selection; `DOING` → `DONE` after test success confirmation
-   - Verify task status has been properly updated before proceeding to the next step
-   - After any context switch or interruption, reconfirm tasks.org reflects the current project state
-6. Regularly verify the accuracy of tasks.org by:
-   - Checking that completed implementation steps match their corresponding task status
-   - Confirming all discovered tasks have been properly documented with appropriate status
-   - Ensuring parent tasks accurately reflect the status of their child tasks
-   - Validating file listings are up-to-date based on actual implementation
-7. Remember that keeping task status current is critical for project tracking and coordination - never proceed without ensuring tasks.org is synchronized with actual progress
+- Maintain consistent task status updates as outlined in the canonical [Task Status Management](04_workflow.md#2-task-status-management) reference:
+  - Always update the tasks.org file after each step
+  - Explicitly mention when to change status: `TODO` → `DOING` after task selection; `DOING` → `DONE` after test success confirmation
+  - Verify task status has been properly updated before proceeding to the next step
+  - After any context switch or interruption, reconfirm tasks.org reflects the current project state
+- Follow all verification procedures defined in the canonical reference:
+  - Checking that implementation steps match their corresponding task status
+  - Confirming all discovered tasks have been properly documented
+  - Ensuring parent tasks reflect the status of their child tasks
+  - Validating file listings are up-to-date
+- Remember that keeping task status current is critical for project tracking and coordination
 
-## Speakeasy-Specific Output Example
+## 2. Speakeasy-Specific Output Example
 
+### Task Analysis
 <task_analysis>
 I need to implement the `detect_issues` method in the MisalignmentDetector class to identify segments with potential misalignments in the transcript. Looking at the task requirements and existing code:
 
@@ -49,6 +51,7 @@ After reviewing the files, I'll implement the method in a way that:
 The implementation should focus on the core logic without modifying other parts of the codebase.
 </task_analysis>
 
+### Response
 <response>
 Based on the analysis, I need to implement the `detect_issues` method in the MisalignmentDetector class.
 

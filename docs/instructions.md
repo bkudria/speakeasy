@@ -15,7 +15,6 @@ This file has been split into multiple sections for easier navigation and to imp
    - Lists important project documents and references
    - Details task management rules with link to TDD workflow
    - Explains task list format and point estimation
-   - Provides file visibility guidelines
    - Covers specification update procedures
    - Describes the task completion process
 

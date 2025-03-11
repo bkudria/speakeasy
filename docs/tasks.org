@@ -2,40 +2,101 @@
 #+STARTUP: overview
 #+TODO: TODO DOING(d) | DONE
 
-* Instruction Improvements for Ruby TDD Projects
-** TODO Fix document redundancy and inconsistency issues
+* Claude Task Processing [8/8]
+** DONE Ensure Claude reads all instructions at session start
+:PROPERTIES:
+:FILES: CLAUDE.md, docs/instructions/*.md
+:POINTS: 1
+:END:
+*** DONE Update instructions to require reading docs before starting tasks or task refinement
+:PROPERTIES:
+:POINTS: 1
+:END:
+** DONE Update instructions to clarify task ordering for Claude
+:PROPERTIES:
+:FILES: CLAUDE.md, docs/instructions/*.md
+:POINTS: 3
+:END:
+*** DONE Specify that next task is always the first incomplete task in the list
+:PROPERTIES:
+:POINTS: 1
+:END:
+*** DONE Specify that Claude should proactively report the next task after completing one
+:PROPERTIES:
+:POINTS: 1
+:END:
+*** DONE Specify that Claude should ask questions about a task when it becomes active
+:PROPERTIES:
+:POINTS: 1
+:END:
+
+* Process Improvements [2/2]
+** DONE Update Claude's instructions about task order and completion
+:PROPERTIES:
+:FILES: CLAUDE.md, docs/instructions/*.md
+:POINTS: 2
+:END:
+*** DONE Specify tasks must be completed in sequential order
+:PROPERTIES:
+:POINTS: 1
+:END:
+*** DONE Clarify that all tasks in a section must be completed before starting new sections
+:PROPERTIES:
+:POINTS: 1
+:END:
+
+* Instruction Improvements for Ruby TDD Projects [1/6]
+** DONE Update instructions for information gathering
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:POINTS: 2
+:END:
+*** DONE Add clarification about obtaining complete information
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** DONE Instruct Claude to ask questions before starting tasks
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** DONE Ensure all required information is gathered up front
+:PROPERTIES:
+:POINTS: 1
+:END:
+
+** DOING Fix document redundancy and inconsistency issues [2/3]
 :PROPERTIES:
 :FILES: docs/instructions/*.md
 :END:
-*** TODO Consolidate duplicated content across instruction documents
+*** DONE Consolidate duplicated content across instruction documents
 :PROPERTIES:
 :POINTS: 3
 :END:
-**** TODO Create centralized TDD workflow in single reference document
+**** DONE Create centralized TDD workflow in single reference document
 :PROPERTIES:
 :POINTS: 2
 :END:
-**** TODO Extract task status management to dedicated section
+**** DONE Extract task status management to dedicated section
 :PROPERTIES:
 :POINTS: 2
 :END:
-**** TODO Remove repeated explanations of the same concepts
+**** DONE Remove repeated explanations of the same concepts
 :PROPERTIES:
 :POINTS: 1
 :END:
-*** TODO Standardize formatting across all instruction documents
+*** DONE Standardize formatting across all instruction documents
 :PROPERTIES:
 :POINTS: 3
 :END:
-**** TODO Implement consistent heading structure and levels
+**** DONE Implement consistent heading structure and levels
 :PROPERTIES:
 :POINTS: 1
 :END:
-**** TODO Normalize use of bullet points vs. numbered lists
+**** DONE Normalize use of bullet points vs. numbered lists
 :PROPERTIES:
 :POINTS: 1
 :END:
-**** TODO Create style guide for instruction document formatting
+**** DONE Create style guide for instruction document formatting
 :PROPERTIES:
 :POINTS: 1
 :END:
@@ -184,8 +245,8 @@
 :POINTS: 1
 :END:
 
-* Refactoring
-** TODO Refactor duplicate code identified by flay
+* Refactoring [3/5]
+** TODO Refactor duplicate code identified by flay [3/5]
 :PROPERTIES:
 :FILES: lib/misalignment_detector.rb, lib/transcript_processor.rb, lib/csv_generator.rb
 :END:
@@ -217,7 +278,7 @@
 :POINTS: 3
 :END:
 
-*** TODO Refactor similar code blocks in TranscriptProcessor
+*** TODO Refactor similar code blocks in TranscriptProcessor [1/1]
 :PROPERTIES:
 :FILES: lib/transcript_processor.rb
 :POINTS: 5
@@ -227,7 +288,7 @@
 :POINTS: 5
 :END:
 
-*** TODO Refactor confidence check code in MisalignmentDetector
+*** TODO Refactor confidence check code in MisalignmentDetector [2/2]
 :PROPERTIES:
 :FILES: lib/misalignment_detector.rb
 :POINTS: 5
@@ -251,12 +312,12 @@
 :POINTS: 3
 :END:
 
-* Code Quality Improvements
-** TODO Refactor TranscriptProcessor class
+* Code Quality Improvements [0/2]
+** TODO Refactor TranscriptProcessor class [5/7]
 :PROPERTIES:
 :FILES: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
 :END:
-*** TODO Extract responsibilities into smaller focused classes
+*** TODO Extract responsibilities into smaller focused classes [3/3]
 :PROPERTIES:
 :POINTS: 5
 :END:
@@ -275,7 +336,7 @@
 :FILES: lib/processing_coordinator.rb, spec/processing_coordinator_spec.rb
 :POINTS: 5
 :END:
-*** TODO Improve error handling
+*** TODO Improve error handling [2/2]
 :PROPERTIES:
 :POINTS: 3
 :END:
@@ -288,7 +349,7 @@
 :PROPERTIES:
 :POINTS: 2
 :END:
-*** TODO Add comprehensive tests
+*** TODO Add comprehensive tests [0/3]
 :PROPERTIES:
 :POINTS: 5
 :END:
@@ -305,11 +366,11 @@
 :POINTS: 3
 :END:
 
-** TODO Refactor CsvGenerator class
+** TODO Refactor CsvGenerator class [0/4]
 :PROPERTIES:
 :FILES: lib/csv_generator.rb, spec/csv_generator_spec.rb
 :END:
-*** TODO Break down process_parsed_items method
+*** TODO Break down process_parsed_items method [0/3]
 :PROPERTIES:
 :POINTS: 5
 :END:
@@ -325,7 +386,7 @@
 :PROPERTIES:
 :POINTS: 3
 :END:
-*** TODO Extract natural pause detection
+*** TODO Extract natural pause detection [0/2]
 :PROPERTIES:
 :POINTS: 3
 :END:
@@ -338,7 +399,7 @@
 :PROPERTIES:
 :POINTS: 2
 :END:
-*** TODO Improve error handling
+*** TODO Improve error handling [0/2]
 :PROPERTIES:
 :POINTS: 3
 :END:
@@ -350,7 +411,7 @@
 :PROPERTIES:
 :POINTS: 3
 :END:
-*** TODO Add boundary condition tests
+*** TODO Add boundary condition tests [0/3]
 :PROPERTIES:
 :POINTS: 5
 :END:
@@ -367,7 +428,7 @@
 :POINTS: 2
 :END:
 
-* Documentation Improvements for AI Agents
+* Documentation Improvements for AI Agents [0/3]
 ** TODO Enhance instruction clarity for AI processing
 :PROPERTIES:
 :FILES: docs/instructions/*.md
