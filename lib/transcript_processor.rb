@@ -11,10 +11,12 @@ require_relative "csv_generator"
 require_relative "low_confidence_detector"
 require_relative "misalignment_detector"
 require_relative "misalignment_corrector"
+require_relative "file_validator"
 
 class TranscriptProcessor
-  def initialize(transcript_path, audio_path, input: $stdin, output_dir: Dir.pwd)
-    validate_inputs(transcript_path, audio_path)
+  def initialize(transcript_path, audio_path, input: $stdin, output_dir: Dir.pwd, file_validator: FileValidator.new)
+    # Use the FileValidator to validate inputs
+    file_validator.validate(transcript_path, audio_path)
 
     @transcript_path = transcript_path
     @audio_path = audio_path
@@ -101,33 +103,6 @@ class TranscriptProcessor
 
   private
 
-  # Validate that a required file exists
-  # @param file_path [String] Path to the file
-  # @param file_type [String] Type of file for error message
-  def validate_file_exists(file_path, file_type)
-    unless File.exist?(file_path)
-      abort "Error: #{file_type} file '#{file_path}' not found."
-    end
-  end
-
-  def validate_inputs(transcript_path, audio_path)
-    # Check if files exist
-    validate_file_exists(transcript_path, "Transcript")
-    validate_file_exists(audio_path, "Audio")
-
-    # Validate JSON format
-    begin
-      JSON.parse(File.read(transcript_path))
-    rescue JSON::ParserError => e
-      abort "Error: Invalid JSON format in transcript file: #{e.message}"
-    end
-
-    # Check if ffmpeg is available
-    _, _, status = Open3.capture3("ffmpeg -version")
-    unless status.success?
-      abort "Error: ffmpeg is not installed or not in PATH. Please install ffmpeg to continue."
-    end
-  end
 
   # Print a formatted step header
   # @param step_number [Integer] The step number

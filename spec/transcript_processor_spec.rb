@@ -20,43 +20,40 @@ RSpec.describe TranscriptProcessor do
   include_context "transcript processor file system mocks"
 
   describe "#initialize" do
-    it "initializes with valid inputs" do
-      expect { TranscriptProcessor.new(valid_json_path, valid_audio_path) }.not_to raise_error
+    context "with file validation" do
+      let(:file_validator) { instance_double(FileValidator) }
+      
+      it "delegates file validation to FileValidator" do
+        expect(file_validator).to receive(:validate).with(valid_json_path, valid_audio_path)
+        
+        TranscriptProcessor.new(
+          valid_json_path, 
+          valid_audio_path, 
+          file_validator: file_validator
+        )
+      end
+      
+      it "initializes with valid inputs" do
+        allow(file_validator).to receive(:validate)
+        
+        processor = TranscriptProcessor.new(
+          valid_json_path, 
+          valid_audio_path, 
+          file_validator: file_validator
+        )
+        
+        expect(processor.instance_variable_get(:@transcript_path)).to eq(valid_json_path)
+        expect(processor.instance_variable_get(:@audio_path)).to eq(valid_audio_path)
+      end
     end
-
-    it "aborts if transcript file doesn't exist" do
-      expect {
-        TranscriptProcessor.new("nonexistent.json", valid_audio_path)
-      }.to raise_error(SystemExit)
-    end
-
-    it "aborts if audio file doesn't exist" do
-      expect {
-        TranscriptProcessor.new(valid_json_path, "nonexistent.m4a")
-      }.to raise_error(SystemExit)
-    end
-
-    it "aborts if transcript file has invalid JSON" do
-      # Use helper methods from FileSystemHelpers for file mocking
-      mock_file_exists("invalid.json", true)
-      mock_file_content("invalid.json", "invalid json")
-      mock_file_basename("invalid.json", ".*", "invalid")
-
-      # Mock JSON parsing error
-      allow(JSON).to receive(:parse).with("invalid json").and_raise(JSON::ParserError.new("Invalid JSON format"))
-
-      expect {
-        TranscriptProcessor.new("invalid.json", valid_audio_path)
-      }.to raise_error(SystemExit)
-    end
-
-    it "aborts if ffmpeg is not available" do
-      # Use our helper method for ffmpeg version check
-      mock_open3_command("ffmpeg -version", "", "error", double(success?: false))
-
-      expect {
-        TranscriptProcessor.new(valid_json_path, valid_audio_path)
-      }.to raise_error(SystemExit)
+    
+    it "initializes with default FileValidator" do
+      # This test ensures the default FileValidator is used when not explicitly provided
+      file_validator = instance_double(FileValidator)
+      allow(FileValidator).to receive(:new).and_return(file_validator)
+      expect(file_validator).to receive(:validate).with(valid_json_path, valid_audio_path)
+      
+      TranscriptProcessor.new(valid_json_path, valid_audio_path)
     end
   end
 
