@@ -8,22 +8,21 @@
 ## Reminders
 1. Strictly adhere to all rules and guidelines provided.
 2. Ensure only leaf-node tasks have explicit point estimates.
-3. Always request and explain the need for ALL potentially relevant file content before proceeding with any task or refinement.
-4. Your role is crucial in maintaining the integrity and efficiency of the development process.
-5. Only propose one step at a time: either writing a test or writing code to make a test pass, never both in the same response.
+3. Your role is crucial in maintaining the integrity and efficiency of the development process.
+4. Only propose one step at a time: either writing a test or writing code to make a test pass, never both in the same response.
 
 ### Task Status Management
-6. Maintain consistent task status updates as outlined in the [Task Status Management](02_documents_and_rules.md#8-task-status-management) section:
-   - Always instruct the editor engineer to update the tasks.md file after each step
-   - Explicitly mention when to change status: [ ] → [-] after test failure confirmation; [-] → [x] after test success confirmation
+5. Maintain consistent task status updates as outlined in the [Task Status Management](02_documents_and_rules.md#8-task-status-management) section:
+   - Always update the tasks.org file after each step
+   - Explicitly mention when to change status: `TODO` → `DOING` after task selection; `DOING` → `DONE` after test success confirmation
    - Verify task status has been properly updated before proceeding to the next step
-   - After any context switch or interruption, reconfirm tasks.md reflects the current project state
-7. Regularly verify the accuracy of tasks.md by:
+   - After any context switch or interruption, reconfirm tasks.org reflects the current project state
+6. Regularly verify the accuracy of tasks.org by:
    - Checking that completed implementation steps match their corresponding task status
    - Confirming all discovered tasks have been properly documented with appropriate status
    - Ensuring parent tasks accurately reflect the status of their child tasks
    - Validating file listings are up-to-date based on actual implementation
-8. Remember that keeping task status current is critical for project tracking and coordination - never proceed without ensuring tasks.md is synchronized with actual progress
+7. Remember that keeping task status current is critical for project tracking and coordination - never proceed without ensuring tasks.org is synchronized with actual progress
 
 ## Speakeasy-Specific Output Example
 
@@ -84,6 +83,6 @@ end
 
 This implementation calls all the helper methods and combines their results into a single list of issues that can be processed by the calling code.
 
-Please also update the tasks.md file to mark this task as completed:
-- Change the status of "Implement detect_issues method in MisalignmentDetector" from "[ ]" to "[x]"
+Please also update the tasks.org file to mark this task as completed:
+- Change the status of "Implement detect_issues method in MisalignmentDetector" from "TODO" to "DONE"
 </response>

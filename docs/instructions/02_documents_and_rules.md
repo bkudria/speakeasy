@@ -60,33 +60,27 @@
    :END:
    ```
 
-## 4. File Visibility Guidelines:
-1. Always request to see the content of files mentioned in tasks before beginning work.
-2. Explain relevance when requesting additional file contents.
-3. Never propose changes to files whose content you have not seen.
-4. Follow the DRY principle when listing files in tasks.
 
-## 5. Specification Updates:
+## 4. Specification Updates:
 1. Evaluate the need for specification.md updates for each task changing user-visible functionality.
 2. Seek user guidance when unsure about potential updates.
 3. Focus on describing what the system does, not how it does it.
 
-## 6. Task Completion Process:
-1. Request necessary file contents and explain why.
-2. Identify the next uncompleted task or sub-task.
-3. Review related tasks and specifications.
-4. Analyze requirements and current code.
-5. Consider impact and side effects of changes.
-6. Determine necessary changes at a tactical level.
-7. Scope changes using the provided Fibonacci scale.
-8. Break down tasks exceeding 5 points into smaller subtasks.
-9. After selecting a task and making a plan for it, re-evaluate its point-score effort number. If the re-evaluated score exceeds 5 points, break down the task into smaller subtasks.
-10. Use standard library tools and language idioms when possible.
-11. Ensure changes adhere to all rules, especially regarding tests and specifications.
-12. Only mark a task as complete [x] after receiving explicit confirmation that tests have passed
-13. Only mark a task as in progress [-] after receiving confirmation that the test fails appropriately
+## 5. Task Completion Process:
+1. Identify the next uncompleted task or sub-task.
+2. Review related tasks and specifications.
+3. Analyze requirements and current code.
+4. Consider impact and side effects of changes.
+5. Determine necessary changes at a tactical level.
+6. Scope changes using the provided Fibonacci scale.
+7. Break down tasks exceeding 5 points into smaller subtasks.
+8. After selecting a task and making a plan for it, re-evaluate its point-score effort number. If the re-evaluated score exceeds 5 points, break down the task into smaller subtasks.
+9. Use standard library tools and language idioms when possible.
+10. Ensure changes adhere to all rules, especially regarding tests and specifications.
+11. Only mark a task as DONE after receiving explicit confirmation that tests have passed
+12. Only mark a task as DOING after receiving confirmation that the test fails appropriately
 
-## 7. Discovered Task Management:
+## 6. Discovered Task Management:
 1. When discovering new tasks during implementation:
    - Document them immediately in tasks.md to prevent forgetting.
    - Use the standard task format with appropriate status indicators.
@@ -123,42 +117,41 @@
    - New features: Entirely new functionality
    - Documentation: Updates to documentation or comments
 
-## 8. Task Status Management:
+## 7. Task Status Management:
 1. Importance of consistent status updates:
    - Accurate status tracking is essential for project visibility and coordination.
-   - Task status in tasks.md must reflect the actual state of the project at all times.
+   - Task status in tasks.org must reflect the actual state of the project at all times.
    - Consistent status updates prevent miscommunication and ensure proper workflow progression.
    - Status changes should be made at specific points in the TDD workflow, not arbitrarily.
-   - Tasks should be marked as in-progress ([-]) as soon as they become the current focus, including during research or planning stages.
-   - Tasks being actively researched or planned should be marked as in-progress.
+   - Tasks should be marked as in-progress (`DOING`) as soon as they become the current focus, including during research or planning stages.
+   - Tasks being actively researched or planned should be marked as in-progress (`DOING`).
    - Tasks being refined or broken down should not be changed to in-progress (unless already marked as such).
    - Regular verification of status accuracy is required throughout the workflow.
 
 2. Responsibility assignments:
-   - The editor engineer is responsible for physically updating the tasks.md file.
    - The AI assistant must explicitly instruct the engineer to update task status at appropriate times.
    - The AI assistant must verify status updates have been made before continuing to the next step.
    - Both parties should confirm status accuracy during context switching or after interruptions.
 
 3. Handling status during interruptions or context switches:
-   - Before switching context, document the current task state in tasks.md with accurate status.
+   - Before switching context, document the current task state in tasks.org with accurate status.
    - Record any partial progress as comments under the task if necessary.
    - When resuming work, verify the task status accurately reflects the current state.
    - If a task is blocked by external factors, add a comment indicating the blocker: `(Blocked by: description)`.
-   - For tasks requiring pause due to discovered blockers, maintain [-] status with explanation.
+   - For tasks requiring pause due to discovered blockers, maintain `DOING` status with explanation.
 
 4. Verification procedures:
-   - Before starting any task, verify its current status in tasks.md.
-   - After writing a failing test, verify the task has been updated to [-].
-   - After confirming tests pass, verify the task has been updated to [x].
-   - Periodically review tasks.md to ensure all statuses are accurate, especially after:
+   - Before starting any task, verify its current status in tasks.org.
+   - After writing a failing test, verify the task has been updated to `DOING`.
+   - After confirming tests pass, verify the task has been updated to `DONE`.
+   - Periodically review tasks.org to ensure all statuses are accurate, especially after:
      - Test runs or implementation changes
      - Task discoveries or refinements
      - Context switches or work sessions
    - When completing a non-leaf task, verify all child tasks are properly marked as completed.
 
 5. Parent task completion rule:
-   - A parent task should be marked as complete [x] if and only if all of its children tasks are complete.
+   - A parent task should be marked as `DONE` if and only if all of its children tasks are complete.
    - When marking the last child task of a parent as complete, always verify and update the parent task's status.
-   - Never mark a parent task as complete if any of its children are still in progress [-] or incomplete [ ].
+   - Never mark a parent task as complete if any of its children are still in progress (`DOING`) or incomplete (`TODO`).
    - When all children tasks are complete, the parent task must be updated to reflect this state.

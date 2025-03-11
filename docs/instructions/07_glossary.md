@@ -28,7 +28,7 @@
 | Sub-task       | A smaller component of a larger task, indented underneath its parent task        |
 | Leaf Task      | A task with no sub-tasks, requiring a point estimate                             |
 | Point Estimate | Fibonacci number (1,2,3,5,8,13,21) indicating relative effort for a leaf task    |
-| Task Status    | Current state of a task: incomplete `[ ]`, in-progress `[-]`, or completed `[x]` |
+| Task Status    | Current state of a task: incomplete `TODO`, in-progress `DOING`, or completed `DONE` |
 
 ## Development Process Terms
 

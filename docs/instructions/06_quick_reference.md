@@ -84,19 +84,12 @@
 
 **Important**: 
 - Mark tasks as `DOING` as soon as they become the current focus, including during research or planning
-- Tasks being actively researched or planned should be marked as DOING
-- Tasks being refined or broken down should not be changed to DOING (unless already marked as such)
+- Tasks being actively researched or planned should be marked as `DOING`
+- Tasks being refined or broken down should not be changed to `DOING` (unless already marked as such)
 - Task status in tasks.org must reflect the actual project state at all times
 - After any interruption or context switch, verify task status accuracy before continuing
 - For detailed guidelines, refer to [Task Status Management](02_documents_and_rules.md#8-task-status-management)
 - The editor engineer must update tasks.org at each status change point, and the AI assistant must verify these updates
-
-## File Handling Guidelines
-
-- Always request file content before proposing changes
-- Explain relevance when requesting additional files
-- Never propose changes to unseen files
-- DRY principle: List files at highest hierarchy level possible
 
 ## Output Formatting
 
