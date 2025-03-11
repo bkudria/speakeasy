@@ -3,32 +3,121 @@
 #+TODO: TODO DOING(d) | DONE
 
 * Instruction Improvements for Ruby TDD Projects
-** TODO Consolidate and streamline TDD workflow instructions
+** TODO Fix document redundancy and inconsistency issues
 :PROPERTIES:
 :FILES: docs/instructions/*.md
 :END:
-*** TODO Create unified TDD workflow algorithm in one location
+*** TODO Consolidate duplicated content across instruction documents
 :PROPERTIES:
-:FILES: docs/instructions/*.md
 :POINTS: 3
 :END:
-**** TODO Develop concise step-by-step procedure for red-green-refactor cycle
+**** TODO Create centralized TDD workflow in single reference document
 :PROPERTIES:
 :POINTS: 2
 :END:
-**** TODO Add RSpec-specific patterns and best practices
+**** TODO Extract task status management to dedicated section
 :PROPERTIES:
 :POINTS: 2
 :END:
-*** TODO Remove redundancies in task status management descriptions
-:PROPERTIES:
-:POINTS: 2
-:END:
-**** TODO Centralize all task status management details in one reference section
+**** TODO Remove repeated explanations of the same concepts
 :PROPERTIES:
 :POINTS: 1
 :END:
-**** TODO Eliminate repeated explanations of the same concepts
+*** TODO Standardize formatting across all instruction documents
+:PROPERTIES:
+:POINTS: 3
+:END:
+**** TODO Implement consistent heading structure and levels
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Normalize use of bullet points vs. numbered lists
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Create style guide for instruction document formatting
+:PROPERTIES:
+:POINTS: 1
+:END:
+
+** TODO Clarify ambiguous instructions and guidelines
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Define explicit criteria for TDD application scope
+:PROPERTIES:
+:POINTS: 3
+:END:
+**** TODO Create decision tree for determining TDD necessity
+:PROPERTIES:
+:POINTS: 2
+:END:
+**** TODO Document examples of code changes requiring strict TDD vs. exceptions
+:PROPERTIES:
+:POINTS: 2
+:END:
+*** TODO Clarify task status transition points
+:PROPERTIES:
+:POINTS: 2
+:END:
+**** TODO Define precise triggers for task status changes
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Create flowchart for task status management lifecycle
+:PROPERTIES:
+:POINTS: 2
+:END:
+*** TODO Establish clear criteria for task breakdown
+:PROPERTIES:
+:POINTS: 3
+:END:
+**** TODO Document process for evaluating task complexity
+:PROPERTIES:
+:POINTS: 2
+:END:
+**** TODO Provide examples of appropriate vs. excessive task granularity
+:PROPERTIES:
+:POINTS: 2
+:END:
+
+** TODO Simplify document structure and navigation
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Reorganize instructions by workflow stages rather than document types
+:PROPERTIES:
+:POINTS: 5
+:END:
+**** TODO Create workflow-aligned document structure
+:PROPERTIES:
+:POINTS: 3
+:END:
+**** TODO Implement progressive disclosure of information
+:PROPERTIES:
+:POINTS: 2
+:END:
+*** TODO Create unified index and navigation system
+:PROPERTIES:
+:POINTS: 3
+:END:
+**** TODO Develop hyperlinked document map
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Add contextual navigation between related sections
+:PROPERTIES:
+:POINTS: 2
+:END:
+*** TODO Reduce cross-references between documents
+:PROPERTIES:
+:POINTS: 2
+:END:
+**** TODO Consolidate related information in single locations
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Replace cross-references with direct content inclusion
 :PROPERTIES:
 :POINTS: 1
 :END:
