@@ -10,7 +10,12 @@ SimpleCov.start do
   enable_coverage :branch
   track_files "lib/**/*.rb"
   add_filter "spec/"
-  refuse_coverage_drop
+  
+  # Only check for coverage drop when running the entire test suite
+  # This allows running individual specs without triggering coverage checks
+  if ENV['FULL_SUITE'] || !ENV['SPEC_OPTS']&.include?('--pattern')
+    refuse_coverage_drop
+  end
 end
 
 SimpleCov.at_exit do

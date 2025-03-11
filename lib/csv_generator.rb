@@ -6,6 +6,19 @@ class CsvGenerator
     @error_count = 0
   end
   
+  # Checks if there have been too many consecutive errors and aborts if necessary
+  # @param index [Integer] The index of the current segment being processed
+  # @return [nil]
+  def abort_if_consecutive_errors(index)
+    return unless @error_count >= 3
+    
+    puts "\nEncountered 3 consecutive errors. Details:"
+    3.times do |i|
+      puts "Error #{i + 1}: Failed to process segment #{index - 2 + i}"
+    end
+    abort "Aborting due to multiple consecutive errors."
+  end
+  
   # Checks if the gap between two time points exceeds the given threshold
   # @param end_time [Float, nil] The end time of the first item
   # @param start_time [Float, nil] The start time of the second item
@@ -18,6 +31,31 @@ class CsvGenerator
     # For non-zero thresholds, we include gaps that equal the threshold
     threshold == 0 ? gap > 0 : gap >= threshold
   end
+  
+  # Determines if a new group/row should be started based on common conditions
+  # @param current [Hash, nil] The current group or row
+  # @param current_speaker [String, nil] The speaker label/name of the current item
+  # @param new_speaker [String, nil] The speaker label/name of the next item
+  # @param current_end_time [Float, nil] The end time of the current group/row
+  # @param new_start_time [Float, nil] The start time of the next item
+  # @param time_threshold [Float] The threshold for time gaps
+  # @return [Boolean] true if a new group/row should be started
+  def should_start_new_group?(current, current_speaker, new_speaker, current_end_time, new_start_time, time_threshold)
+    # Start new group if this is the first item
+    return true if current.nil?
+    
+    # Start new group if the speaker changed
+    if current_speaker && new_speaker && current_speaker != new_speaker
+      return true
+    end
+    
+    # Start new group if there's a significant silence gap
+    if time_gap_exceeds_threshold?(current_end_time, new_start_time, time_threshold)
+      return true
+    end
+    
+    false
+  end
 
   def group_items_by_speaker(items, silence_threshold: 1.0)
     return [] if items.empty?
@@ -29,19 +67,18 @@ class CsvGenerator
       # Skip items with no content
       next unless item[:content]
 
-      # Start a new group if:
-      # 1. This is the first item
-      # 2. The speaker changed
-      # 3. There's a significant silence gap
-      start_new_group = current_group.nil? ||
-        (item[:speaker_label] && current_group[:speaker_label] &&
-         item[:speaker_label] != current_group[:speaker_label]) ||
-        time_gap_exceeds_threshold?(current_group[:end_time], item[:start_time], silence_threshold)
+      # Check if we should start a new group using the common helper method
+      start_new_group = item[:type] != "punctuation" && 
+        should_start_new_group?(
+          current_group, 
+          current_group&.dig(:speaker_label), 
+          item[:speaker_label],
+          current_group&.dig(:end_time),
+          item[:start_time],
+          silence_threshold
+        )
 
-      # For punctuation, don't start a new group
-      start_new_group = false if item[:type] == "punctuation"
-
-      if start_new_group && item[:type] != "punctuation"
+      if start_new_group
         # Create a new group
         current_group = {
           speaker_label: item[:speaker_label],
@@ -112,28 +149,18 @@ class CsvGenerator
       @error_count = 0
     end
 
-    # Determine if we need a new row
-    start_new_row = false
+    # Determine if we need a new row using the common helper method
+    start_new_row = should_start_new_group?(
+      current_row,
+      current_row&.dig(:speaker),
+      speaker_name,
+      current_row&.dig(:end_time),
+      segment["start_time"].to_f,
+      1.0  # Using standard 1.0 second threshold for silence
+    )
 
-    if current_row.nil?
-      start_new_row = true
-    elsif current_row[:speaker] != speaker_name
-      start_new_row = true
-    elsif segment["start_time"].to_f - current_row[:end_time] > 1.0
-      # More than 1 second of silence
-      start_new_row = true
-    end
-
-    # When a segment is invalid, note is set to "error". If we detect 3 consecutive
-    # errors, we provide details on each prior error and terminate the program.
-    # This ensures serious or recurring issues are caught early.
-    if @error_count >= 3
-      puts "\nEncountered 3 consecutive errors. Details:"
-      3.times do |i|
-        puts "Error #{i + 1}: Failed to process segment #{index - 2 + i}"
-      end
-      abort "Aborting due to multiple consecutive errors."
-    end
+    # When a segment is invalid, note is set to "error". Check for consecutive errors.
+    abort_if_consecutive_errors(index)
 
     {
       start_new_row: start_new_row,
@@ -150,9 +177,8 @@ class CsvGenerator
   rescue => e
     puts "\nError processing segment #{index}: #{e.message}"
     @error_count += 1
-    if @error_count >= 3
-      abort "Aborting due to multiple consecutive errors."
-    end
+    # Check for consecutive errors with a simplified message in the rescue block
+    abort_if_consecutive_errors(index)
 
     {
       start_new_row: true,
