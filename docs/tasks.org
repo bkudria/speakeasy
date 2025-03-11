@@ -1,128 +1,164 @@
-# Tasks
+#+TITLE: Speakeasy Tasks
+#+STARTUP: overview
+#+TODO: TODO IN-PROGRESS(p) | DONE
 
-## Instruction Improvements for Ruby TDD Projects
+* Instruction Improvements for Ruby TDD Projects
+** TODO Consolidate and streamline TDD workflow instructions
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Create unified TDD workflow algorithm in one location [3]
+**** TODO Develop concise step-by-step procedure for red-green-refactor cycle [2]
+**** TODO Add RSpec-specific patterns and best practices [2]
+*** TODO Remove redundancies in task status management descriptions [2]
+**** TODO Centralize all task status management details in one reference section [1]
+**** TODO Eliminate repeated explanations of the same concepts [1]
 
-- [ ] Consolidate and streamline TDD workflow instructions
-  - Files: docs/instructions/*.md
-  - [ ] Create unified TDD workflow algorithm in one location (3)
-    - [ ] Develop concise step-by-step procedure for red-green-refactor cycle (2)
-    - [ ] Add RSpec-specific patterns and best practices (2)
-  - [ ] Remove redundancies in task status management descriptions (2)
-    - [ ] Centralize all task status management details in one reference section (1)
-    - [ ] Eliminate repeated explanations of the same concepts (1)
+** TODO Enhance procedural format for AI consumption
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Convert narrative instructions to algorithm-style procedures [3]
+**** TODO Develop decision trees for file handling and task refinement [2]
+**** TODO Create standardized input/output templates for consistent formatting [1]
+*** TODO Add structured formats for AI processing [3]
+**** TODO Use more tables and structured formats instead of prose [1]
+**** TODO Include clearer heuristics for decision-making points [2]
+**** TODO Standardize heading levels and hierarchies [1]
 
-- [ ] Enhance procedural format for AI consumption
-  - Files: docs/instructions/*.md
-  - [ ] Convert narrative instructions to algorithm-style procedures (3)
-    - [ ] Develop decision trees for file handling and task refinement (2)
-    - [ ] Create standardized input/output templates for consistent formatting (1)
-  - [ ] Add structured formats for AI processing (3)
-    - [ ] Use more tables and structured formats instead of prose (1)
-    - [ ] Include clearer heuristics for decision-making points (2)
-    - [ ] Standardize heading levels and hierarchies (1)
+** TODO Generalize technical guidance for Ruby projects
+:PROPERTIES:
+:FILES: docs/instructions/*.md, docs/conventions.md
+:END:
+*** TODO Create language-agnostic but Ruby-friendly sections [3]
+**** TODO Add guidance on dependency injection and composition patterns [2]
+**** TODO Include Ruby idioms and conventions applicable across projects [1]
+*** TODO Structure file/class organization principles for Ruby projects [2]
+**** TODO Document typical RSpec project organization patterns [1]
+**** TODO Include examples of test-to-implementation mappings [1]
 
-- [ ] Generalize technical guidance for Ruby projects
-  - Files: docs/instructions/*.md, docs/conventions.md
-  - [ ] Create language-agnostic but Ruby-friendly sections (3)
-    - [ ] Add guidance on dependency injection and composition patterns (2)
-    - [ ] Include Ruby idioms and conventions applicable across projects (1)
-  - [ ] Structure file/class organization principles for Ruby projects (2)
-    - [ ] Document typical RSpec project organization patterns (1)
-    - [ ] Include examples of test-to-implementation mappings (1)
+* Refactoring
+** TODO Refactor duplicate code identified by flay
+:PROPERTIES:
+:FILES: lib/misalignment_detector.rb, lib/transcript_processor.rb, lib/csv_generator.rb
+:END:
+*** DONE Refactor similar code in :call blocks in MisalignmentDetector [8]
+:PROPERTIES:
+:FILES: lib/misalignment_detector.rb
+:END:
+**** DONE Extract duplicated check and issue creation pattern from lines 170, 181, 217, and 299 [5]
+**** DONE Create helper method for issue creation with common parameters [3]
 
-## Refactoring
+*** DONE Refactor error handling code in TranscriptProcessor [8]
+:PROPERTIES:
+:FILES: lib/transcript_processor.rb
+:END:
+**** DONE Extract common error handling pattern from :resbody blocks at lines 137, 169, 201, and 210 [5]
+**** DONE Create reusable error handling method with appropriate parameters [3]
 
-- [ ] Refactor duplicate code identified by flay
-  - Files: lib/misalignment_detector.rb, lib/transcript_processor.rb, lib/csv_generator.rb
-  - [x] Refactor similar code in :call blocks in MisalignmentDetector (8)
-    - Files: lib/misalignment_detector.rb
-    - [x] Extract duplicated check and issue creation pattern from lines 170, 181, 217, and 299 (5)
-    - [x] Create helper method for issue creation with common parameters (3)
-  
-  - [x] Refactor error handling code in TranscriptProcessor (8)
-    - Files: lib/transcript_processor.rb
-    - [x] Extract common error handling pattern from :resbody blocks at lines 137, 169, 201, and 210 (5)
-    - [x] Create reusable error handling method with appropriate parameters (3)
-  
-  - [ ] Refactor similar code blocks in TranscriptProcessor (5)
-    - Files: lib/transcript_processor.rb
-    - [x] Extract duplicate speaker file handling logic from blocks at lines 46 and 70 (5)
-  
-  - [ ] Refactor confidence check code in MisalignmentDetector (5)
-    - Files: lib/misalignment_detector.rb
-    - [x] Extract duplicated confidence threshold checking logic from lines 136 and 147 (3)
-    - [x] Create helper method for confidence-related issue detection (2)
-  
-  - [-] Refactor duplicate conditional logic in CsvGenerator (3)
-    - Files: lib/csv_generator.rb
-    - [-] Extract common condition checking from :and conditions at lines 26 and 168 (3)
+*** TODO Refactor similar code blocks in TranscriptProcessor [5]
+:PROPERTIES:
+:FILES: lib/transcript_processor.rb
+:END:
+**** DONE Extract duplicate speaker file handling logic from blocks at lines 46 and 70 [5]
 
-## Code Quality Improvements
+*** TODO Refactor confidence check code in MisalignmentDetector [5]
+:PROPERTIES:
+:FILES: lib/misalignment_detector.rb
+:END:
+**** DONE Extract duplicated confidence threshold checking logic from lines 136 and 147 [3]
+**** DONE Create helper method for confidence-related issue detection [2]
 
-- [ ] Refactor TranscriptProcessor class
-  - Files: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
-  - [ ] Extract responsibilities into smaller focused classes (5)
-    - [ ] Create FileValidator class for input validation (3)
-      - Files: lib/file_validator.rb, spec/file_validator_spec.rb
-    - [ ] Extract SpeakerFileManager for speaker file handling (3)
-      - Files: lib/speaker_file_manager.rb, spec/speaker_file_manager_spec.rb
-    - [ ] Create ProcessingCoordinator to manage workflow (5)
-      - Files: lib/processing_coordinator.rb, spec/processing_coordinator_spec.rb
-  - [ ] Implement dependency injection (3)
-    - [ ] Replace direct instantiations in initialize method (2)
-    - [ ] Add configuration options with defaults (2)
-  - [ ] Improve error handling (3)
-    - [ ] Create TranscriptProcessorError and subclasses (2)
-      - Files: lib/errors/transcript_processor_error.rb
-    - [ ] Enhance handle_error method with recovery strategies (2)
-  - [ ] Add comprehensive tests (5)
-    - [ ] Test named and unnamed speaker file scenarios (2)
-    - [ ] Test malformed input handling paths (2)
-    - [ ] Test partial processing recovery (3)
+*** IN-PROGRESS Refactor duplicate conditional logic in CsvGenerator [3]
+:PROPERTIES:
+:FILES: lib/csv_generator.rb
+:END:
+**** IN-PROGRESS Extract common condition checking from :and conditions at lines 26 and 168 [3]
 
-- [ ] Refactor CsvGenerator class
-  - Files: lib/csv_generator.rb, spec/csv_generator_spec.rb
-  - [ ] Break down process_parsed_items method (5)
-    - [ ] Extract group splitting logic to separate method (3)
-    - [ ] Create methods for transcript building (2)
-    - [ ] Separate row creation from processing logic (3)
-  - [ ] Extract natural pause detection (3)
-    - [ ] Create PauseDetector class for pause identification (3)
-      - Files: lib/pause_detector.rb, spec/pause_detector_spec.rb
-    - [ ] Support configurable pause thresholds (2)
-  - [ ] Improve error handling (3)
-    - [ ] Replace abort calls with proper exception handling (2)
-    - [ ] Create progressive error recovery mechanism (3)
-  - [ ] Add boundary condition tests (5)
-    - [ ] Test with empty/sparse input data (2)
-    - [ ] Test with malformed segment data (2)
-    - [ ] Test with confidence calculation edge cases (2)
+* Code Quality Improvements
+** TODO Refactor TranscriptProcessor class
+:PROPERTIES:
+:FILES: lib/transcript_processor.rb, spec/transcript_processor_spec.rb
+:END:
+*** TODO Extract responsibilities into smaller focused classes [5]
+**** TODO Create FileValidator class for input validation [3]
+:PROPERTIES:
+:FILES: lib/file_validator.rb, spec/file_validator_spec.rb
+:END:
+**** TODO Extract SpeakerFileManager for speaker file handling [3]
+:PROPERTIES:
+:FILES: lib/speaker_file_manager.rb, spec/speaker_file_manager_spec.rb
+:END:
+**** TODO Create ProcessingCoordinator to manage workflow [5]
+:PROPERTIES:
+:FILES: lib/processing_coordinator.rb, spec/processing_coordinator_spec.rb
+:END:
+*** TODO Implement dependency injection [3]
+**** TODO Replace direct instantiations in initialize method [2]
+**** TODO Add configuration options with defaults [2]
+*** TODO Improve error handling [3]
+**** TODO Create TranscriptProcessorError and subclasses [2]
+:PROPERTIES:
+:FILES: lib/errors/transcript_processor_error.rb
+:END:
+**** TODO Enhance handle_error method with recovery strategies [2]
+*** TODO Add comprehensive tests [5]
+**** TODO Test named and unnamed speaker file scenarios [2]
+**** TODO Test malformed input handling paths [2]
+**** TODO Test partial processing recovery [3]
 
-## Documentation Improvements for AI Agents
+** TODO Refactor CsvGenerator class
+:PROPERTIES:
+:FILES: lib/csv_generator.rb, spec/csv_generator_spec.rb
+:END:
+*** TODO Break down process_parsed_items method [5]
+**** TODO Extract group splitting logic to separate method [3]
+**** TODO Create methods for transcript building [2]
+**** TODO Separate row creation from processing logic [3]
+*** TODO Extract natural pause detection [3]
+**** TODO Create PauseDetector class for pause identification [3]
+:PROPERTIES:
+:FILES: lib/pause_detector.rb, spec/pause_detector_spec.rb
+:END:
+**** TODO Support configurable pause thresholds [2]
+*** TODO Improve error handling [3]
+**** TODO Replace abort calls with proper exception handling [2]
+**** TODO Create progressive error recovery mechanism [3]
+*** TODO Add boundary condition tests [5]
+**** TODO Test with empty/sparse input data [2]
+**** TODO Test with malformed segment data [2]
+**** TODO Test with confidence calculation edge cases [2]
 
-- [ ] Enhance instruction clarity for AI processing
-  - Files: docs/instructions/*.md
-  - [ ] Add consistent format patterns for machine parsing (3)
-    - [ ] Create standardized section tags with clear start/end boundaries (2)
-    - [ ] Implement uniform formatting for code/data distinctions (2) 
-  - [ ] Incorporate explicit reasoning process guides (5)
-    - [ ] Create step-by-step reasoning templates for code analysis (3)
-    - [ ] Add decision tree examples for common scenarios (3)
+* Documentation Improvements for AI Agents
+** TODO Enhance instruction clarity for AI processing
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Add consistent format patterns for machine parsing [3]
+**** TODO Create standardized section tags with clear start/end boundaries [2]
+**** TODO Implement uniform formatting for code/data distinctions [2]
+*** TODO Incorporate explicit reasoning process guides [5]
+**** TODO Create step-by-step reasoning templates for code analysis [3]
+**** TODO Add decision tree examples for common scenarios [3]
 
-- [ ] Improve examples for AI comprehension
-  - Files: docs/instructions/*.md
-  - [ ] Add input/output examples with exact formatting (3)
-    - [ ] Create examples for task refinement process (2)
-    - [ ] Add examples for code analysis workflows (2)
-  - [ ] Develop error recovery procedures (5)
-    - [ ] Document specific recovery steps for misunderstood instructions (3)
-    - [ ] Add examples of error recognition and self-correction (3)
+** TODO Improve examples for AI comprehension
+:PROPERTIES:
+:FILES: docs/instructions/*.md
+:END:
+*** TODO Add input/output examples with exact formatting [3]
+**** TODO Create examples for task refinement process [2]
+**** TODO Add examples for code analysis workflows [2]
+*** TODO Develop error recovery procedures [5]
+**** TODO Document specific recovery steps for misunderstood instructions [3]
+**** TODO Add examples of error recognition and self-correction [3]
 
-- [ ] Create AI-specific reference documentation
-  - Files: docs/instructions/*.md, docs/ai_agent_guide.md
-  - [ ] Develop specialized glossary of terms (3)
-    - [ ] Define technical terms with AI-relevant context (2)
-    - [ ] Add examples of correct term application (2)
-  - [ ] Create pattern library for code structures (5)
-    - [ ] Document Ruby idioms commonly used in the codebase (3)
-    - [ ] Add recognition patterns for test/implementation pairs (3)
+** TODO Create AI-specific reference documentation
+:PROPERTIES:
+:FILES: docs/instructions/*.md, docs/ai_agent_guide.md
+:END:
+*** TODO Develop specialized glossary of terms [3]
+**** TODO Define technical terms with AI-relevant context [2]
+**** TODO Add examples of correct term application [2]
+*** TODO Create pattern library for code structures [5]
+**** TODO Document Ruby idioms commonly used in the codebase [3]
+**** TODO Add recognition patterns for test/implementation pairs [3]
