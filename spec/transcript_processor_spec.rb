@@ -67,6 +67,7 @@ RSpec.describe TranscriptProcessor do
     let(:csv_writer) { instance_double("CsvWriter") }
     let(:csv_generator) { instance_double("CsvGenerator") }
     let(:low_confidence_detector) { instance_double("LowConfidenceDetector") }
+    let(:speaker_file_manager) { instance_double("SpeakerFileManager") }
 
     before do
       # Set up test doubles for all component classes
@@ -76,11 +77,8 @@ RSpec.describe TranscriptProcessor do
       allow(CsvWriter).to receive(:new).and_return(csv_writer)
       allow(CsvGenerator).to receive(:new).and_return(csv_generator)
       allow(LowConfidenceDetector).to receive(:new).and_return(low_confidence_detector)
-
-      # Use FileSystemHelpers methods for directory operations
-      mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), [])
-      mock_dir_glob(File.join(Dir.pwd, "spk_*.m4a"), [])
-      mock_dir_glob(File.join(processor.instance_variable_get(:@output_dir), "spk_*.m4a"), [])
+      allow(SpeakerFileManager).to receive(:new).and_return(speaker_file_manager)
+      allow(speaker_file_manager).to receive(:check_speaker_files).and_return(false)
 
       # Set up component behavior
       allow(speaker_extraction).to receive(:extract)
@@ -229,8 +227,11 @@ RSpec.describe TranscriptProcessor do
 
       allow(parser).to receive(:parsed_items).and_return(parsed_items)
 
-      # Use our helper for mocking Dir.glob with named speaker files
-      mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_Alice.m4a", "spk_1_Bob.m4a"])
+      # Mock SpeakerFileManager's find_speaker_identities
+      allow(speaker_file_manager).to receive(:find_speaker_identities).and_return({
+        "spk_0" => "Alice",
+        "spk_1" => "Bob"
+      })
 
       expected_rows = [
         {id: 1, speaker: "Alice", transcript: "Hello", confidence_min: 0.9, confidence_max: 0.9, confidence_mean: 0.9, confidence_median: 0.9, note: ""},
@@ -251,27 +252,20 @@ RSpec.describe TranscriptProcessor do
       expect { processor.process }.not_to raise_error
     end
 
-    it "skips extraction when named speaker files exist" do
-      # Use helper for mocking named speaker files
-      mock_dir_glob(File.join(Dir.pwd, "spk_*_*.m4a"), ["spk_0_John.m4a"])
+    it "skips extraction when speaker files check returns true" do
+      allow(speaker_file_manager).to receive(:check_speaker_files).and_return(true)
 
       expect(speaker_extraction).not_to receive(:extract)
-      expect(speaker_identification).to receive(:identify).with(skip: true)
+      expect(speaker_identification).not_to receive(:identify)
 
       processor.process
     end
 
-    # This test requires specific sequencing of Dir.glob calls, which is a complex mocking scenario
-    it "prompts for speaker identification when unnamed speaker files exist" do
-      # Complex mocking scenario: We need three sequential Dir.glob calls with different results
-      # 1. First check for named speaker files → returns []
-      # 2. Check for unnamed speaker files → returns ["spk_0.m4a"]
-      # 3. After user input "go", check named files again → returns ["spk_0_John.m4a"]
+    it "proceeds with extraction when speaker files check returns false" do
+      allow(speaker_file_manager).to receive(:check_speaker_files).and_return(false)
 
-      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).twice.and_return([], ["spk_0_John.m4a"])
-      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*.m4a")).once.and_return(["spk_0.m4a"])
-      expect(processor).to receive(:puts).with(/Please identify each speaker/)
-      expect(Dir).to receive(:glob).with(File.join(Dir.pwd, "spk_*_*.m4a")).once.and_return(["spk_0_John.m4a"])
+      expect(speaker_extraction).to receive(:extract)
+      expect(speaker_identification).to receive(:identify)
 
       processor.process
     end

@@ -171,12 +171,12 @@
 :PROPERTIES:
 :POINTS: 5
 :END:
-**** TODO Create FileValidator class for input validation
+**** DONE Create FileValidator class for input validation
 :PROPERTIES:
 :FILES: lib/file_validator.rb, spec/file_validator_spec.rb
 :POINTS: 3
 :END:
-**** TODO Extract SpeakerFileManager for speaker file handling
+**** DONE Extract SpeakerFileManager for speaker file handling
 :PROPERTIES:
 :FILES: lib/speaker_file_manager.rb, spec/speaker_file_manager_spec.rb
 :POINTS: 3
