@@ -1,5 +1,35 @@
 # Tasks
 
+## Instruction Improvements for Ruby TDD Projects
+
+- [ ] Consolidate and streamline TDD workflow instructions
+  - Files: docs/instructions/*.md
+  - [ ] Create unified TDD workflow algorithm in one location (3)
+    - [ ] Develop concise step-by-step procedure for red-green-refactor cycle (2)
+    - [ ] Add RSpec-specific patterns and best practices (2)
+  - [ ] Remove redundancies in task status management descriptions (2)
+    - [ ] Centralize all task status management details in one reference section (1)
+    - [ ] Eliminate repeated explanations of the same concepts (1)
+
+- [ ] Enhance procedural format for AI consumption
+  - Files: docs/instructions/*.md
+  - [ ] Convert narrative instructions to algorithm-style procedures (3)
+    - [ ] Develop decision trees for file handling and task refinement (2)
+    - [ ] Create standardized input/output templates for consistent formatting (1)
+  - [ ] Add structured formats for AI processing (3)
+    - [ ] Use more tables and structured formats instead of prose (1)
+    - [ ] Include clearer heuristics for decision-making points (2)
+    - [ ] Standardize heading levels and hierarchies (1)
+
+- [ ] Generalize technical guidance for Ruby projects
+  - Files: docs/instructions/*.md, docs/conventions.md
+  - [ ] Create language-agnostic but Ruby-friendly sections (3)
+    - [ ] Add guidance on dependency injection and composition patterns (2)
+    - [ ] Include Ruby idioms and conventions applicable across projects (1)
+  - [ ] Structure file/class organization principles for Ruby projects (2)
+    - [ ] Document typical RSpec project organization patterns (1)
+    - [ ] Include examples of test-to-implementation mappings (1)
+
 ## Refactoring
 
 - [ ] Refactor duplicate code identified by flay

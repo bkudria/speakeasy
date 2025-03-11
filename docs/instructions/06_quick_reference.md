@@ -16,6 +16,16 @@
 | Conventions   | Project standards       | docs/conventions.md    |
 | Tasks         | Task tracking           | docs/tasks.md          |
 
+## Development Commands
+
+| Command                                         | Purpose                   |
+|-------------------------------------------------|---------------------------|
+| `bundle exec rspec`                             | Run full test suite       |
+| `bundle exec rspec path/to/spec_file.rb`        | Run single test file      |
+| `bundle exec rspec path/to/spec_file.rb:LINE`   | Run specific test         |
+| `bundle exec standardrb`                        | Run linting               |
+| `bin/speakeasy <input_directory>`              | Execute application       |
+
 ## Task Management
 
 ### Task Status Notation
