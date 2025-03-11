@@ -36,12 +36,13 @@
    ```
 
 2. Use org-mode hierarchy with * for main sections, ** for top-level tasks, *** for subtasks, etc.
-3. Include point estimates for leaf tasks only, using the Fibonacci scale (1, 2, 3, 5, 8, 13, 21…) in [brackets].
-4. Non-leaf tasks should not have explicit point estimates.
-5. File listings for tasks:
-   - Use org-mode PROPERTIES drawers to list files relevant to a task
-   - Place file listings as high in the hierarchy as possible
-   - Update file listings during task refinement or when adding new tasks
+3. Include point estimates for leaf tasks only, using the Fibonacci scale (1, 2, 3, 5, 8, 13, 21…) in the PROPERTIES drawer.
+4. Non-leaf tasks can have POINTS properties calculated from their children.
+5. Use PROPERTIES drawers for all metadata:
+   - Use `:FILES:` to list files relevant to a task
+   - Use `:POINTS:` to store complexity/effort estimates
+   - Place property drawers as high in the hierarchy as possible
+   - Update properties during task refinement or when adding new tasks
    
    Example:
    ```org
@@ -49,8 +50,14 @@
    :PROPERTIES:
    :FILES: lib/csv_generator.rb, lib/low_confidence_detector.rb
    :END:
-   *** TODO Extract calculate_confidence_metrics method [2]
-   *** TODO Extract confidence calculation from process_segment [3]
+   *** TODO Extract calculate_confidence_metrics method
+   :PROPERTIES:
+   :POINTS: 2
+   :END:
+   *** TODO Extract confidence calculation from process_segment
+   :PROPERTIES:
+   :POINTS: 3
+   :END:
    ```
 
 ## 4. File Visibility Guidelines:

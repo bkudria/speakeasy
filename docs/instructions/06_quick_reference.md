@@ -38,8 +38,8 @@
 
 ### Task Structure
 - Hierarchical organization with org-mode heading levels (* ** *** etc.)
-- Point estimates (Fibonacci: 1,2,3,5,8,13,21) for leaf tasks only in [brackets]
-- Include file references in PROPERTIES drawers at highest applicable level
+- Point estimates (Fibonacci: 1,2,3,5,8,13,21) stored in PROPERTIES drawers
+- Include file references and points in PROPERTIES drawers at appropriate levels
 - Parent tasks should be marked DONE if and only if all child tasks are complete
 - Re-evaluate point estimates after planning tasks; break down if they exceed 5 points
 
@@ -50,10 +50,22 @@
 :PROPERTIES:
 :FILES: path/to/files
 :END:
-*** TODO Sub-task with files needed [2]
-**** TODO Leaf task [1]
-**** TODO Another leaf task [1]
-*** TODO Another sub-task [3]
+*** TODO Sub-task with files needed
+:PROPERTIES:
+:POINTS: 2
+:END:
+**** TODO Leaf task
+:PROPERTIES:
+:POINTS: 1
+:END:
+**** TODO Another leaf task
+:PROPERTIES:
+:POINTS: 1
+:END:
+*** TODO Another sub-task
+:PROPERTIES:
+:POINTS: 3
+:END:
 ```
 
 ## TDD Workflow
