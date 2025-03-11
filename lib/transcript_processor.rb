@@ -27,6 +27,42 @@ class TranscriptProcessor
     @misalignments_detected = false
   end
 
+  # Get named speaker files from output directory
+  # @return [Array] List of named speaker files
+  def get_named_speaker_files
+    Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
+  end
+  
+  # Get unnamed speaker files from output directory
+  # @param named_files [Array] List of named speaker files to exclude
+  # @return [Array] List of unnamed speaker files
+  def get_unnamed_speaker_files(named_files)
+    Dir.glob(File.join(@output_dir, "spk_*.m4a")) - named_files
+  end
+  
+  # Handle unnamed speaker files by prompting user to rename them
+  # @param result [Hash] The result hash to update
+  # @return [Boolean] Whether to continue processing or exit
+  def handle_unnamed_speaker_files(result)
+    puts "\nUnnamed speaker files detected."
+    puts "Please identify each speaker by renaming the audio files:"
+    puts "  Example: rename 'spk_0.m4a' to 'spk_0_Alex.m4a' if the speaker is Alex"
+    puts "\nType `go` and press enter after renaming the files..."
+    until @input.gets.strip.downcase == "go"
+      sleep 1
+    end
+    
+    # After renaming, check for named speaker files again
+    named_speaker_files = get_named_speaker_files
+    if named_speaker_files.any?
+      process_named_speaker_files(result, "Named speaker files detected after renaming. Skipping speaker audio extraction step.")
+      return false # Don't continue processing in the caller
+    else
+      puts "No named speaker files found after renaming. Exiting."
+      exit 1
+    end
+  end
+
   def process
     puts "Starting Amazon Transcribe processing script"
     
@@ -41,29 +77,15 @@ class TranscriptProcessor
     # If we detect any files matching "spk_*_*.m4a", we assume the user has already
     # named the speakers, so we skip extraction. Otherwise, we look for unnamed
     # speaker files ("spk_#.m4a"), prompt the user to rename them, and then retry.
-    named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
+    named_speaker_files = get_named_speaker_files
     if named_speaker_files.any?
       return process_named_speaker_files(result, "Named speaker files detected. Skipping speaker audio extraction step.")
     end
 
     # Check for existing unnamed speaker files
-    unnamed_speaker_files = Dir.glob(File.join(@output_dir, "spk_*.m4a")) - named_speaker_files
+    unnamed_speaker_files = get_unnamed_speaker_files(named_speaker_files)
     if unnamed_speaker_files.any?
-      puts "\nUnnamed speaker files detected."
-      puts "Please identify each speaker by renaming the audio files:"
-      puts "  Example: rename 'spk_0.m4a' to 'spk_0_Alex.m4a' if the speaker is Alex"
-      puts "\nType `go` and press enter after renaming the files..."
-      until @input.gets.strip.downcase == "go"
-        sleep 1
-      end
-      # After renaming, restart the process to check for named speaker files
-      named_speaker_files = Dir.glob(File.join(@output_dir, "spk_*_*.m4a"))
-      if named_speaker_files.any?
-        return process_named_speaker_files(result, "Named speaker files detected after renaming. Skipping speaker audio extraction step.")
-      else
-        puts "No named speaker files found after renaming. Exiting."
-        exit 1
-      end
+      return if handle_unnamed_speaker_files(result) == false
     end
 
     # Step 1: Extract speaker audio
@@ -73,31 +95,25 @@ class TranscriptProcessor
     # Wait for user to identify speakers
     wait_for_speaker_identification
 
-    # Step 2: Generate CSV transcript
-    generate_csv_transcript
-    result[:csv_generated] = true
-
-    # Step 3: Identify segments to review
-    identify_segments_to_review
-    
-    # Update result with misalignments detection status
-    result[:misalignments_detected] = @misalignments_detected || false
-
-    puts "Processing complete!"
-    result
+    # Complete the remaining processing steps
+    complete_processing(result)
   end
 
   private
 
+  # Validate that a required file exists
+  # @param file_path [String] Path to the file
+  # @param file_type [String] Type of file for error message
+  def validate_file_exists(file_path, file_type)
+    unless File.exist?(file_path)
+      abort "Error: #{file_type} file '#{file_path}' not found."
+    end
+  end
+
   def validate_inputs(transcript_path, audio_path)
     # Check if files exist
-    unless File.exist?(transcript_path)
-      abort "Error: Transcript file '#{transcript_path}' not found."
-    end
-
-    unless File.exist?(audio_path)
-      abort "Error: Audio file '#{audio_path}' not found."
-    end
+    validate_file_exists(transcript_path, "Transcript")
+    validate_file_exists(audio_path, "Audio")
 
     # Validate JSON format
     begin
@@ -113,8 +129,15 @@ class TranscriptProcessor
     end
   end
 
+  # Print a formatted step header
+  # @param step_number [Integer] The step number
+  # @param description [String] The step description
+  def print_step_header(step_number, description)
+    puts "\n=== Step #{step_number}: #{description} ==="
+  end
+
   def identify_segments_to_review
-    puts "\n=== Step 3: Identifying segments to review ==="
+    print_step_header(3, "Identifying segments to review")
     handle_error("identifying segments to review") do
       detector = LowConfidenceDetector.new
       detector.identify_segments_to_review(@rows)
@@ -122,7 +145,7 @@ class TranscriptProcessor
   end
 
   def extract_speaker_audio
-    puts "\n=== Step 1: Extracting speaker audio ==="
+    print_step_header(1, "Extracting speaker audio")
     SpeakerExtraction.new(@parser, @audio_path, @output_dir).extract
   end
 
@@ -130,13 +153,9 @@ class TranscriptProcessor
     SpeakerIdentification.new(@parser, @audio_path, @output_dir).identify(skip: skip)
   end
 
-  def generate_csv_transcript
-    puts "\n=== Step 2: Generating CSV transcript ==="
-
-    # Open the directory for the user to rename files
-    open_output_directory
-
-    # Find speaker identifications from renamed files
+  # Find speaker identifications from renamed audio files
+  # @return [Hash] Map of speaker labels to speaker names
+  def find_speaker_identities
     speaker_identities = {}
     handle_error("processing speaker identity files") do
       Dir.glob(File.join(@output_dir, "spk_*_*.m4a")).each do |file|
@@ -147,20 +166,27 @@ class TranscriptProcessor
         end
       end
     end
-
-    # Process transcript into rows using the new item-based approach
-    csv_writer = CsvWriter.new(@output_dir)
+    speaker_identities
+  end
+  
+  # Process transcript items and generate rows
+  # @param speaker_identities [Hash] Map of speaker labels to speaker names
+  # @return [Array] Processed transcript rows
+  def process_transcript_items(speaker_identities)
     csv_gen = CsvGenerator.new
-
     # Get parsed items from the parser
     parsed_items = @parser.parsed_items || []
 
     # Process the parsed items using the new method
-    rows = handle_error("processing transcript items", []) do
+    handle_error("processing transcript items", []) do
       csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
     end
-
-    # Detect and correct misalignments
+  end
+  
+  # Handle misalignment detection and correction
+  # @param rows [Array] Transcript rows
+  # @return [Array] Updated transcript rows
+  def handle_misalignments(rows)
     misalignment_issues = handle_error("detecting misalignments", []) do
       issues = MisalignmentDetector.new(rows).detect_issues
       # Store if misalignments were detected in the instance variable
@@ -171,11 +197,36 @@ class TranscriptProcessor
     handle_error("correcting misalignments") do
       MisalignmentCorrector.new(rows, misalignment_issues).correct!
     end
-
-    # Write to CSV
+    
+    rows
+  end
+  
+  # Write transcript rows to CSV
+  # @param rows [Array] Transcript rows
+  def write_to_csv(rows)
+    csv_writer = CsvWriter.new(@output_dir)
     handle_error("writing CSV transcript") do
       csv_writer.write_transcript(rows, @csv_base_name)
     end
+  end
+
+  def generate_csv_transcript
+    print_step_header(2, "Generating CSV transcript")
+
+    # Open the directory for the user to rename files
+    open_output_directory
+
+    # Find speaker identifications from renamed files
+    speaker_identities = find_speaker_identities
+    
+    # Process transcript into rows
+    rows = process_transcript_items(speaker_identities)
+    
+    # Detect and correct misalignments
+    rows = handle_misalignments(rows)
+    
+    # Write to CSV
+    write_to_csv(rows)
 
     @rows = rows
   end
@@ -218,6 +269,24 @@ class TranscriptProcessor
     end
   end
   
+  # Complete the remaining processing steps common to all paths
+  # @param result [Hash] The result hash to update
+  # @return [Hash] Updated result hash
+  def complete_processing(result)
+    # Step 2: Generate CSV transcript
+    generate_csv_transcript
+    result[:csv_generated] = true
+
+    # Step 3: Identify segments to review
+    identify_segments_to_review
+    
+    # Update result with misalignments detection status
+    result[:misalignments_detected] = @misalignments_detected || false
+
+    puts "Processing complete!"
+    result
+  end
+  
   # Process named speaker files with common logic
   # @param result [Hash] The result hash to update
   # @param message [String] Custom message to display about speaker files detection
@@ -226,11 +295,6 @@ class TranscriptProcessor
     puts "\n#{message}"
     result[:speakers_extracted] = true
     wait_for_speaker_identification(skip: true)
-    generate_csv_transcript
-    result[:csv_generated] = true
-    identify_segments_to_review
-    result[:misalignments_detected] = @misalignments_detected || false
-    puts "Processing complete!"
-    result
+    complete_processing(result)
   end
 end
