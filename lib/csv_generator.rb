@@ -5,6 +5,19 @@ class CsvGenerator
     # Add needed parameters (e.g.: parser, options) in later steps
     @error_count = 0
   end
+  
+  # Checks if the gap between two time points exceeds the given threshold
+  # @param end_time [Float, nil] The end time of the first item
+  # @param start_time [Float, nil] The start time of the second item
+  # @param threshold [Float] The threshold to compare against
+  # @return [Boolean] true if the gap exceeds or equals the threshold, false otherwise
+  def time_gap_exceeds_threshold?(end_time, start_time, threshold)
+    return false if end_time.nil? || start_time.nil?
+    gap = start_time - end_time
+    # For zero threshold, we require the gap to be strictly positive
+    # For non-zero thresholds, we include gaps that equal the threshold
+    threshold == 0 ? gap > 0 : gap >= threshold
+  end
 
   def group_items_by_speaker(items, silence_threshold: 1.0)
     return [] if items.empty?
@@ -23,8 +36,7 @@ class CsvGenerator
       start_new_group = current_group.nil? ||
         (item[:speaker_label] && current_group[:speaker_label] &&
          item[:speaker_label] != current_group[:speaker_label]) ||
-        (item[:start_time] && current_group[:end_time] &&
-         item[:start_time] - current_group[:end_time] > silence_threshold)
+        time_gap_exceeds_threshold?(current_group[:end_time], item[:start_time], silence_threshold)
 
       # For punctuation, don't start a new group
       start_new_group = false if item[:type] == "punctuation"
@@ -165,8 +177,7 @@ class CsvGenerator
         next_item = items[index + 1]
 
         # Check for time gaps between current item and next item
-        if item[:end_time] && next_item[:start_time] &&
-            (next_item[:start_time] - item[:end_time] >= time_gap_threshold)
+        if time_gap_exceeds_threshold?(item[:end_time], next_item[:start_time], time_gap_threshold)
           pauses << {index: index, type: :time_gap}
         end
       end

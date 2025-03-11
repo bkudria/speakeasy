@@ -23,6 +23,6 @@
     - [x] Extract duplicated confidence threshold checking logic from lines 136 and 147 (3)
     - [x] Create helper method for confidence-related issue detection (2)
   
-  - [ ] Refactor duplicate conditional logic in CsvGenerator (3)
+  - [-] Refactor duplicate conditional logic in CsvGenerator (3)
     - Files: lib/csv_generator.rb
-    - [ ] Extract common condition checking from :and conditions at lines 26 and 168 (3)
+    - [-] Extract common condition checking from :and conditions at lines 26 and 168 (3)

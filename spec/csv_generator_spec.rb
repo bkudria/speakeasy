@@ -397,6 +397,33 @@ RSpec.describe CsvGenerator do
     end
   end
 
+  describe "#time_gap_exceeds_threshold?" do
+    let(:csv_generator) { described_class.new }
+
+    it "returns true when time gap exceeds threshold" do
+      # Case 1: Simple comparison
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 3.0, 1.5)).to be true
+      
+      # Case 2: Exactly at threshold
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 2.5, 1.5)).to be true
+      
+      # Case 3: Below threshold
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 2.0, 1.5)).to be false
+    end
+
+    it "returns false when either time is nil" do
+      expect(csv_generator.time_gap_exceeds_threshold?(nil, 3.0, 1.5)).to be false
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, nil, 1.5)).to be false
+      expect(csv_generator.time_gap_exceeds_threshold?(nil, nil, 1.5)).to be false
+    end
+
+    it "handles zero and negative thresholds" do
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 1.0, 0)).to be false
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 1.1, 0)).to be true
+      expect(csv_generator.time_gap_exceeds_threshold?(1.0, 0.9, -0.2)).to be true
+    end
+  end
+
   describe "#process_segment" do
     let(:csv_generator) { described_class.new }
     let(:parser) { instance_double("TranscriptParser") }
