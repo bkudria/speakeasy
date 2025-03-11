@@ -163,7 +163,7 @@
 :PROPERTIES:
 :POINTS: 3
 :END:
-**** TODO Add guidance on dependency injection and composition patterns
+**** TODO Add guidance on composition patterns
 :PROPERTIES:
 :POINTS: 2
 :END:
@@ -270,33 +270,21 @@
 :FILES: lib/speaker_file_manager.rb, spec/speaker_file_manager_spec.rb
 :POINTS: 3
 :END:
-**** TODO Create ProcessingCoordinator to manage workflow
+**** DONE Create ProcessingCoordinator to manage workflow
 :PROPERTIES:
 :FILES: lib/processing_coordinator.rb, spec/processing_coordinator_spec.rb
 :POINTS: 5
-:END:
-*** TODO Implement dependency injection
-:PROPERTIES:
-:POINTS: 3
-:END:
-**** TODO Replace direct instantiations in initialize method
-:PROPERTIES:
-:POINTS: 2
-:END:
-**** TODO Add configuration options with defaults
-:PROPERTIES:
-:POINTS: 2
 :END:
 *** TODO Improve error handling
 :PROPERTIES:
 :POINTS: 3
 :END:
-**** TODO Create TranscriptProcessorError and subclasses
+**** DONE Create TranscriptProcessorError and subclasses
 :PROPERTIES:
 :FILES: lib/errors/transcript_processor_error.rb
 :POINTS: 2
 :END:
-**** TODO Enhance handle_error method with recovery strategies
+**** DONE Enhance handle_error method with recovery strategies
 :PROPERTIES:
 :POINTS: 2
 :END:

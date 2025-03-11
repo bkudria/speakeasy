@@ -33,7 +33,7 @@ class TranscriptProcessor
 
   def process
     puts "Starting Amazon Transcribe processing script"
-    
+
     # Initialize result hash to track processing status
     result = {
       csv_generated: false,
@@ -58,7 +58,6 @@ class TranscriptProcessor
   end
 
   private
-
 
   # Print a formatted step header
   # @param step_number [Integer] The step number
@@ -91,7 +90,7 @@ class TranscriptProcessor
       @speaker_file_manager.find_speaker_identities
     end
   end
-  
+
   # Process transcript items and generate rows
   # @param speaker_identities [Hash] Map of speaker labels to speaker names
   # @return [Array] Processed transcript rows
@@ -105,7 +104,7 @@ class TranscriptProcessor
       csv_gen.process_parsed_items(parsed_items, speaker_identities, silence_threshold: 1.0)
     end
   end
-  
+
   # Handle misalignment detection and correction
   # @param rows [Array] Transcript rows
   # @return [Array] Updated transcript rows
@@ -120,10 +119,10 @@ class TranscriptProcessor
     handle_error("correcting misalignments") do
       MisalignmentCorrector.new(rows, misalignment_issues).correct!
     end
-    
+
     rows
   end
-  
+
   # Write transcript rows to CSV
   # @param rows [Array] Transcript rows
   def write_to_csv(rows)
@@ -141,13 +140,13 @@ class TranscriptProcessor
 
     # Find speaker identifications from renamed files
     speaker_identities = find_speaker_identities
-    
+
     # Process transcript into rows
     rows = process_transcript_items(speaker_identities)
-    
+
     # Detect and correct misalignments
     rows = handle_misalignments(rows)
-    
+
     # Write to CSV
     write_to_csv(rows)
 
@@ -176,22 +175,77 @@ class TranscriptProcessor
     end
   end
 
-  # Reusable error handling method
+  # Reusable error handling method with recovery strategies
   # @param operation_description [String] Description of the operation being performed
   # @param default_value [Object] Optional default value to return on error
+  # @param recovery_options [Hash] Options for error recovery strategies
+  # @option recovery_options [Integer] :retry_count Number of times to retry the operation
+  # @option recovery_options [Float] :retry_delay Delay in seconds between retry attempts
+  # @option recovery_options [Proc] :fallback_proc Procedure to execute as fallback when all retries fail
+  # @option recovery_options [Object] :log_to Logger object to log errors to
+  # @option recovery_options [String] :notification Custom notification message for critical errors
   # @yield The block of code to execute
-  # @return [Object] Result of the block if successful, default_value if error
-  def handle_error(operation_description, default_value = nil)
+  # @return [Object] Result of the block if successful, fallback value if error
+  def handle_error(operation_description, default_value = nil, recovery_options = {})
+    # Extract recovery options with defaults
+    retry_count = recovery_options[:retry_count] || 0
+    retry_delay = recovery_options[:retry_delay] || 0.1
+    fallback_proc = recovery_options[:fallback_proc]
+    logger = recovery_options[:log_to]
+    notification = recovery_options[:notification]
+
+    attempt = 0
+
     begin
+      # Try the operation
+      attempt += 1
       yield
-    rescue => e
-      puts "Error #{operation_description}: #{e.message}"
+    rescue ValidationError, ProcessingError, SpeakerIdentificationError, FileOperationError, StandardError => e
+      # Log the error
+      error_message = "Error #{operation_description}: #{e.message}"
+      puts error_message
       puts e.backtrace.join("\n") if ENV["DEBUG"]
+
+      # Log to external logger if provided
+      logger&.error(error_message)
+
+      # Display notification if provided
+      puts notification if notification
+
+      # Increment error counter
       @error_count += 1
-      default_value
+
+      # Apply specific recovery strategies based on error type
+      if e.is_a?(ValidationError)
+        # Validation errors typically can't be recovered by retry
+        if fallback_proc
+          return fallback_proc.call
+        else
+          return default_value
+        end
+      elsif e.is_a?(ProcessingError) && attempt <= retry_count
+        # Processing errors might be transient, so retry
+        sleep retry_delay
+        retry
+      elsif e.is_a?(FileOperationError)
+        # File operation errors might need notification
+        puts "Critical file operation error detected" unless notification
+
+        if attempt <= retry_count
+          sleep retry_delay
+          retry
+        end
+      elsif attempt <= retry_count
+        # General retry for other errors
+        sleep retry_delay
+        retry
+      end
+
+      # Use fallback proc if available
+      fallback_proc ? fallback_proc.call : default_value
     end
   end
-  
+
   # Complete the remaining processing steps common to all paths
   # @param result [Hash] The result hash to update
   # @return [Hash] Updated result hash
@@ -202,14 +256,14 @@ class TranscriptProcessor
 
     # Step 3: Identify segments to review
     identify_segments_to_review
-    
+
     # Update result with misalignments detection status
     result[:misalignments_detected] = @misalignments_detected || false
 
     puts "Processing complete!"
     result
   end
-  
+
   # Process named speaker files with common logic
   # @param result [Hash] The result hash to update
   # @param message [String] Custom message to display about speaker files detection
